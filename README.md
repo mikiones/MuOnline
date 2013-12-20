@@ -1,4 +1,4 @@
-OpenMUTakeTwo
+OpenMU Take Two
 =============
 
-Started from https://code.google.com/p/java-muonline-server-files/
+This Mu Server Emulator Was Initially OpenMu (https://code.google.com/p/java-muonline-server-files/)
