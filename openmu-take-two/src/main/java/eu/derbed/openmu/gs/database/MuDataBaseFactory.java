@@ -12,8 +12,11 @@ import javax.sql.DataSource;
 import com.mchange.v2.c3p0.DataSources;
 
 import eu.derbed.openmu.gs.GameServerConfig;
+import eu.derbed.util.database.DatabaseHelper;
+import eu.derbed.util.database.IConnectionProvider;
+import eu.derbed.util.database.ResultStatementEvaluator;
 
-public class MuDataBaseFactory {
+public class MuDataBaseFactory implements IConnectionProvider {
 
 	private final String driver;
 	private final String url;
@@ -21,6 +24,8 @@ public class MuDataBaseFactory {
 	private final String password;
 
 	private static MuDataBaseFactory _instance;
+
+	private final DatabaseHelper dbhelper;
 
 	private DataSource _source;
 	private Statement _syst;
@@ -61,6 +66,7 @@ public class MuDataBaseFactory {
 			throw new IllegalStateException(message, t);
 		}
 
+		dbhelper = new DatabaseHelper(this);
 	}
 
 	public static MuDataBaseFactory getInstance() throws SQLException {
@@ -82,8 +88,23 @@ public class MuDataBaseFactory {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.utils.database.IConnectionProvider#getConnection()
+	 */
+	@Override
 	public Connection getConnection() throws SQLException {
 		return _source.getConnection();
+	}
+
+	/**
+	 * @param evaluator
+	 */
+	public static <S extends Statement, R> void execute(ResultStatementEvaluator<S, R> evaluator) {
+		try {
+			getInstance().dbhelper.execute(evaluator);
+		} catch (Throwable e) {
+			throw new IllegalStateException("Failed to execute query.", e);
+		}
 	}
 
 	public Statement getSyst() {
