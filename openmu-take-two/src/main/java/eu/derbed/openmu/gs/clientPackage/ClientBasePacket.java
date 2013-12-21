@@ -90,7 +90,4 @@ public abstract class ClientBasePacket extends Packet {
 			_decrypt[i] = (byte) (_decrypt[i] ^ d3key[(i - start) % 3]);
 		}
 	}
-
-	@Override
-	public abstract String getType();
 }
