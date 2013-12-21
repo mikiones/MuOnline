@@ -28,9 +28,32 @@ public final class UPacket {
 	 *
 	 * @param log
 	 * @param data
+	 * @param forceUpperCase
+	 */
+	public static void logTransfer(Logger log, byte[] data, boolean forceUpperCase) {
+		logTransfer(log, data, null, forceUpperCase);
+	}
+
+	/**
+	 * Convert byte array to String for that Hex editor look
+	 *
+	 * @param log
+	 * @param data
 	 * @param string
 	 */
 	public static void logTransfer(Logger log, byte[] data, String string) {
+		logTransfer(log, data, string, false);
+	}
+
+	/**
+	 * Convert byte array to String for that Hex editor look
+	 *
+	 * @param log
+	 * @param data
+	 * @param string
+	 * @param forceUpperCase
+	 */
+	public static void logTransfer(Logger log, byte[] data, String string, boolean forceUpperCase) {
 		final StringBuffer result = new StringBuffer();
 
 		int counter = 0;
@@ -59,7 +82,7 @@ public final class UPacket {
 					}
 				}
 
-				flush(log, result);
+				flush(log, result, forceUpperCase);
 				counter = 0;
 			}
 		}
@@ -80,14 +103,18 @@ public final class UPacket {
 				}
 			}
 		}
-		flush(log, result);
+		flush(log, result, forceUpperCase);
 	}
 
 	/**
 	 * @param s
 	 */
-	private static void flush(Logger log, StringBuffer sb) {
-		log.debug(sb.toString());
+	private static void flush(Logger log, StringBuffer sb, boolean forceUpperCase) {
+		String string = sb.toString();
+		if (forceUpperCase) {
+			string = string.toLowerCase();
+		}
+		log.debug(string);
 		sb.setLength(0);
 	}
 

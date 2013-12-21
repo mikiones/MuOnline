@@ -5,7 +5,7 @@
 package eu.derbed.openmu.gs.muObjects;
 
 /**
- * 
+ *
  * @author Miki i Linka
  */
 class MuMobWalkArea {
@@ -17,7 +17,7 @@ class MuMobWalkArea {
 	}
 
 	public int getRandX(int actX) {
-		int tx = tx = actX
+		int tx = actX
 				+ ((int) (Math.random() * (_radius * 2)) - (_radius));
 		// while (!((_x1<tx)&&(tx<_x2))) {
 		// tx = actX + ((int) (Math.random() * (_radius * 2)) - (_radius));

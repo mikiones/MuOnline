@@ -14,12 +14,15 @@
  */
 package eu.derbed.openmu.cs;
 
+import static eu.derbed.openmu.utils.UPacket.logTransfer;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.derbed.openmu.cs.codec.builder.GSServerEntryBuilder;
 import eu.derbed.openmu.cs.codec.builder.GSServersListBuilder;
@@ -28,9 +31,9 @@ import eu.derbed.openmu.cs.codec.data.GSSerersList;
 import eu.derbed.openmu.cs.codec.data.HelloClientData;
 import eu.derbed.openmu.cs.codec.data.ServerEntry;
 import eu.derbed.openmu.netty.abstracts.AbstractMuPackageData;
-import eu.derbed.openmu.utils.Protocol;
 
 public class CSProtocolEncoder extends OneToOneEncoder {
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	static final HelloClientBuilder helloClient = new HelloClientBuilder();
 	static final GSServersListBuilder gsSererList = new GSServersListBuilder();
@@ -57,10 +60,10 @@ public class CSProtocolEncoder extends OneToOneEncoder {
 		default:
 			return msg;
 		}
-		
-		System.out.println(Protocol.printData(out.array(), out.array().length, "").toUpperCase());
+
+		logTransfer(log, out.array(), true);
 		//return ChannelBuffers.EMPTY_BUFFER;
-	
+
 		return out;
 	}
 

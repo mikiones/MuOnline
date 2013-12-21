@@ -14,10 +14,11 @@
     */
 package eu.derbed.openmu.netty.abstracts;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import static eu.derbed.openmu.utils.UPacket.logTransfer;
 
-import eu.derbed.openmu.utils.Protocol;
+import org.jboss.netty.buffer.ChannelBuffer;
+
+import eu.derbed.openmu.base.LoggableObject;
 
 /**
  *
@@ -28,7 +29,8 @@ import eu.derbed.openmu.utils.Protocol;
  * To_DERYPT need to be decrypted
  * READY     data ready to move on next layer (decoding)
  */
-public class MuBaseMessage {
+public class MuBaseMessage extends LoggableObject {
+
     public static final String[] StrStatus={"To Decrypt" , "Ready"};
     public static final byte To_DECRYPT = 0x00;
     public static final byte READY = 0x01;
@@ -43,7 +45,10 @@ public class MuBaseMessage {
     public byte status;
 
     @Override
+	@Deprecated
     public String toString() {
-        return "Message [status:" + StrStatus[status] + "] data :\n"+Protocol.printData(message.array(), message.array().length, "")+"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
+//    	AAA what to do here?
+		logTransfer(log, message.array());
+		return "Message [status:" + StrStatus[status] + "] ";
     }
 }
