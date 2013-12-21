@@ -6,17 +6,17 @@ import eu.derbed.openmu.gs.muObjects.MuCharacterBase;
 import eu.derbed.openmu.gs.muObjects.MuCharacterList;
 
 /**
- * 
+ *
  */
 
 /**
  * @author MikiOne
- * 
+ *
  */
 public class SCharacterListAnsfer extends ServerBasePacket {
 
 	/**
-	 * 
+	 *
 	 */
 	MuCharacterList _list;
 
@@ -26,7 +26,7 @@ public class SCharacterListAnsfer extends ServerBasePacket {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see ServerBasePacket#getContent()
 	 */
 
@@ -38,7 +38,7 @@ public class SCharacterListAnsfer extends ServerBasePacket {
 	@Override
 	public byte[] getContent() throws IOException {
 		final int ilec = _list.getCharsCount();
-		System.out.println("ilosc postaci od ch_list = " + ilec);
+		log.debug("Number of characters: {}", ilec);
 		final CharHea head = new CharHea(ilec);
 		_bao.write(head.getContent());
 		if (ilec != 0) {
@@ -47,14 +47,13 @@ public class SCharacterListAnsfer extends ServerBasePacket {
 				_bao.write(t.getContent());
 			}
 		}
-		;
 
 		return _bao.toByteArray();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see ServerBasePacket#getType()
 	 */
 	@Override

@@ -8,13 +8,13 @@ package eu.derbed.openmu.gs.serverPackets;
 import java.io.IOException;
 
 /**
- * 
+ *
  * @author Miki
  */
 public interface ServerPacketModel {
 
 	/**
-	 * 
+	 *
 	 * @return zwraca zarartosc w byte[]
 	 */
 	byte[] getBytes();
@@ -22,13 +22,6 @@ public interface ServerPacketModel {
 	byte[] getContent() throws IOException, Throwable;
 
 	int getLength();
-
-	/**
-	 * just for information and debug purposes
-	 * 
-	 * @return
-	 */
-	String getType();
 
 	String printData(byte[] data, int len, String string);
 

@@ -4,18 +4,21 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author Marcel
  */
-public class GameServerConfig {
-	static private GameServerConfig _instance;
-	static public Properties global = new Properties();
-	static public Properties databse = new Properties();
-	static public Properties gs = new Properties();
-	static public Properties logs = new Properties();
-	static public Properties cs = new Properties();
+public final class GameServerConfig {
+	private static GameServerConfig _instance;
+	public static final Properties global = new Properties();
+	public static final Properties databse = new Properties();
+	public static final Properties gs = new Properties();
+	public static final Properties logs = new Properties();
+	public static final Properties cs = new Properties();
 
+	public final boolean testMode;
 
 	public static GameServerConfig getInstance() throws IOException {
 		if (_instance == null) {
@@ -31,6 +34,8 @@ public class GameServerConfig {
 		global.put("global.itemFile", global.getProperty("global.conf") + "/data/item.txt");
 		global.put("global.mapsDir", global.getProperty("global.conf") + "/data/maps/");
 		loadConfig();
+
+		testMode = new Boolean(gs.getProperty("testmode", "false"));
 	}
 
 	private void loadConfig() throws IOException {
@@ -43,6 +48,18 @@ public class GameServerConfig {
 	public void findDataDirectory() {
 		final String home = System.getProperty("user.dir");
 		System.out.println(home);
+	}
+
+	/**
+	 * @return
+	 */
+	public static boolean isTestMode() {
+		try {
+			return getInstance().testMode;
+		} catch (Throwable t) {
+			LoggerFactory.getLogger(GameServerConfig.class).error("Failed to get instance", t);
+			return true;
+		}
 	}
 
 }

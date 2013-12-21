@@ -1,12 +1,14 @@
 package eu.derbed.openmu.gs.muObjects;
 
-import java.io.EOFException ;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javolution.util.FastMap;
+import eu.derbed.openmu.base.LoggableObject;
 import eu.derbed.openmu.gs.GameServerConfig;
 import eu.derbed.openmu.gs.serverPackets.SForgetId;
 import eu.derbed.openmu.gs.serverPackets.SMeetItemOnGround;
@@ -15,17 +17,15 @@ import eu.derbed.openmu.gs.serverPackets.SPlayersMeeting;
 import eu.derbed.openmu.gs.serverPackets.SToMoveID;
 import eu.derbed.openmu.gs.serverPackets.ServerBasePacket;
 
-import javolution.util.FastMap;
-
 /**
  * MuMap represents the game entity known as map or zone.<br>
  * It provides means to encapsulate visible objects and manipulate them in
  * terms of spawn and movement.
- * 
+ *
  * @see MuObject
  * @see MuWorld
  */
-public class MuMap {
+public class MuMap extends LoggableObject {
 
 	/**
 	 * MuMapPoint encapsulates all objects visible on a 3x3 square on map.<br>
@@ -181,7 +181,7 @@ public class MuMap {
 	private int playerVisibiliyRange = 1;
 
 	/**
-	 * MuMap constructor function. 
+	 * MuMap constructor function.
 	 * @param mapId
 	 *            The Id of the map to be constructed. It must match with files.
 	 * @param mapName
@@ -210,7 +210,7 @@ public class MuMap {
 
 	/**
 	 * The method returns the map name.
-	 * 
+	 *
 	 * @return the map name
 	 */
 	public String getMapName() {
@@ -219,7 +219,7 @@ public class MuMap {
 
 	/**
 	 * The method returns the map ID.
-	 * 
+	 *
 	 * @return return code of map
 	 */
 	public byte getMapCode() {
@@ -228,7 +228,7 @@ public class MuMap {
 
 	/**
 	 * Reads the corresponding *.att file.
-	 * 
+	 *
 	 * @return true if successful
 	 */
 	private boolean loadTerrain() {
@@ -267,7 +267,7 @@ public class MuMap {
 	 * Given the region X and Y coordinates (max. 85), the function broadcasts a
 	 * packet to all player instances, except the one represented by the first
 	 * paramater, that can be found in the visibile player range.
-	 * 
+	 *
 	 * @param Client
 	 *            The exception player when broadcasting
 	 * @param RegionX
@@ -390,7 +390,7 @@ public class MuMap {
 	 * Given the region X and Y coordinates (max. 85), the function broadcasts a
 	 * packet to all player instances, except the one represented by the first
 	 * paramater, that can be found in the visibile player range.
-	 * 
+	 *
 	 * @param Client
 	 *            The exception player when broadcasting
 	 * @param RegionX
@@ -408,7 +408,7 @@ public class MuMap {
 	/**
 	 * This method sends packets to the given player "from" all the objects in
 	 * the visibility range. It is mostly used for "meeting" packets.
-	 * 
+	 *
 	 * @param Player
 	 *            The player that receives the packets
 	 */
@@ -523,7 +523,7 @@ public class MuMap {
 	 * visibility range, and broadcasts movement, spawn and "forget" packets
 	 * appropriately. <br>
 	 * The method uses the new and old coordinates of the MuCharacter.
-	 * 
+	 *
 	 * @param Who
 	 *            The character to be moved
 	 * @param x
@@ -602,7 +602,7 @@ public class MuMap {
 	 * The function adds the given object into the map, at the right position
 	 * and region (MuMapPoint). <br>
 	 * It includes broadcasting the appropriate "spawn" packets.
-	 * 
+	 *
 	 * @param object
 	 *            The MuObject to be added.
 	 * @return False if the object is already on the map, true otherwise
@@ -610,7 +610,7 @@ public class MuMap {
 	public boolean addObject(MuObject object) {
 		final int x = object.getCurrentMuMapPointX();
 		final int y = object.getCurrentMuMapPointY();
-		System.out.println("Total objects on map: " + _allObjects.size());
+		log.debug("Total objects on map: {}", _allObjects.size());
 		// Test if object already exists on the map
 		if (_allObjects.containsValue(object)) {
 			// resend meeting packets
@@ -681,7 +681,7 @@ public class MuMap {
 	/**
 	 * Remove the given object from the map.<br>
 	 * It includes sending the appropriate "forget" packets.
-	 * 
+	 *
 	 * @param object
 	 *            The object to be remove TODO send forgetid packets
 	 */

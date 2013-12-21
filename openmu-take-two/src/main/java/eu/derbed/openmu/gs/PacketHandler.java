@@ -26,6 +26,7 @@ import eu.derbed.openmu.gs.clientPackage.CPasVeryfcation;
 import eu.derbed.openmu.gs.clientPackage.CPublicMsg;
 import eu.derbed.openmu.gs.clientPackage.CSelectCharacterOrExitRequest;
 import eu.derbed.openmu.gs.clientPackage.CSelectedCharacterEnterRequest;
+import eu.derbed.openmu.utils.PackageUtil;
 
 
 /**
@@ -51,7 +52,7 @@ public class PacketHandler {
 		if (data.length > 1) {
 			id2 = data[1] & 0xff;
 		}
-		log.debug(printData(data, data.length, "[C->S]"));
+		PackageUtil.logPackage(log, data, "[C->S]");
 		switch (id) {
 		case 0xa0:
 			new CA0Request(data, _client);
@@ -150,64 +151,4 @@ public class PacketHandler {
 
 	}
 
-	private String printData(byte[] data, int len, String string) {
-		final StringBuffer result = new StringBuffer("Received:\n");
-
-		int counter = 0;
-
-		for (int i = 0; i < len; i++) {
-			if (counter % 16 == 0) {
-				result.append(string + " ");
-				result.append(fillHex(i, 4) + ": ");
-			}
-
-			result.append(fillHex(data[i] & 0xff, 2) + " ");
-			counter++;
-			if (counter == 16) {
-				result.append("   ");
-
-				int charpoint = i - 15;
-				for (int a = 0; a < 16; a++) {
-					final int t1 = data[charpoint++];
-					if (t1 > 0x1f && t1 < 0x80) {
-						result.append((char) t1);
-					} else {
-						result.append('.');
-					}
-				}
-
-				result.append("\n");
-				counter = 0;
-			}
-		}
-
-		final int rest = data.length % 16;
-		if (rest > 0) {
-			for (int i = 0; i < 17 - rest; i++) {
-				result.append("   ");
-			}
-
-			int charpoint = data.length - rest;
-			for (int a = 0; a < rest; a++) {
-				final int t1 = data[charpoint++];
-				if (t1 > 0x1f && t1 < 0x80) {
-					result.append((char) t1);
-				} else {
-					result.append('.');
-				}
-			}
-		}
-
-		return result.toString();
-	}
-
-	private String fillHex(int data, int digits) {
-		String number = Integer.toHexString(data);
-
-		for (int i = number.length(); i < digits; i++) {
-			number = "0" + number;
-		}
-
-		return number;
-	}
 }

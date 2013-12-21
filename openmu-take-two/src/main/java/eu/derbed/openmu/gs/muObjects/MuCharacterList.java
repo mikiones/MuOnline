@@ -1,19 +1,17 @@
 package eu.derbed.openmu.gs.muObjects;
 
+import eu.derbed.openmu.base.LoggableObject;
 import eu.derbed.openmu.gs.ClientThread;
 
 /**
- * 
+ *
  */
 
 /**
  * @author MikiOne
- * 
+ *
  */
-public class MuCharacterList {
-	/**
-	 * 
-	 */
+public class MuCharacterList extends LoggableObject {
 
 	private boolean _needRead = true;
 	private final MuCharacterBase[] _chars = { null, null, null, null, null };
@@ -26,7 +24,7 @@ public class MuCharacterList {
 
 	/**
 	 * get character base fron name
-	 * 
+	 *
 	 * @param _name
 	 *            to get
 	 * @return character base
@@ -43,7 +41,7 @@ public class MuCharacterList {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return firs free slot
 	 */
 	public byte getFirstFreeSlot() {
@@ -62,8 +60,7 @@ public class MuCharacterList {
 			return false;
 		}
 		final byte i = getFirstFreeSlot();
-		System.out.println("Added new character to chlist :" + c.getName()
-				+ " on pos " + i);
+		log.info("Added new character '{}' in slot {}", c.getName(), i);
 		_chars[i] = c;
 		return true;
 	}

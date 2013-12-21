@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import eu.derbed.openmu.gs.serverPackets.ServerBasePacket;
+import eu.derbed.openmu.utils.PackageUtil;
 
 
 /**
@@ -113,7 +114,8 @@ public class MuConnection {
 		byte[] decr = new byte[incoming.length];
 		decr = dec(incoming, pos);
 		if (f) {
-			_packArea.append("\n" + printData(decr, decr.length, "[C->S]"));
+//			AAA what is this? UI integration?
+//			_packArea.append("\n" + printData(decr, decr.length, "[C->S]"));
 			// System.out.println("\n" + printData(decr, decr.length
 			// ,"[C->S]"));
 		}
@@ -184,7 +186,7 @@ public class MuConnection {
 			// this is time consuming.. only enable for debugging
 
 			{
-				log.debug(printData(data, data.length, "[S->C]"));
+				PackageUtil.logPackage(log, data, "[S->C]");
 			}
 
 			_out.write(data, 0, data.length);
@@ -224,75 +226,4 @@ public class MuConnection {
 		_csocket.close();
 	}
 
-	/**
-	 * print data
-	 *
-	 * @param data
-	 *            data to print
-	 * @param len
-	 *            lenght of data
-	 * @param string
-	 *            string
-	 * @return string of printed hexdata
-	 */
-	private String printData(byte[] data, int len, String string) {
-		final StringBuffer result = new StringBuffer();
-
-		int counter = 0;
-
-		for (int i = 0; i < len; i++) {
-			if (counter % 16 == 0) {
-				result.append(string + " ");
-				result.append(fillHex(i, 4) + ": ");
-			}
-
-			result.append(fillHex(data[i] & 0xff, 2) + " ");
-			counter++;
-			if (counter == 16) {
-				result.append("   ");
-
-				int charpoint = i - 15;
-				for (int a = 0; a < 16; a++) {
-					final int t1 = data[charpoint++];
-					if (t1 > 0x1f && t1 < 0x80) {
-						result.append((char) t1);
-					} else {
-						result.append('.');
-					}
-				}
-
-				result.append("\n");
-				counter = 0;
-			}
-		}
-
-		final int rest = data.length % 16;
-		if (rest > 0) {
-			for (int i = 0; i < 17 - rest; i++) {
-				result.append("   ");
-			}
-
-			int charpoint = data.length - rest;
-			for (int a = 0; a < rest; a++) {
-				final int t1 = data[charpoint++];
-				if (t1 > 0x1f && t1 < 0x80) {
-					result.append((char) t1);
-				} else {
-					result.append('.');
-				}
-			}
-		}
-
-		return result.toString();
-	}
-
-	private String fillHex(int data, int digits) {
-		String number = Integer.toHexString(data);
-
-		for (int i = number.length(); i < digits; i++) {
-			number = "0" + number;
-		}
-
-		return number;
-	}
 }

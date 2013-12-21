@@ -1,21 +1,22 @@
 package eu.derbed.openmu.gs.clientPackage;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class ...
- * 
+ *
  * @version $Revision: 1.5 $ $Date: 2004/10/23 17:26:18 $
  */
 public abstract class ClientBasePacket {
-	static Logger _log = Logger.getLogger(ClientBasePacket.class.getName());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	private final byte[] d3key = { (byte) 0xfc, (byte) 0xcf, (byte) 0xab };
 	protected byte[] _decrypt;
 
 	protected int _off;
 
 	public ClientBasePacket(byte[] decrypt) {
-		_log.finest(getType());
+		log.info(getType());
 		_decrypt = decrypt;
 		_off = 3; // skip packet type id
 	}

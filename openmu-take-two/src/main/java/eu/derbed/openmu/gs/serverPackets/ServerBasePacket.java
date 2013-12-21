@@ -2,27 +2,25 @@ package eu.derbed.openmu.gs.serverPackets;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Logger;
+
+import eu.derbed.openmu.base.Packet;
 
 /**
  * This class ...
- * 
+ *
  * @version $Revision: 1.3 $ $Date: 2004/07/04 11:14:53 $
  */
-public abstract class ServerBasePacket implements ServerPacketModel {
+public abstract class ServerBasePacket extends Packet implements ServerPacketModel {
 
-	private static Logger _log = Logger.getLogger(ServerBasePacket.class
-			.getName());
 	protected ByteArrayOutputStream _bao;
 
 	protected ServerBasePacket() {
 		_bao = new ByteArrayOutputStream();
-		_log.finest(getType());
 	}
 
 	/**
 	 * put the long value to byte array
-	 * 
+	 *
 	 * @param value
 	 */
 	protected void writeL(long value) {
@@ -34,7 +32,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * put integer value to bytearray
-	 * 
+	 *
 	 * @param value
 	 */
 	protected void writeI(int value) {
@@ -46,7 +44,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 	/**
 	 * writing integer with diverted bits some tims mu protocol using diverted
 	 * bits of integer
-	 * 
+	 *
 	 * @param value
 	 */
 	protected void writeIDiverted(int value) {
@@ -57,7 +55,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * put byte nalue to byte array
-	 * 
+	 *
 	 * @param value
 	 */
 	protected void writeC(int value) {
@@ -66,7 +64,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * put double value to bytearray
-	 * 
+	 *
 	 * @param org
 	 */
 	protected void writeF(double org) {
@@ -83,7 +81,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * put bytearray to ..
-	 * 
+	 *
 	 * @param a
 	 */
 	protected void writeB(byte[] a) {
@@ -96,7 +94,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * write string to byte array
-	 * 
+	 *
 	 * @param text
 	 */
 	protected void writeS(String text) {
@@ -111,7 +109,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * writes fixed nick full by 0x00 to 10 bytes
-	 * 
+	 *
 	 * @param nick
 	 */
 	protected void writeNick(String nick) {
@@ -132,7 +130,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * write strimng to bytearray
-	 * 
+	 *
 	 * @param text
 	 * @param from
 	 * @param ile
@@ -152,7 +150,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * return lengh of byte array
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -161,7 +159,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return zwraca zarartosc w byte[]
 	 */
 	@Override
@@ -174,7 +172,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * make c1 header template with 1'st class protocol
-	 * 
+	 *
 	 * @param typ
 	 * @param s
 	 */
@@ -186,7 +184,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * make c1 header with 2 clases of protool
-	 * 
+	 *
 	 * @param typ
 	 * @param typ2
 	 * @param s
@@ -202,7 +200,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * make c3 template header with 2 types
-	 * 
+	 *
 	 * @param typ
 	 * @param typ2
 	 * @param s
@@ -225,7 +223,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * make c2 header with 2 types
-	 * 
+	 *
 	 * @param typ
 	 * @param typ2
 	 * @param s
@@ -240,7 +238,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * Make C2 header with one type
-	 * 
+	 *
 	 * @param typ
 	 * @param s
 	 */
@@ -254,7 +252,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * make c4 header with 2 typs
-	 * 
+	 *
 	 * @param typ
 	 * @param typ2
 	 * @param s
@@ -269,7 +267,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * make c4 header with 1 typ
-	 * 
+	 *
 	 * @param typ
 	 * @param s
 	 */
@@ -283,7 +281,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * compare two bitarrays
-	 * 
+	 *
 	 * @param a
 	 * @param b
 	 * @return
@@ -304,7 +302,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * printe data to String as Hex look edytor
-	 * 
+	 *
 	 * @param data
 	 * @param len
 	 * @param string
@@ -366,7 +364,7 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 
 	/**
 	 * fill hex helped function 4 print hex
-	 * 
+	 *
 	 * @param data
 	 * @param digits
 	 * @return

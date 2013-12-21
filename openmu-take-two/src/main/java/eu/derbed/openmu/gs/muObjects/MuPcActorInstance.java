@@ -4,7 +4,7 @@ import eu.derbed.openmu.gs.serverPackets.ServerBasePacket;
 
 /**
  * test class actor for pc instances to test interactivings betwens players
- * 
+ *
  * @author Miki
  */
 public class MuPcActorInstance extends MuPcInstance {
