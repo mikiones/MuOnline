@@ -1,8 +1,12 @@
 package eu.derbed.openmu.packetBase.crypt;
 
+import static eu.derbed.openmu.utils.UPacket.logTransfer;
+
 import java.io.ByteArrayOutputStream;
 
-public class decC3test {
+import eu.derbed.openmu.base.LoggableObject;
+
+public class decC3test extends LoggableObject {
 
 	private final long[] ClientDecryptKeys = { 73326, 109989, 98843, 171058,
 			18035, 30340, 24701, 11141, 62004, 64409, 35374, 64599, 35 };
@@ -20,75 +24,12 @@ public class decC3test {
 			(byte) 0xC3, (byte) 0xB1, (byte) 0xE9, (byte) 0x83, 0x29, 0x51,
 			(byte) 0xE8, 0x56 };
 
-	public String printData(byte[] data, int len, String string) {
-		final StringBuffer result = new StringBuffer();
-
-		int counter = 0;
-
-		for (int i = 0; i < len; i++) {
-			if (counter % 16 == 0) {
-				result.append(string + " ");
-				result.append(fillHex(i, 4) + ": ");
-			}
-
-			result.append(fillHex(data[i] & 0xff, 2) + " ");
-			counter++;
-			if (counter == 16) {
-				result.append("   ");
-
-				int charpoint = i - 15;
-				for (int a = 0; a < 16; a++) {
-					final int t1 = data[charpoint++];
-					if (t1 > 0x1f && t1 < 0x80) {
-						result.append((char) t1);
-					} else {
-						result.append('.');
-					}
-				}
-
-				result.append("\n");
-				counter = 0;
-			}
-		}
-
-		final int rest = data.length % 16;
-		if (rest > 0) {
-			for (int i = 0; i < 17 - rest; i++) {
-				result.append("   ");
-			}
-
-			int charpoint = data.length - rest;
-			for (int a = 0; a < rest; a++) {
-				final int t1 = data[charpoint++];
-				if (t1 > 0x1f && t1 < 0x80) {
-					result.append((char) t1);
-				} else {
-					result.append('.');
-				}
-			}
-
-			result.append("\n");
-		}
-
-		return result.toString();
-	}
-
-	private String fillHex(int data, int digits) {
-		String number = Integer.toHexString(data);
-
-		for (int i = number.length(); i < digits; i++) {
-			number = "0" + number;
-		}
-
-		return number;
-	}
-
 	private final byte LoginKeys[] = { (byte) 0xFC, (byte) 0xCF, (byte) 0xAB };
 
 	private int HashBuffer(byte[] Dest, int arrd, int Param10, byte[] Src,
 			int off, int Param18, int Param1c) {
 
-		System.out.println(printData(Src, Src.length, ""));
+		logTransfer(log, Src);
 
 		final int BuffLen = ((Param1c + Param18 - 1) >> 3) - (Param18 >> 3) + 2;
 		final byte[] Temp = new byte[BuffLen];
@@ -112,7 +53,7 @@ public class decC3test {
 			}
 		}
 		// delete[] Temp;
-		System.out.println(printData(Dest, Dest.length, ""));
+		logTransfer(log, Dest);
 		return Param10 + Param1c;
 	}
 
@@ -125,7 +66,7 @@ public class decC3test {
 	}
 
 	private void ShiftBuffer(byte[] Buff, int Len, int ShiftLen) {
-		System.out.println(printData(Buff, Buff.length, ""));
+		logTransfer(log, Buff);
 		if (ShiftLen != 0) {
 			if (ShiftLen > 0) {
 				if (Len - 1 > 0) {
@@ -144,7 +85,7 @@ public class decC3test {
 			}
 			Buff[Len - 1] = (byte) (Buff[Len - 1] << ShiftLen);
 		}
-		System.out.println(printData(Buff, Buff.length, ""));
+		logTransfer(log, Buff);
 	}
 
 	private void ZeroMemory(byte[] Dest, int arr, int i) {
@@ -271,7 +212,7 @@ public class decC3test {
 
 	private int DecC3Bytes(byte[] Dest, int arrd, byte[] Src, int arrs,
 			long[] Keys) {
-		System.out.println(printData(Src, Src.length, ""));
+		logTransfer(log, Src);
 		ZeroMemory(Dest, arrd, 8);
 
 		byte[] TempDecB = new byte[5 * 4];
@@ -303,7 +244,7 @@ public class decC3test {
 		for (int i = 0; i < 8; i++) {
 			XorByte ^= Dest[i];
 		}
-		System.out.println(printData(Dest, Dest.length, ""));
+		logTransfer(log, Dest);
 		if (XorByte != TempDecB[1]) {
 			return -1;
 		} else {

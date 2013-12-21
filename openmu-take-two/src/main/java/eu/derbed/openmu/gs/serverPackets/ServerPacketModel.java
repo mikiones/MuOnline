@@ -23,8 +23,6 @@ public interface ServerPacketModel {
 
 	int getLength();
 
-	String printData(byte[] data, int len, String string);
-
 	boolean testMe();
 
 }
