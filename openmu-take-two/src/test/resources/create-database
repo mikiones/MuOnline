@@ -1,0 +1,7 @@
+#CREATE USER mu PASSWORD '123456' ADMIN
+#DROP USER sa
+#CREATE TABLE users ( u_user character(10) NOT NULL, u_pass character(10) NOT NULL, u_flag integer DEFAULT 0, u_ch_c integer DEFAULT 0 NOT NULL, u_id integer IDENTITY NOT NULL,    u_create_acc_date date,    u_last_login_date date,    u_last_login_ip character(15),    u_fail_log_count integer DEFAULT 0,    u_date_to_blocked date,    u_vol_code character(99));
+#INSERT INTO users (u_user, u_pass, u_flag, u_ch_c, u_id, u_create_acc_date, u_last_login_date, u_last_login_ip, u_fail_log_count, u_date_to_blocked, u_vol_code) VALUES ('admin1', 'admin1', 0, 1, 0, '2013-12-21', NULL, NULL, 0, NULL, NULL);
+#INSERT INTO users (u_user, u_pass, u_flag, u_ch_c, u_id, u_create_acc_date, u_last_login_date, u_last_login_ip, u_fail_log_count, u_date_to_blocked, u_vol_code) VALUES ('mikione', 'michalki1', 0, 3, 1, '2013-12-21', NULL, NULL, 0, NULL, NULL);
+CREATE TABLE characters (   us_id integer,    ch_name character(10) NOT NULL,    ch_class integer DEFAULT 0,    ch_stat_lvl integer DEFAULT 1 NOT NULL,    ch_stat_str integer DEFAULT 0,    ch_stat_agi integer DEFAULT 0,    ch_stat_vit integer DEFAULT 0,    ch_stat_enr integer DEFAULT 0,    ch_stat_com integer DEFAULT 0,    ch_last_pos_map character(1),    ch_last_pos_h character(1),    ch_exp_act bigint,    ch_exp_lp integer DEFAULT 0,    ch_last_pos_x integer DEFAULT 170,    ch_last_pos_y integer DEFAULT 127,    ch_guild_id integer);
+SHUTDOWN

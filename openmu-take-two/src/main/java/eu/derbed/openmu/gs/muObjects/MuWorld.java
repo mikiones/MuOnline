@@ -1,18 +1,23 @@
 package eu.derbed.openmu.gs.muObjects;
 
+import javolution.util.FastMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.derbed.openmu.gs.GameServerConfig;
 import eu.derbed.openmu.gs.IdFactory;
 import eu.derbed.openmu.gs.templates.MuNpc;
 
-import javolution.util.FastMap;
-
 /**
  * The class represents the entire MuOnline visible world.<br>
  * Encapsulates all the players and objects, all the maps and gates.
- * 
+ *
  * @author Miki, Marcel
  */
 public class MuWorld {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	private static MuWorld _instance;
 	private final FastMap<String, MuObject> _allPlayers;
@@ -37,7 +42,7 @@ public class MuWorld {
 
 	/**
 	 * Returns the map with the given map identifier.
-	 * 
+	 *
 	 * @param MapCode
 	 *            The map identifier
 	 * @return null if the map was not found
@@ -48,7 +53,7 @@ public class MuWorld {
 
 	/**
 	 * Returns the object with the given identifier.
-	 * 
+	 *
 	 * @param oID
 	 *            The object ID
 	 * @return null if no object was found
@@ -59,7 +64,7 @@ public class MuWorld {
 
 	/**
 	 * Returns the player with the given name.
-	 * 
+	 *
 	 * @param name
 	 *            The player's nickname
 	 * @return null if the player was not found
@@ -70,7 +75,7 @@ public class MuWorld {
 
 	/**
 	 * Returns the gate with the given identifier.
-	 * 
+	 *
 	 * @param gn
 	 *            number of gate
 	 * @return null if the gate was not found
@@ -81,7 +86,7 @@ public class MuWorld {
 
 	/**
 	 * Adds an object to the world, into the right map.
-	 * 
+	 *
 	 * @param Obj
 	 *            The object to be added
 	 * @return True only if object was added to both world and map successfully
@@ -100,11 +105,15 @@ public class MuWorld {
 	/**
 	 * Removes an object from the world (and map).<br>
 	 * In the end, the object is set to null.
-	 * 
+	 *
 	 * @param Obj
 	 *            The object to be deleted
 	 */
 	public void removeObject(MuObject Obj) {
+		if (Obj == null) {
+			log.debug("Object does not exist.", new NullPointerException());
+			return;
+		}
 		Obj.getCurrentWorldRegion().removeObject(Obj);
 		_allObjects.remove(new Integer(Obj.getObjectId()));
 		if (Obj instanceof MuPcInstance) {
@@ -121,7 +130,7 @@ public class MuWorld {
 	 * Initialize the world gates. The gates are similar to wormholes, you enter
 	 * one gate and warp to another one, somewhere in the world. Warping through
 	 * gates is usually bidirectional.
-	 * 
+	 *
 	 * @ToDo: Load the gates from configuration file.
 	 */
 	public void InitGates() {

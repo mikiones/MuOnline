@@ -1,27 +1,25 @@
 package eu.derbed.openmu.gs.clientPackage;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.muObjects.MuCharacterList;
 import eu.derbed.openmu.gs.serverPackets.SCharacterListAnsfer;
 
 
 public class CCharacterListRequest extends ClientBasePacket {
 
 	public CCharacterListRequest(byte[] decrypt, ClientThread cl)
-			throws IOException {
+			throws Throwable {
 		super(decrypt);
+		MuCharacterList result = new MuCharacterList();
 		try {
-			if (cl.getChList().needRead()) {
+			MuCharacterList chList = cl.getChList();
+			if (chList.needRead()) {
 				cl.readCharacterList();
 			}
-			cl.getConnection().sendPacket(
-					new SCharacterListAnsfer(cl.getChList()));
-		} catch (final Throwable ex) {
-			Logger.getLogger(CCharacterListRequest.class.getName()).log(
-					Level.SEVERE, null, ex);
+			result = chList;
+		} finally {
+		cl.getConnection().sendPacket(
+				new SCharacterListAnsfer(result));
 		}
 	}
 

@@ -4,62 +4,36 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.CommandHandler;
 import eu.derbed.openmu.gs.GameServerConfig;
+import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
-import eu.derbed.openmu.logger.MuLoggerMennager;
-
 
 public class GameServer extends Thread {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
 	// Socket listener
 
 	private ServerSocket _serverSocket;
-	// Ip adresses
-	private String _ip;
-	// Port listener
 	public static int _port;
-	// GS Global Logger
-	static Logger GSLogger = Logger.getLogger("GameServer");
 
-	public static void main(String[] args) throws Exception {
-		MuLoggerMennager.getInstance();
-		GSLogger.info("WorkingDir: " + System.getProperty("user.dir"));
-		final GameServer server = new GameServer();
-
-		GSLogger.info("GameServer Listening on port " + _port);
-		server.start();// runing GS
-	}
-
-	@Override
-	public void run() {
-		GSLogger.info("Init Regions:...");
-		MuWorld.getInstance().initWorld();
-		GSLogger.info("Init Gates.....");
-		MuWorld.getInstance().InitGates();
-		CommandHandler.getInstancec();
-		while (true) {
-			try {
-				final Socket connection = _serverSocket.accept();
-				new ClientThread(connection);
-			} catch (final IOException e) {
-				// not a real problem
-			}
-		}
-	}
-
-	public long getUsedMemoryMB() {
-		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime()
-				.freeMemory()) / 1024 / 1024;
-	}
-
-	public GameServer() throws Exception {
+	/**
+	 * @throws IOException
+	 */
+	public GameServer() throws IOException {
 		super("AppMain");
+
+		log.info("WorkingDir: " + System.getProperty("user.dir"));
+
 		GameServerConfig.getInstance();
 
-		_ip = GameServerConfig.gs.getProperty("gs.ip");
+//		_ip = GameServerConfig.gs.getProperty("gs.ip");
 		_port = Integer.parseInt((GameServerConfig.gs.getProperty("gs.port")));
 
 		System.out.println("used mem:" + getUsedMemoryMB() + "MB");
@@ -71,8 +45,9 @@ public class GameServer extends Thread {
 
 		if (!"*".equals(hostname)) {
 			final InetAddress adr = InetAddress.getByName(hostname);
-			_ip = adr.getHostAddress();
+//			_ip = adr.getHostAddress();
 			_serverSocket = new ServerSocket(_port, 50, adr);
+			log.info("GameServer Listening on port " + _port);
 			// application.AddLog("GameServer listening on IP:" + _ip + " Port "
 			// + _port);
 		} else {
@@ -87,4 +62,35 @@ public class GameServer extends Thread {
 		// keep the references of Singletons to prevent garbage collection
 		// Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
 	}
+
+	@Override
+	public void run() {
+		try {
+			log.info("Init Regions:...");
+			MuWorld.getInstance().initWorld();
+			log.info("Init Gates.....");
+			MuWorld.getInstance().InitGates();
+			CommandHandler.getInstancec();
+
+			MuDataBaseFactory.initiate();
+
+			while (true) {
+				try {
+					final Socket connection = _serverSocket.accept();
+					new ClientThread(connection);
+				} catch (final IOException e) {
+					// not a real problem
+				}
+			}
+
+		} catch (Throwable t) {
+			log.error("Game Server Crashed!", t);
+		}
+	}
+
+	public long getUsedMemoryMB() {
+		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime()
+				.freeMemory()) / 1024 / 1024;
+	}
+
 }

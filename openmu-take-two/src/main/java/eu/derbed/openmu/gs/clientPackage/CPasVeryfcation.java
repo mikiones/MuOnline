@@ -1,6 +1,7 @@
 package eu.derbed.openmu.gs.clientPackage;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ public class CPasVeryfcation extends ClientBasePacket {
 		Dec3bit(12, 10);
 		_use = readS(2, 10);
 		_pas = readS(12, 10);
-		System.out.println("user: [" + _use + "] pass[" + _pas + "].");
+		log.debug("Authentication request received [user: '{}', password: '{}']", _use, _pas);
 
 		if (!doesUserNameExist(_use)) {
 			log.debug("User '{}' does not exist in the database!", _use);
@@ -134,10 +135,9 @@ public class CPasVeryfcation extends ClientBasePacket {
 
 	public boolean doesUserNameExist(String name) {
 		boolean result = false;
-		java.sql.Connection con = null;
 
-		try {
-			con = MuDataBaseFactory.getInstance().getConnection();
+
+		try (Connection con = MuDataBaseFactory.getInstance().getConnection()) {
 			final PreparedStatement statement = con
 					.prepareStatement("SELECT * FROM users where u_user=?");
 			// ("select * from users where u_login=?");
@@ -146,13 +146,7 @@ public class CPasVeryfcation extends ClientBasePacket {
 			result = rset.next();
 			con.close();
 		} catch (final SQLException e) {
-			System.out.println("could not check existing charname:"
-					+ e.getMessage());
-		} finally {
-			try {
-				con.close();
-			} catch (final Exception e1) {
-			}
+			log.error("Failed to check if user exists.", e);
 		}
 		return result;
 	}
