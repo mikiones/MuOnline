@@ -91,7 +91,7 @@ public class MuConnection {
 		}
 			break;
 		default: {
-			System.out.println("Unknown Header type");
+				log.error("Unknown Header type {}", typ);
 		}
 		}
 
