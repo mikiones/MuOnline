@@ -3,6 +3,7 @@ package eu.derbed.openmu.gs.clientPackage;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_AccInvalt;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_InvaltPassword;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_PassOK;
+import static eu.derbed.openmu.utils.UPacket.logTransfer;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,7 +19,6 @@ import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;
-import eu.derbed.openmu.utils.PackageUtil;
 import eu.derbed.openmu.utils.UString;
 
 
@@ -52,7 +52,7 @@ public class CPasVeryfcation extends ClientBasePacket {
 				String userName = UString.nvl(user.getUser());
 				String pass = UString.nvl(user.getPass());
 
-				PackageUtil.logPackage(log, _decrypt, null);
+				logTransfer(log, _decrypt);
 
 				correctCredentials = StringUtils.equals(_use, userName) && StringUtils.equals(_pas, pass);
 

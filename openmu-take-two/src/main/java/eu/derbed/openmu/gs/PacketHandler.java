@@ -1,5 +1,7 @@
 package eu.derbed.openmu.gs;
 
+import static eu.derbed.openmu.utils.UPacket.logTransfer;
+
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -26,7 +28,6 @@ import eu.derbed.openmu.gs.clientPackage.CPasVeryfcation;
 import eu.derbed.openmu.gs.clientPackage.CPublicMsg;
 import eu.derbed.openmu.gs.clientPackage.CSelectCharacterOrExitRequest;
 import eu.derbed.openmu.gs.clientPackage.CSelectedCharacterEnterRequest;
-import eu.derbed.openmu.utils.PackageUtil;
 
 
 /**
@@ -52,7 +53,7 @@ public class PacketHandler {
 		if (data.length > 1) {
 			id2 = data[1] & 0xff;
 		}
-		PackageUtil.logPackage(log, data, "[C->S]");
+		logTransfer(log, data, "[C->S]");
 		switch (id) {
 		case 0xa0:
 			new CA0Request(data, _client);

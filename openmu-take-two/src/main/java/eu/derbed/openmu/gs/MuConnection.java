@@ -1,5 +1,7 @@
 package eu.derbed.openmu.gs;
 
+import static eu.derbed.openmu.utils.UPacket.logTransfer;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import eu.derbed.openmu.gs.serverPackets.ServerBasePacket;
-import eu.derbed.openmu.utils.PackageUtil;
 
 
 /**
@@ -185,9 +186,7 @@ public class MuConnection {
 		synchronized (this) {
 			// this is time consuming.. only enable for debugging
 
-			{
-				PackageUtil.logPackage(log, data, "[S->C]");
-			}
+			logTransfer(log, data, "[S->C]");
 
 			_out.write(data, 0, data.length);
 			_out.flush();

@@ -11,15 +11,26 @@ import org.slf4j.Logger;
  * @author Alexandru Bledea
  * @since Dec 21, 2013
  */
-public final class PackageUtil {
+public final class UPacket {
 
 	/**
+	 * Convert byte array to String for that Hex editor look
+	 *
 	 * @param log
 	 * @param data
-	 * @param len
+	 */
+	public static void logTransfer(Logger log, byte[] data) {
+		logTransfer(log, data, null);
+	}
+
+	/**
+	 * Convert byte array to String for that Hex editor look
+	 *
+	 * @param log
+	 * @param data
 	 * @param string
 	 */
-	public static void logPackage(Logger log, byte[] data, String string) {
+	public static void logTransfer(Logger log, byte[] data, String string) {
 		final StringBuffer result = new StringBuffer();
 
 		int counter = 0;
@@ -48,7 +59,7 @@ public final class PackageUtil {
 					}
 				}
 
-				debug(log, result);
+				flush(log, result);
 				counter = 0;
 			}
 		}
@@ -69,13 +80,13 @@ public final class PackageUtil {
 				}
 			}
 		}
-		debug(log, result);
+		flush(log, result);
 	}
 
 	/**
 	 * @param s
 	 */
-	private static void debug(Logger log, StringBuffer sb) {
+	private static void flush(Logger log, StringBuffer sb) {
 		log.debug(sb.toString());
 		sb.setLength(0);
 	}
