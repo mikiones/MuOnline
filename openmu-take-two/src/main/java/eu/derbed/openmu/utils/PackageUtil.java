@@ -3,6 +3,8 @@
  */
 package eu.derbed.openmu.utils;
 
+import static eu.derbed.openmu.utils.UString.empty;
+
 import org.slf4j.Logger;
 
 /**
@@ -24,7 +26,10 @@ public final class PackageUtil {
 		int len = data.length;
 		for (int i = 0; i < len; i++) {
 			if (counter % 16 == 0) {
-				result.append(string + " ");
+				if (!empty(string)) {
+					result.append(string);
+					result.append(' ');
+				}
 				result.append(fillHex(i, 4) + ": ");
 			}
 

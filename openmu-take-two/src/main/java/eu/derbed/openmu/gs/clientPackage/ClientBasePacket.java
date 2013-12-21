@@ -1,22 +1,20 @@
 package eu.derbed.openmu.gs.clientPackage;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import eu.derbed.openmu.base.Packet;
 
 /**
  * This class ...
  *
  * @version $Revision: 1.5 $ $Date: 2004/10/23 17:26:18 $
  */
-public abstract class ClientBasePacket {
-	private final Logger log = LoggerFactory.getLogger(getClass());
+public abstract class ClientBasePacket extends Packet {
+
 	private final byte[] d3key = { (byte) 0xfc, (byte) 0xcf, (byte) 0xab };
 	protected byte[] _decrypt;
 
 	protected int _off;
 
 	public ClientBasePacket(byte[] decrypt) {
-		log.info(getType());
 		_decrypt = decrypt;
 		_off = 3; // skip packet type id
 	}
@@ -93,5 +91,6 @@ public abstract class ClientBasePacket {
 		}
 	}
 
+	@Override
 	public abstract String getType();
 }
