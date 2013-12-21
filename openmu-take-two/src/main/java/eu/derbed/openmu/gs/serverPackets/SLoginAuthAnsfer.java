@@ -2,12 +2,7 @@ package eu.derbed.openmu.gs.serverPackets;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class SLoginAuthAnsfer extends ServerBasePacket {
-
-	private final Logger log = LoggerFactory.getLogger(getClass());
+public class SLoginAuthAnsfer extends ServerBasePacketNoType {
 
 	private byte f = 0; // flafa
 
@@ -21,24 +16,18 @@ public class SLoginAuthAnsfer extends ServerBasePacket {
 	public static final int PA_NoChargeInfo = 0x09;
 
 	public SLoginAuthAnsfer(byte fl) {
-		super();
 		f = fl;
-		// TODO Auto-generated constructor stub
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.serverPackets.ServerPacketModel#getContent()
+	 */
 	@Override
 	public byte[] getContent() throws IOException {
 		mC1Header(0xf1, 0x01, 0x05);
 		_bao.write(f);
 		_bao.write(0x00);
-		log.debug("Content: '{}'", f);
 		return _bao.toByteArray();
-	}
-
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return "SF101 Veryvication pass&user ansfer";
 	}
 
 	@Override
