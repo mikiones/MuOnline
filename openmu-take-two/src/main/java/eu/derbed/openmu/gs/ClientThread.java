@@ -173,37 +173,10 @@ public class ClientThread extends Thread {
 	}
 
 	/**
-	 * Read specifed userdata from database
-	 *
-	 * @Isusae 1 Move to database section
-	 * @param name
-	 *            of user login
-	 * @throws AbortException
+	 * @param user the user to set
 	 */
-	public void readUser(String name) throws AbortException {
-
-		java.sql.Connection con = null;
-
-		try {
-			con = MuDataBaseFactory.getInstance().getConnection();
-			final PreparedStatement statement = con
-					.prepareStatement("select * from users where u_user=?");
-			statement.setString(1, name);
-			final ResultSet rset = statement.executeQuery();
-			rset.next();
-			user = new MuUser(rset.getInt("u_id"), rset.getString("u_user"),
-					rset.getString("u_pass"), rset.getInt("u_flag"),
-					rset.getInt("u_ch_c"), rset.getString("u_vol_code"));
-			con.close();
-		} catch (final SQLException e) {
-			throw new AbortException("I'm cannot get data about user " + name, e);
-		} finally {
-			try {
-				con.close();
-			} catch (final Exception e1) {
-			}
-		}
-
+	public void setUser(MuUser user) {
+		this.user = user;
 	}
 
 	@Override
