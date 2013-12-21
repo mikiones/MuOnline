@@ -1,7 +1,7 @@
 package eu.derbed.openmu.gs.muObjects;
 
-import eu.derbed.openmu.base.LoggableObject;
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.util.LoggableObject;
 
 /**
  *

@@ -18,7 +18,7 @@ import static eu.derbed.openmu.utils.UPacket.logTransfer;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
-import eu.derbed.openmu.base.LoggableObject;
+import eu.derbed.util.LoggableObject;
 
 /**
  *

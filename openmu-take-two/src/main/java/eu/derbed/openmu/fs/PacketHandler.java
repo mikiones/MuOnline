@@ -4,10 +4,10 @@ import static eu.derbed.openmu.utils.UPacket.logTransfer;
 
 import java.io.IOException;
 
-import eu.derbed.openmu.base.LoggableObject;
 import eu.derbed.openmu.fs.clientPackets.FSChatMessage;
 import eu.derbed.openmu.fs.clientPackets.HelloFriendServer;
 import eu.derbed.openmu.fs.clientPackets.ServerListRequest;
+import eu.derbed.util.LoggableObject;
 
 
 /**

@@ -4,7 +4,7 @@ import static eu.derbed.openmu.utils.UPacket.logTransfer;
 
 import java.io.ByteArrayOutputStream;
 
-import eu.derbed.openmu.base.LoggableObject;
+import eu.derbed.util.LoggableObject;
 
 public class decC3test extends LoggableObject {
 

@@ -6,6 +6,7 @@ package eu.derbed.openmu.base;
 import org.apache.commons.lang3.StringUtils;
 
 import eu.derbed.openmu.gs.GameServerConfig;
+import eu.derbed.util.LoggableObject;
 
 /**
  * @author Alexandru Bledea

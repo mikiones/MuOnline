@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javolution.util.FastMap;
-import eu.derbed.openmu.base.LoggableObject;
 import eu.derbed.openmu.gs.GameServerConfig;
 import eu.derbed.openmu.gs.serverPackets.SForgetId;
 import eu.derbed.openmu.gs.serverPackets.SMeetItemOnGround;
@@ -16,6 +15,7 @@ import eu.derbed.openmu.gs.serverPackets.SNpcMiting;
 import eu.derbed.openmu.gs.serverPackets.SPlayersMeeting;
 import eu.derbed.openmu.gs.serverPackets.SToMoveID;
 import eu.derbed.openmu.gs.serverPackets.ServerBasePacket;
+import eu.derbed.util.LoggableObject;
 
 /**
  * MuMap represents the game entity known as map or zone.<br>
