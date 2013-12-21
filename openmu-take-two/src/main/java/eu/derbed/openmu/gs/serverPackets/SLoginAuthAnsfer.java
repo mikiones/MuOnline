@@ -2,7 +2,12 @@ package eu.derbed.openmu.gs.serverPackets;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SLoginAuthAnsfer extends ServerBasePacket {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	private byte f = 0; // flafa
 
@@ -26,7 +31,7 @@ public class SLoginAuthAnsfer extends ServerBasePacket {
 		mC1Header(0xf1, 0x01, 0x05);
 		_bao.write(f);
 		_bao.write(0x00);
-		System.out.println(f);
+		log.debug("Content: '{}'", f);
 		return _bao.toByteArray();
 	}
 

@@ -5,12 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;
 
 
 public class CPasVeryfcation extends ClientBasePacket {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	public CPasVeryfcation(byte[] decrypt, ClientThread client)
 			throws IOException, Throwable {
@@ -24,10 +29,9 @@ public class CPasVeryfcation extends ClientBasePacket {
 		System.out.println("user: [" + _use + "] pass[" + _pas + "].");
 
 		if (!doesUserNameExist(_use)) {
-			System.out.println("User : [" + _use
-					+ "] Nieistnieje w Bazie danych !!!");
+			log.debug("User '{}' does not exist in the database!", _use);
 			client.getConnection().sendPacket(new SLoginAuthAnsfer((byte) 0));
-			System.out.println("Autherysacion Failed !!!");
+			log.debug("Authentication failed.");
 			return;
 		}
 		System.out.println("User znaleziony pobieram reszte danych:");
@@ -37,6 +41,7 @@ public class CPasVeryfcation extends ClientBasePacket {
 				+ client.getUser().getCh_c() + "].");
 
 		// if(client.getUser()==null)client.makeNewUser(_use,_pas);
+
 		// System.out.println("User[" + _use + "]Pass[" + _pas + "]");
 		System.out.println("\n" + printData(_decrypt, _decrypt.length));
 		if (client.getUser() != null) {

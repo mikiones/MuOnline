@@ -2,6 +2,9 @@ package eu.derbed.openmu.gs;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CAddFrendRequest;
 import eu.derbed.openmu.gs.clientPackage.CAddLvlPointsRequest;
@@ -27,11 +30,11 @@ import eu.derbed.openmu.gs.clientPackage.CSelectedCharacterEnterRequest;
 
 /**
  * This class ...
- * 
+ *
  * @version $Revision: 1.18 $ $Date: 2004/10/26 20:43:03 $
  */
 public class PacketHandler {
-	// private static Logger _log = Logger
+	private Logger log = LoggerFactory.getLogger(getClass());
 	// .getLogger(PacketHandler.class.getName());
 	private final ClientThread _client;
 
@@ -48,7 +51,7 @@ public class PacketHandler {
 		if (data.length > 1) {
 			id2 = data[1] & 0xff;
 		}
-		System.out.println(printData(data, data.length, "[C->S]"));
+		log.debug(printData(data, data.length, "[C->S]"));
 		switch (id) {
 		case 0xa0:
 			new CA0Request(data, _client);
@@ -148,7 +151,7 @@ public class PacketHandler {
 	}
 
 	private String printData(byte[] data, int len, String string) {
-		final StringBuffer result = new StringBuffer();
+		final StringBuffer result = new StringBuffer("Received:\n");
 
 		int counter = 0;
 
@@ -193,8 +196,6 @@ public class PacketHandler {
 					result.append('.');
 				}
 			}
-
-			result.append("\n");
 		}
 
 		return result.toString();

@@ -8,15 +8,20 @@ import java.net.Socket;
 
 import javax.swing.JTextArea;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.derbed.openmu.gs.serverPackets.ServerBasePacket;
 
 
 /**
  * This class Represent connection to client
- * 
- * 
+ *
+ *
  */
 public class MuConnection {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	private final byte[] _cryptkey;
 	JTextArea _packArea;
@@ -34,7 +39,7 @@ public class MuConnection {
 
 	/**
 	 * Construtor
-	 * 
+	 *
 	 * @param client
 	 *            Socket to client
 	 * @param cryptKey
@@ -51,7 +56,7 @@ public class MuConnection {
 	/**
 	 * get data packets and parse it to single packages if wos sended more then
 	 * 1
-	 * 
+	 *
 	 * @return Decrypted xor algh package
 	 * @throws java.io.IOException
 	 */
@@ -117,7 +122,7 @@ public class MuConnection {
 
 	/**
 	 * Decrypt whole array
-	 * 
+	 *
 	 * @param buf
 	 *            to decrypt
 	 * @param pos
@@ -147,7 +152,7 @@ public class MuConnection {
 
 	/**
 	 * Decrypt xor algorytm one bajt
-	 * 
+	 *
 	 * @param a
 	 *            actual bait to decrypt
 	 * @param n
@@ -170,7 +175,7 @@ public class MuConnection {
 	 * of the amount of events that the target gets. if one target receives
 	 * hundreds of events in parallel, all event sources will have to wait until
 	 * the packets are send... for now, we use the direct communication
-	 * 
+	 *
 	 * @param data
 	 * @throws IOException
 	 */
@@ -179,8 +184,7 @@ public class MuConnection {
 			// this is time consuming.. only enable for debugging
 
 			{
-				System.out.println("\n"
-						+ printData(data, data.length, "[S->C]"));
+				log.debug(printData(data, data.length, "[S->C]"));
 			}
 
 			_out.write(data, 0, data.length);
@@ -190,7 +194,7 @@ public class MuConnection {
 
 	/**
 	 * Send packet bp
-	 * 
+	 *
 	 * @see ServerBasePacket
 	 * @param bp
 	 * @throws java.io.IOException
@@ -222,7 +226,7 @@ public class MuConnection {
 
 	/**
 	 * print data
-	 * 
+	 *
 	 * @param data
 	 *            data to print
 	 * @param len
@@ -277,8 +281,6 @@ public class MuConnection {
 					result.append('.');
 				}
 			}
-
-			result.append("\n");
 		}
 
 		return result.toString();
