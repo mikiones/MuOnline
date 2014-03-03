@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.slf4j.LoggerFactory;
-
 /**
  *
  * @author Marcel
@@ -15,19 +13,19 @@ public final class GameServerConfig {
 
 	private static final String GLOBAL_CONF = "global.conf";
 
-	private static GameServerConfig INSTANCE;
+	private static final GameServerConfig INSTANCE = new GameServerConfig();
+
 	public static final Properties global = new Properties();
 	public static final Properties databse = new Properties();
 	public static final Properties gs = new Properties();
-	public static final Properties logs = new Properties();
 	public static final Properties cs = new Properties();
 
 	public final boolean testMode;
 
-	public static GameServerConfig getInstance() throws IOException {
-		if (INSTANCE == null) {
-			INSTANCE = new GameServerConfig();
-		}
+	/**
+	 * @return
+	 */
+	public static GameServerConfig getInstance() {
 		return INSTANCE;
 	}
 
@@ -61,7 +59,6 @@ public final class GameServerConfig {
 		final String conf = getConf();
 		load(conf, "/conf/database.ini", databse);
 		load(conf, "/conf/gameserver.ini", gs);
-		load(conf, "/conf/mulog.ini", logs);
 		load(conf, "/conf/connectserver.ini", cs);
 	}
 
@@ -82,12 +79,7 @@ public final class GameServerConfig {
 	 * @return
 	 */
 	public static boolean isTestMode() {
-		try {
-			return getInstance().testMode;
-		} catch (Throwable t) {
-			LoggerFactory.getLogger(GameServerConfig.class).error("Failed to get instance", t);
-			return true;
-		}
+		return getInstance().testMode;
 	}
 
 }
