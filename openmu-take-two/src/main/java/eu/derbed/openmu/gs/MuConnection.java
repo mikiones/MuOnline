@@ -27,7 +27,6 @@ public class MuConnection {
 
 	private final byte[] _cryptkey;
 	JTextArea _packArea;
-	private final boolean f = false;
 	private final Socket _csocket;
 	private final InputStream _in;
 	private final OutputStream _out;
@@ -112,15 +111,7 @@ public class MuConnection {
 		if (incoming.length <= 0) {
 			return null;
 		}
-		byte[] decr = new byte[incoming.length];
-		decr = dec(incoming, pos);
-		if (f) {
-//			AAA what is this? UI integration?
-//			_packArea.append("\n" + printData(decr, decr.length, "[C->S]"));
-			// System.out.println("\n" + printData(decr, decr.length
-			// ,"[C->S]"));
-		}
-		return decr;
+		return dec(incoming, pos);
 	}
 
 	/**
