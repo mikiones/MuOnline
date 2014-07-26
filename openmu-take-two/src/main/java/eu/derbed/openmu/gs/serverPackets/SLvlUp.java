@@ -34,7 +34,7 @@ public class SLvlUp extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 		mC3Header(0xf3, 0x05, 0x12);
 		writeI(Level);
 		writeI(LevelUpPoint);

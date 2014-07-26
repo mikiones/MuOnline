@@ -30,7 +30,7 @@ public class SGoneExp extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 		// 03 87
 		// c6 f0 00
 		mC3Header(0x16, 0x09); // header

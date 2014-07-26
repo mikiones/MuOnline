@@ -14,7 +14,7 @@ import java.io.IOException;
 public class SForgotAboutItemId extends ServerBasePacket {
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 		final byte[] b = { (byte) 0xc2, 0x00, 0x07, 0x21, 0x01, 0x00, 0x00 };
 		return b;
 	}

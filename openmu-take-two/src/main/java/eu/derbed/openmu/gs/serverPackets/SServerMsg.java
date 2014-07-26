@@ -72,7 +72,7 @@ public class SServerMsg extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 		final int sizePAcket = _msg.length() + 13 + 1; // lenght of package
 		mC1Header(0x0D, _msgType, sizePAcket);
 		if (_msgType == ScrollMsg) {

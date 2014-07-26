@@ -37,7 +37,7 @@ public class FriendHelloAnsfer extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 		final int size = (11 * (_nicks.size())) + 8;
 		mC2Header(0x02, size);
 		writeC(0xcc); // unk 0xcc

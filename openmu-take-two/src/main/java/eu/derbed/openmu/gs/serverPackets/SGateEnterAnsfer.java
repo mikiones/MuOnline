@@ -23,7 +23,7 @@ public class SGateEnterAnsfer extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 
 		mC3Header(0x1C, 0x08);
 

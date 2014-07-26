@@ -26,7 +26,7 @@ public class SPlayersMeeting extends ServerBasePacket {
 		}
 
 		@Override
-		public byte[] getContent() throws IOException, Throwable {
+		public byte[] getContent() throws IOException {
 			writeC(0x00);
 			writeC(player.getObjectId()); // ObjID, int
 			writeC(player.getX()); // new X coordinate
@@ -71,7 +71,7 @@ public class SPlayersMeeting extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 		final int size = 5 + (_newPc.size() * SPlayerSubMiting.SubSize);
 		mC2Header(0x12, size);
 		writeC(_newPc.size());

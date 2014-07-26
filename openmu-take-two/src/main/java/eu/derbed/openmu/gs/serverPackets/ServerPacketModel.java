@@ -6,20 +6,21 @@
 package eu.derbed.openmu.gs.serverPackets;
 
 import java.io.IOException;
+import java.nio.channels.ByteChannel;
+
+import com.notbed.muonline.ByteContainer;
 
 /**
  *
  * @author Miki
  */
-public interface ServerPacketModel {
+public interface ServerPacketModel extends ByteContainer {
 
 	/**
 	 *
 	 * @return zwraca zarartosc w byte[]
 	 */
 	byte[] getBytes();
-
-	byte[] getContent() throws IOException, Throwable;
 
 	int getLength();
 

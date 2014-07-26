@@ -21,7 +21,7 @@ public class SPublicMsg extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 		mC1Header(0x00, _what.length() + 14);
 		writeNick(_who);
 		writeS(_what);

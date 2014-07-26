@@ -23,7 +23,7 @@ public class SMeetItemOnGround extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException, Throwable {
+	public byte[] getContent() throws IOException {
 		final int size = (9 * _item.size()) + 5; // (size of block items+
 													// id+wsp)* itemscout +
 													// itemcontbit + head
