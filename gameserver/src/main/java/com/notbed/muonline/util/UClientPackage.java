@@ -23,7 +23,7 @@ public final class UClientPackage {
 	 * @param start
 	 * @param len
 	 */
-	public static void Dec3bit(byte[] array, int start, int len) {
+	public static void dec3bit(byte[] array, int start, int len) {
 		for (int i = start; i < start + len; i++) {
 			array[i] = (byte) (array[i] ^ d3key[(i - start) % 3]);
 		}

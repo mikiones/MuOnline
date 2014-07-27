@@ -88,7 +88,7 @@ public final class DataDecrypter {
 	 * @param len
 	 */
 	public void dec3bit(final int start, final int len) {
-		UClientPackage.Dec3bit(data, start, len);
+		UClientPackage.dec3bit(data, start, len);
 	}
 
 	/**
