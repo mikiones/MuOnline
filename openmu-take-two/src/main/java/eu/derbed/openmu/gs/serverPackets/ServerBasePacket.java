@@ -286,15 +286,13 @@ public abstract class ServerBasePacket extends Packet implements ServerPacketMod
 	 * @param b
 	 * @return
 	 */
-	protected boolean CompareBits(byte[] a, byte[] b) {
-
+	protected static boolean CompareBits(byte[] a, byte[] b) {
 		if (a.length != b.length) {
 			return false;
-		} else {
-			for (int i = 0; i < a.length; i++) {
-				if (a[i] != b[i]) {
-					return false;
-				}
+		}
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] != b[i]) {
+				return false;
 			}
 		}
 		return true;
