@@ -1,9 +1,6 @@
-package eu.derbed.openmu.gs.clientPackage;
+package com.notbed.muonline.util;
 
 import org.slf4j.Logger;
-
-import com.notbed.muonline.util.UClientPackage;
-import com.notbed.muonline.util.UPacket;
 
 /**
  * @author Alexandru Bledea

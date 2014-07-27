@@ -97,7 +97,7 @@ public class PacketHandler {
 		case 0xf1: {
 			switch (id2) {
 			case 0x01:
-				new CPasVeryfcation(data, _client);
+				new CPasVeryfcation().process(data, _client);
 				break;
 			case 0x02:
 				new CSelectCharacterOrExitRequest(data, _client);

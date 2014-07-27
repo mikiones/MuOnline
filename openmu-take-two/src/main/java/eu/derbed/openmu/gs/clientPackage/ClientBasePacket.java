@@ -1,5 +1,7 @@
 package eu.derbed.openmu.gs.clientPackage;
 
+import com.notbed.muonline.util.DataDecrypter;
+
 
 
 /**
