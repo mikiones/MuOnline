@@ -37,13 +37,13 @@ public class CPasVeryfcation extends ClientBasePacket {
 			throws IOException, Throwable {
 		super(decrypt);
 
-		Dec3bit(2, 10);
-		Dec3bit(12, 10);
+		decrypter.dec3bit(2, 10);
+		decrypter.dec3bit(12, 10);
 
-		logTransfer(log, _decrypt);
+		decrypter.logTransfer(log);
 
-		final String username = readS(2, 10);
-		final String password = readS(12, 10);
+		final String username = decrypter.readS(2, 10);
+		final String password = decrypter.readS(12, 10);
 
 		log.debug("Authentication request received [user: '{}', password: '{}']", username, password);
 

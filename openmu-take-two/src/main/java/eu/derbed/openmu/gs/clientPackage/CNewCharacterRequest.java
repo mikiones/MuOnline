@@ -16,7 +16,7 @@ public class CNewCharacterRequest extends ClientBasePacket {
 	public CNewCharacterRequest(byte[] decrypt, ClientThread _client)
 			throws IOException, Throwable {
 		super(decrypt);
-		_name = readS(2, 10);
+		_name = decrypter.readS(2, 10);
 		_name = _name.trim();
 		_class = decrypt[12];
 		_class = _class * 2;

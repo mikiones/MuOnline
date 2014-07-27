@@ -24,8 +24,8 @@ public class CPublicMsg extends ClientBasePacket {
 
 	public CPublicMsg(byte[] data, ClientThread _client) {
 		super(data);
-		_from = readS(1, 10).trim();
-		_msg = readS(11, data.length - 12);
+		_from = decrypter.readS(1, 10).trim();
+		_msg = decrypter.readS(11, data.length - 12);
 		System.out.println("waidomosc publiczna od :" + _from + " o tresci: "
 				+ _msg + ". ");
 		try {

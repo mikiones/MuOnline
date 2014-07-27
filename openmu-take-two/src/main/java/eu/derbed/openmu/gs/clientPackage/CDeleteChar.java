@@ -26,8 +26,8 @@ public class CDeleteChar extends ClientBasePacket {
 			p_code = "";
 		}
 		int result = 0x02;
-		_name = readS(2, 10);
-		_personalcode = readS(12, 7);
+		_name = decrypter.readS(2, 10);
+		_personalcode = decrypter.readS(12, 7);
 		if (_personalcode.compareTo(p_code) == 0) {
 			result = 0x01;
 		}

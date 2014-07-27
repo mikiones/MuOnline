@@ -23,9 +23,10 @@ public class HelloFriendServer extends ClientBasePacket {
 	public HelloFriendServer(byte[] decrypt, FriendTheard _fs) {
 		super(decrypt);
 		int _IdRoom = decrypt[2] & 0xff;
-		_IdRoom |= _decrypt[3] << 8 & 0xff00;
-		Dec3bit(4, 10);
-		final String Nick = readS(4, 10);
+		_IdRoom |= decrypter.data[3] << 8 & 0xff00;
+
+		decrypter.dec3bit(4, 10);
+		final String Nick = decrypter.readS(4, 10);
 		System.out.println("Request to connect to Chat Room Id:" + _IdRoom
 				+ " From Nick" + Nick);
 		try {

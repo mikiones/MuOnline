@@ -20,7 +20,7 @@ public class CSelectedCharacterEnterRequest extends ClientBasePacket {
 	}
 
 	public String SelectedName() {
-		return readS(2, 10);
+		return decrypter.readS(2, 10);
 	}
 
 }

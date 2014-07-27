@@ -22,8 +22,8 @@ public class FSChatMessage extends ClientBasePacket {
 		super(decrypt);
 		size = decrypt[02];
 		System.out.println("FS:> Size of package:" + decrypt.length + "]");
-		Dec3bit(03, size);
-		message = readS(03, size);
+		decrypter.dec3bit(03, size);
+		message = decrypter.readS(03, size);
 		System.out.println("FS:> Message[" + message + "] Size : ["
 				+ Integer.toHexString(size) + "]");
 	}
