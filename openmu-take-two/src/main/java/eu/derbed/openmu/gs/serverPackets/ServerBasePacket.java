@@ -3,14 +3,12 @@ package eu.derbed.openmu.gs.serverPackets;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
-import eu.derbed.openmu.base.Packet;
-
 /**
  * This class ...
  *
  * @version $Revision: 1.3 $ $Date: 2004/07/04 11:14:53 $
  */
-public abstract class ServerBasePacket extends Packet implements ServerPacketModel {
+public abstract class ServerBasePacket implements ServerPacketModel {
 
 	protected ByteArrayOutputStream _bao;
 

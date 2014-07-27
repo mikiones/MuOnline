@@ -1,13 +1,12 @@
 package eu.derbed.openmu.gs.clientPackage;
 
-import eu.derbed.openmu.base.Packet;
 
 /**
  * This class ...
  *
  * @version $Revision: 1.5 $ $Date: 2004/10/23 17:26:18 $
  */
-public abstract class ClientBasePacket extends Packet {
+public abstract class ClientBasePacket {
 
 	private final byte[] d3key = { (byte) 0xfc, (byte) 0xcf, (byte) 0xab };
 	protected byte[] _decrypt;
