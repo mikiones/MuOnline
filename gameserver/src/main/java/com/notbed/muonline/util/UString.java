@@ -48,10 +48,8 @@ public final class UString {
 	 * @param s2
 	 * @return
 	 */
-	public static boolean equalTrim(String s1, String s2) {
-		s1 = trimNvl(s1);
-		s2 = trimNvl(s2);
-		return s1.equals(s2);
+	public static boolean equalTrim(final String s1, final String s2) {
+		return trimNvl(s1).equals(trimNvl(s2));
 	}
 
 }

@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @author Alexandru Bledea
  * @since Jul 27, 2014
  */
-public class SocketWrapper implements Closeable, AutoCloseable {
+public class SocketWrapper implements Closeable {
 
 	private final Closeable socket;
 	protected final InputStream in;
