@@ -5,9 +5,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import eu.derbed.openmu.gs.MuConnection;
-import eu.derbed.openmu.gs.serverPackets.SForgetId;
-import eu.derbed.openmu.gs.serverPackets.SIdGoneDie;
+import com.notbed.muonline.util.MuSocket;
+
 import eu.derbed.openmu.gs.serverPackets.SLiveStats;
 import eu.derbed.openmu.gs.serverPackets.SLvlUp;
 import eu.derbed.openmu.gs.serverPackets.SManaStaminaStats;
@@ -58,7 +57,7 @@ public class MuPcInstance extends MuCharacter {
 	/**
 	 * connection to client
 	 */
-	private MuConnection _netConnection;
+	private MuSocket _netConnection;
 
 	/**
      *
@@ -142,7 +141,7 @@ public class MuPcInstance extends MuCharacter {
 	/**
 	 * @return connection to client
 	 */
-	public MuConnection getNetConnection() {
+	public MuSocket getNetConnection() {
 		if (_netConnection == null) {
 			throw new NullPointerException("lost pointer to net conection");
 		}
@@ -253,7 +252,7 @@ public class MuPcInstance extends MuCharacter {
 	 * 
 	 * @param connection
 	 */
-	public void setNetConnection(MuConnection connection) {
+	public void setNetConnection(MuSocket connection) {
 		_netConnection = connection;
 	}
 

@@ -10,26 +10,23 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import eu.derbed.openmu.gs.MuConnection;
-
+import com.notbed.muonline.util.MuSocket;
 
 /**
  * 
  * @author Miki i Linka
  */
 public class FriendTheard extends Thread {
-	private final byte[] _cryptkey = { (byte) 0x94, (byte) 0x35, (byte) 0x00,
-			(byte) 0x00, (byte) 0xa1, (byte) 0x6c, (byte) 0x54, (byte) 0x87 };
-	private final MuConnection _connection;
+	private final MuSocket _connection;
 	private final eu.derbed.openmu.fs.PacketHandler _handler;
 
 	public FriendTheard(Socket _con) throws IOException {
-		_connection = new MuConnection(_con, _cryptkey);
+		_connection = new MuSocket(_con);
 		_handler = new eu.derbed.openmu.fs.PacketHandler(this);
 		start();
 	}
 
-	public MuConnection getConnection() {
+	public MuSocket getConnection() {
 		return _connection;
 
 	}

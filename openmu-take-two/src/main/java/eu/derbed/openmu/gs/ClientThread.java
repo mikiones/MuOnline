@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.MuSocket;
+
 import eu.derbed.openmu.exceptions.AbortException;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
 import eu.derbed.openmu.gs.database.MuCharactersDb;
@@ -80,10 +82,10 @@ public class ClientThread extends Thread {
 		return _activeNpc;
 	}
 
-	private final byte[] _cryptkey = { (byte) 0x94, (byte) 0x35, (byte) 0x00,
-			(byte) 0x00, (byte) 0xa1, (byte) 0x6c, (byte) 0x54, (byte) 0x87 // these
-	};
-	private final MuConnection _connection;
+//	private final byte[] _cryptkey = { (byte) 0x94, (byte) 0x35, (byte) 0x00,
+//			(byte) 0x00, (byte) 0xa1, (byte) 0x6c, (byte) 0x54, (byte) 0x87 // these
+//	};
+	private final MuSocket _connection;
 	private final PacketHandler _handler;
 
 	/**
@@ -95,7 +97,7 @@ public class ClientThread extends Thread {
 	 */
 	public ClientThread(Socket client) throws IOException {
 
-		_connection = new MuConnection(client, _cryptkey);
+		_connection = new MuSocket(client);
 		_handler = new PacketHandler(this);
 		_world = MuWorld.getInstance();
 
@@ -115,7 +117,7 @@ public class ClientThread extends Thread {
 	 *
 	 * @return
 	 */
-	public MuConnection getConnection() {
+	public MuSocket getConnection() {
 		return _connection;
 	}
 
