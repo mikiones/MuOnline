@@ -1,4 +1,4 @@
-package com.notbed.muonline;
+package com.notbed.muonline.util;
 
 import java.io.Closeable;
 import java.io.IOException;

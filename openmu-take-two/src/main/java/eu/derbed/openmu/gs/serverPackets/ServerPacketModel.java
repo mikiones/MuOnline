@@ -8,7 +8,7 @@ package eu.derbed.openmu.gs.serverPackets;
 import java.io.IOException;
 import java.nio.channels.ByteChannel;
 
-import com.notbed.muonline.ByteContainer;
+import com.notbed.muonline.util.ByteContainer;
 
 /**
  *
