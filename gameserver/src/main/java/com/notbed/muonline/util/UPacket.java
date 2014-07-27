@@ -1,9 +1,7 @@
 /**
  *
  */
-package eu.derbed.openmu.utils;
-
-import static eu.derbed.openmu.utils.UString.empty;
+package com.notbed.muonline.util;
 
 import org.slf4j.Logger;
 
@@ -14,12 +12,17 @@ import org.slf4j.Logger;
 public final class UPacket {
 
 	/**
-	 * Convert byte array to String for that Hex editor look
 	 *
+	 */
+	private UPacket() {
+	}
+
+	/**
+	 * Convert byte array to String for that Hex editor look
 	 * @param log
 	 * @param data
 	 */
-	public static void logTransfer(Logger log, byte[] data) {
+	public static void logTransfer(final Logger log, final byte[] data) {
 		logTransfer(log, data, null);
 	}
 
@@ -30,7 +33,7 @@ public final class UPacket {
 	 * @param data
 	 * @param forceUpperCase
 	 */
-	public static void logTransfer(Logger log, byte[] data, boolean forceUpperCase) {
+	public static void logTransfer(final Logger log, final byte[] data, final boolean forceUpperCase) {
 		logTransfer(log, data, null, forceUpperCase);
 	}
 
@@ -41,7 +44,7 @@ public final class UPacket {
 	 * @param data
 	 * @param string
 	 */
-	public static void logTransfer(Logger log, byte[] data, String string) {
+	public static void logTransfer(final Logger log, final byte[] data, final String string) {
 		logTransfer(log, data, string, false);
 	}
 
@@ -53,14 +56,14 @@ public final class UPacket {
 	 * @param string
 	 * @param forceUpperCase
 	 */
-	public static void logTransfer(Logger log, byte[] data, String string, boolean forceUpperCase) {
+	public static void logTransfer(final Logger log, final byte[] data, final String string, final boolean forceUpperCase) {
 		final StringBuffer result = new StringBuffer();
 
 		int counter = 0;
-		int len = data.length;
+		final int len = data.length;
 		for (int i = 0; i < len; i++) {
 			if (counter % 16 == 0) {
-				if (!empty(string)) {
+				if (!UString.empty(string)) {
 					result.append(string);
 					result.append(' ');
 				}
@@ -109,7 +112,7 @@ public final class UPacket {
 	/**
 	 * @param s
 	 */
-	private static void flush(Logger log, StringBuffer sb, boolean forceUpperCase) {
+	private static void flush(final Logger log, final StringBuffer sb, final boolean forceUpperCase) {
 		String string = sb.toString();
 		if (forceUpperCase) {
 			string = string.toLowerCase();
@@ -123,7 +126,7 @@ public final class UPacket {
 	 * @param digits
 	 * @return
 	 */
-	private static String fillHex(int data, int digits) {
+	private static String fillHex(final int data, final int digits) {
 		String number = Integer.toHexString(data);
 
 		for (int i = number.length(); i < digits; i++) {

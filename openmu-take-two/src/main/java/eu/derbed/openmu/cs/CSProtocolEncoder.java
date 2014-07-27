@@ -14,7 +14,7 @@
  */
 package eu.derbed.openmu.cs;
 
-import static eu.derbed.openmu.utils.UPacket.logTransfer;
+import static com.notbed.muonline.util.UPacket.logTransfer;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;

@@ -1,20 +1,21 @@
 package eu.derbed.openmu.gs.clientPackage;
 
+import static com.notbed.muonline.util.UPacket.logTransfer;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_AccInvalt;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_InvaltPassword;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_PassOK;
-import static eu.derbed.openmu.utils.UPacket.logTransfer;
 
 import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.notbed.muonline.util.UString;
 
 import eu.derbed.openmu.database.LoadUser;
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;
-import eu.derbed.openmu.utils.UString;
 import eu.derbed.util.ICallback;
 
 public class CPasVeryfcation extends ClientBasePacket {

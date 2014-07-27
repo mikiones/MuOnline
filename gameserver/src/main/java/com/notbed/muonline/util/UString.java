@@ -1,7 +1,8 @@
 /**
  *
  */
-package eu.derbed.openmu.utils;
+package com.notbed.muonline.util;
+
 
 /**
  * @author Alexandru Bledea
@@ -10,10 +11,16 @@ package eu.derbed.openmu.utils;
 public final class UString {
 
 	/**
+	 *
+	 */
+	private UString() {
+	}
+
+	/**
 	 * @param s
 	 * @return
 	 */
-	public static boolean empty(String s) {
+	public static boolean empty(final String s) {
 		return s == null || s.trim().isEmpty();
 	}
 
@@ -21,15 +28,18 @@ public final class UString {
 	 * @param possiblyNullString
 	 * @return
 	 */
-	public static String nvl(String possiblyNullString) {
-		return USettings.nvl(possiblyNullString, "");
+	public static String nvl(final String possiblyNullString) {
+		if (null == possiblyNullString) {
+			return "";
+		}
+		return possiblyNullString;
 	}
 
 	/**
 	 * @param possiblyNullString
 	 * @return
 	 */
-	public static String trimNvl(String possiblyNullString) {
+	public static String trimNvl(final String possiblyNullString) {
 		return nvl(possiblyNullString).trim();
 	}
 

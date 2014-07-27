@@ -1,6 +1,6 @@
 package eu.derbed.openmu.gs;
 
-import static eu.derbed.openmu.utils.UPacket.logTransfer;
+import static com.notbed.muonline.util.UPacket.logTransfer;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;

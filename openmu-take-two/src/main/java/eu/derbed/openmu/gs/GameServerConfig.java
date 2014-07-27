@@ -13,12 +13,12 @@ public final class GameServerConfig {
 
 	private static final String GLOBAL_CONF = "global.conf";
 
-	private static final GameServerConfig INSTANCE = new GameServerConfig();
-
 	public static final Properties global = new Properties();
 	public static final Properties databse = new Properties();
 	public static final Properties gs = new Properties();
 	public static final Properties cs = new Properties();
+
+	private static final GameServerConfig INSTANCE = new GameServerConfig();
 
 	public final boolean testMode;
 
@@ -67,10 +67,10 @@ public final class GameServerConfig {
 	 * @param file
 	 * @param dest
 	 */
-	private void load(String conf, String file, Properties dest) {
+	private void load(final String conf, final String file, final Properties dest) {
 		try (InputStream in = new FileInputStream(conf + file)) {
 			dest.load(in);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IllegalStateException("Failed to load " + file);
 		}
 	}

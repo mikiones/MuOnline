@@ -1,6 +1,6 @@
 package eu.derbed.openmu.packetBase.crypt;
 
-import static eu.derbed.openmu.utils.UPacket.logTransfer;
+import static com.notbed.muonline.util.UPacket.logTransfer;
 
 import java.io.ByteArrayOutputStream;
 
