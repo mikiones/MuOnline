@@ -48,10 +48,4 @@ public class SDMgOnScreen extends ServerBasePacket {
 		return null;
 	}
 
-	@Override
-	public boolean testMe() {
-
-		return false;
-	}
-
 }

@@ -32,9 +32,4 @@ public class SPutItemInInventory extends ServerBasePacket {
 		return "Request to create item in character inventory.";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
-
 }

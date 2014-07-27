@@ -28,12 +28,4 @@ public class SSkillList extends ServerBasePacket {
 		return null;
 	}
 
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	/**
-	 * @param args
-	 */
 }

@@ -24,9 +24,4 @@ public class SForgotAboutItemId extends ServerBasePacket {
 		return "";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
-
 }

@@ -36,10 +36,4 @@ public class SToMoveID extends ServerBasePacket {
 		return "cIDMOve";
 	}
 
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

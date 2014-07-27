@@ -47,10 +47,4 @@ public class SNewCharacterAnsfer extends ServerBasePacket {
 		return null;
 	}
 
-	@Override
-	public boolean testMe() {
-
-		return false;
-	}
-
 }

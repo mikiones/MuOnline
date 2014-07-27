@@ -29,8 +29,4 @@ public class SDeleteChar extends ServerBasePacket {
 		return null;
 	}
 
-	@Override
-	public boolean testMe() {
-		return false;
-	}
 }

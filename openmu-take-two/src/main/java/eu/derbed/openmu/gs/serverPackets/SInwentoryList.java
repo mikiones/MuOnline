@@ -56,8 +56,4 @@ public class SInwentoryList extends ServerBasePacket {
 		return "";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
 }

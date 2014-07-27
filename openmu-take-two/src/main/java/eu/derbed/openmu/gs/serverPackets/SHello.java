@@ -33,10 +33,4 @@ public class SHello extends ServerBasePacket {
 		return "SF101 witaj klijencie";
 	}
 
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

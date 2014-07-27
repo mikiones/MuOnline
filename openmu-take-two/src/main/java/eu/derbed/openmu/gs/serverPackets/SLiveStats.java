@@ -41,10 +41,4 @@ public class SLiveStats extends ServerBasePacket {
 
 	}
 
-	@Override
-	public boolean testMe() {
-
-		return false;
-	}
-
 }

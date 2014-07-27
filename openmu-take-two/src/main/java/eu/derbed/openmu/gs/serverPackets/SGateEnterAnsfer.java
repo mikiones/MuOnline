@@ -43,9 +43,4 @@ public class SGateEnterAnsfer extends ServerBasePacket {
 		return "enter ingate ansfer";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
-
 }

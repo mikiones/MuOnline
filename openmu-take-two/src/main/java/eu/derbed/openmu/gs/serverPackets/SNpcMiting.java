@@ -55,9 +55,4 @@ public class SNpcMiting extends ServerBasePacket {
 		return "13 SNpcMiting";
 	}
 
-	@Override
-	public boolean testMe() {
-
-		return false;
-	}
 }

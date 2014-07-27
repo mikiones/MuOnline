@@ -31,9 +31,4 @@ public class SDirectionOrStatusChange extends ServerBasePacket {
 		return "Action result";
 	}
 
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

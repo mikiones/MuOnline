@@ -141,10 +141,4 @@ public class SSelectedCharacterEnterAnsfer extends ServerBasePacket {
 		return null;
 	}
 
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

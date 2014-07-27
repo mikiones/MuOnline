@@ -35,9 +35,4 @@ public class SMoveItemResult extends ServerBasePacket {
 		return "Move item from one inventory to another.";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
-
 }

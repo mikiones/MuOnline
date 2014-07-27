@@ -34,9 +34,4 @@ public class SPublicMsg extends ServerBasePacket {
 		return "00 public msg";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
-
 }

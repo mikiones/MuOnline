@@ -30,10 +30,4 @@ public class SLoginAuthAnsfer extends ServerBasePacketNoType {
 		return _bao.toByteArray();
 	}
 
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

@@ -102,8 +102,4 @@ public class SServerMsg extends ServerBasePacket {
 		return "Server Msg";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
 }

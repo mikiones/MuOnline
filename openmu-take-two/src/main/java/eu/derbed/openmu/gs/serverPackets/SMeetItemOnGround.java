@@ -52,8 +52,4 @@ public class SMeetItemOnGround extends ServerBasePacket {
 		return "meet itemson ground";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
 }

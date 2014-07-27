@@ -58,10 +58,6 @@ public class SPlayersMeeting extends ServerBasePacket {
 			return "playersmeting sub";
 		}
 
-		@Override
-		public boolean testMe() {
-			return true;
-		}
 	}
 
 	private final ArrayList<MuObject> _newPc;
@@ -89,8 +85,4 @@ public class SPlayersMeeting extends ServerBasePacket {
 		return "pc Miting";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
 }

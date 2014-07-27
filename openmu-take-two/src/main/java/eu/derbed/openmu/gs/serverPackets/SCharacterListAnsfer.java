@@ -94,11 +94,6 @@ public class SCharacterListAnsfer extends ServerBasePacket {
 			return null;
 		}
 
-		@Override
-		public boolean testMe() {
-			// TODO Auto-generated method stub
-			return false;
-		}
 	}
 
 	class CharHea extends ServerBasePacket {
@@ -133,17 +128,6 @@ public class SCharacterListAnsfer extends ServerBasePacket {
 			return null;
 		}
 
-		@Override
-		public boolean testMe() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-	}
-
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

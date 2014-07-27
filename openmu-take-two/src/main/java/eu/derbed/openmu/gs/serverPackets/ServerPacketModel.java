@@ -5,9 +5,6 @@
 
 package eu.derbed.openmu.gs.serverPackets;
 
-import java.io.IOException;
-import java.nio.channels.ByteChannel;
-
 import com.notbed.muonline.util.ByteContainer;
 
 /**
@@ -23,7 +20,5 @@ public interface ServerPacketModel extends ByteContainer {
 	byte[] getBytes();
 
 	int getLength();
-
-	boolean testMe();
 
 }

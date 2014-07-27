@@ -47,10 +47,4 @@ public class SManaStaminaStats extends ServerBasePacket {
 
 	}
 
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

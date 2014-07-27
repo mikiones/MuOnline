@@ -51,8 +51,4 @@ public class SLvlUp extends ServerBasePacket {
 		return "";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
 }

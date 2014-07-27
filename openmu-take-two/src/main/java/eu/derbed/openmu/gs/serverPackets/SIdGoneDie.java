@@ -24,10 +24,4 @@ public class SIdGoneDie extends ServerBasePacket {
 		return "IdGomeDie";
 	}
 
-	@Override
-	public boolean testMe() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

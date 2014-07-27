@@ -61,8 +61,4 @@ public class FriendHelloAnsfer extends ServerBasePacket {
 		return "Friend hello ansfer";
 	}
 
-	@Override
-	public boolean testMe() {
-		return true;
-	}
 }
