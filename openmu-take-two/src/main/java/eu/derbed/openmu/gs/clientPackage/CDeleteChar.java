@@ -45,8 +45,4 @@ public class CDeleteChar extends ClientBasePacket {
 		_client.getConnection().sendPacket(new SDeleteChar(_name, result));
 	}
 
-	@Override
-	public String getType() {
-		return null;
-	}
 }

@@ -51,9 +51,4 @@ public class SInwentoryList extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-		return "";
-	}
-
 }

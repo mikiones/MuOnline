@@ -97,9 +97,4 @@ public class CMoveItemRequest extends ClientBasePacket {
 		}
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -53,11 +53,6 @@ public class SPlayersMeeting extends ServerBasePacket {
 			return getBytes();
 		}
 
-		@Override
-		public String getType() {
-			return "playersmeting sub";
-		}
-
 	}
 
 	private final ArrayList<MuObject> _newPc;
@@ -78,11 +73,6 @@ public class SPlayersMeeting extends ServerBasePacket {
 			writeB(t.getContent());
 		}
 		return getBytes();
-	}
-
-	@Override
-	public String getType() {
-		return "pc Miting";
 	}
 
 }

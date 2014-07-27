@@ -56,9 +56,4 @@ public class FriendHelloAnsfer extends ServerBasePacket {
 		writeNick(nick);// put name flipped 0x00 to 10 bytes
 	}
 
-	@Override
-	public String getType() {
-		return "Friend hello ansfer";
-	}
-
 }

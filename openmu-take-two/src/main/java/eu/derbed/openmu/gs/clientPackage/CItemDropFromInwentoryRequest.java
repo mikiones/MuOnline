@@ -26,10 +26,5 @@ public class CItemDropFromInwentoryRequest extends ClientBasePacket {
 		System.out.println("Drop Request from slot[" + _slotFrom + "] to wsp ["
 				+ _xPos + "," + _yPos + "]");
 	}// 26 0c 00
-
-	@Override
-	public String getType() {
-		return "inwentory roop item request";
-	}
 	// 23 ad 7f 0c
 }

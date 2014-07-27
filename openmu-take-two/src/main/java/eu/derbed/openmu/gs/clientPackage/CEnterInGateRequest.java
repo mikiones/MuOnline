@@ -52,8 +52,4 @@ public class CEnterInGateRequest extends ClientBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-		return null;
-	}
 }

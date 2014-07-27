@@ -10,10 +10,4 @@ public class CClientSettingsSaveRequest extends ClientBasePacket {
 		_client.storeClientSettingsInDb();
 	}
 
-	@Override
-	public String getType() {
-
-		return null;
-	}
-
 }

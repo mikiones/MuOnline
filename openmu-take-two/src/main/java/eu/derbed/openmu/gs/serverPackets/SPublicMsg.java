@@ -29,9 +29,4 @@ public class SPublicMsg extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-		return "00 public msg";
-	}
-
 }

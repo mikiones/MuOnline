@@ -51,17 +51,6 @@ public class SCharacterListAnsfer extends ServerBasePacket {
 		return _bao.toByteArray();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see ServerBasePacket#getType()
-	 */
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	class CharSub extends ServerBasePacket {
 
 		private final MuCharacterBase _c;
@@ -86,12 +75,6 @@ public class SCharacterListAnsfer extends ServerBasePacket {
 			_bao.write((byte) _c.getClas());
 			writeB(_c.getWear().getBytes());
 			return _bao.toByteArray();
-		}
-
-		@Override
-		public String getType() {
-			// TODO Auto-generated method stub
-			return null;
 		}
 
 	}
@@ -120,12 +103,6 @@ public class SCharacterListAnsfer extends ServerBasePacket {
 			t[6] = (byte) ile_c; // how many haracters we have
 			t[1] = (byte) (7 + ((ile_c) * 28)); // Size of new package
 			return t;
-		}
-
-		@Override
-		public String getType() {
-			// TODO Auto-generated method stub
-			return null;
 		}
 
 	}

@@ -31,10 +31,6 @@ public class CItemPickUpRequest extends ClientBasePacket {
 		System.out.println("Request to pickup item id:" + id);
 	}
 
-	@Override
-	public String getType() {
-		return "pck up item";
-	}
 	// 0x22 opcode
 
 }

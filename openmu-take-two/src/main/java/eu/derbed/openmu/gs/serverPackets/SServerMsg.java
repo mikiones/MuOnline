@@ -97,9 +97,4 @@ public class SServerMsg extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-		return "Server Msg";
-	}
-
 }

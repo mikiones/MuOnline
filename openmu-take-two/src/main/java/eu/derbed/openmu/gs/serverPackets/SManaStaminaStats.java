@@ -31,12 +31,6 @@ public class SManaStaminaStats extends ServerBasePacket {
 		return _bao.toByteArray();
 	}
 
-	@Override
-	public String getType() {
-
-		return null;
-	}
-
 	public void setMana(int maxMana) {
 		_maxMana = maxMana;
 

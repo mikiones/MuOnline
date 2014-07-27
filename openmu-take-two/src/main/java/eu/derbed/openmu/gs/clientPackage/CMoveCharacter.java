@@ -221,9 +221,4 @@ public class CMoveCharacter extends ClientBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-
-		return "Charater MOve ";
-	}
 }

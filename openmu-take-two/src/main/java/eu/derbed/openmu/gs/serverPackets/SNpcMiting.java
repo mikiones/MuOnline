@@ -49,10 +49,4 @@ public class SNpcMiting extends ServerBasePacket {
 		// 12 bits total
 	}
 
-	@Override
-	public String getType() {
-
-		return "13 SNpcMiting";
-	}
-
 }

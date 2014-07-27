@@ -21,9 +21,4 @@ public class CAddFrendRequest extends ClientBasePacket {
 		System.out.println("_name = " + _name);
 	}
 
-	@Override
-	public String getType() {
-		return "";
-	}
-
 }

@@ -27,10 +27,4 @@ public class SHello extends ServerBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-
-		return "SF101 witaj klijencie";
-	}
-
 }

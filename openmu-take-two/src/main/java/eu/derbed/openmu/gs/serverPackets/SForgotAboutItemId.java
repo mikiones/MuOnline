@@ -19,9 +19,4 @@ public class SForgotAboutItemId extends ServerBasePacket {
 		return b;
 	}
 
-	@Override
-	public String getType() {
-		return "";
-	}
-
 }

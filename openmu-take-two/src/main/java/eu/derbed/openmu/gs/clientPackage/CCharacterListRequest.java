@@ -23,9 +23,4 @@ public class CCharacterListRequest extends ClientBasePacket {
 		}
 	}
 
-	@Override
-	public String getType() {
-		return null;
-	}
-
 }

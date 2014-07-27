@@ -38,9 +38,4 @@ public class SGateEnterAnsfer extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-		return "enter ingate ansfer";
-	}
-
 }

@@ -30,12 +30,6 @@ public class SLiveStats extends ServerBasePacket {
 		return _bao.toByteArray();
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public void setLive(int maxLive) {
 		_maxLive = maxLive;
 

@@ -95,8 +95,4 @@ public class CNpcRunRequest extends ClientBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-		return "0x30 Run Npc request";
-	}
 }

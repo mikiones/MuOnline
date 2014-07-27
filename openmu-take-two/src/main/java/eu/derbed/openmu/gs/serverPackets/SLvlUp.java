@@ -46,9 +46,4 @@ public class SLvlUp extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-		return "";
-	}
-
 }

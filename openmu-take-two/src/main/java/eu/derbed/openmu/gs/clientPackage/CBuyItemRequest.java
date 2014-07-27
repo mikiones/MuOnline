@@ -19,9 +19,4 @@ public class CBuyItemRequest extends ClientBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-		return "";
-	}
-
 }

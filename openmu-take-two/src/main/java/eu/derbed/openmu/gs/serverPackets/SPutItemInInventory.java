@@ -27,9 +27,4 @@ public class SPutItemInInventory extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-		return "Request to create item in character inventory.";
-	}
-
 }

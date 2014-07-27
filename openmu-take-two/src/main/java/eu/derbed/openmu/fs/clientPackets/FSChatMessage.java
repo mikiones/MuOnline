@@ -28,9 +28,4 @@ public class FSChatMessage extends ClientBasePacket {
 				+ Integer.toHexString(size) + "]");
 	}
 
-	@Override
-	public String getType() {
-		return "Chat request 0x04 00";
-	}
-
 }

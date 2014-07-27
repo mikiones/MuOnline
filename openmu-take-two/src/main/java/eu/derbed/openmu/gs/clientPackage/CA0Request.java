@@ -97,10 +97,4 @@ public class CA0Request extends ClientBasePacket {
 		System.out.println("Skille postaci zaloadowane");
 
 	}
-
-	@Override
-	public String getType() {
-
-		return null;
-	}
 }

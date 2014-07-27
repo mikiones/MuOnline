@@ -76,12 +76,4 @@ public class CPasVeryfcation extends ClientBasePacket {
 		}));
 	}
 
-	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.clientPackage.ClientBasePacket#getType()
-	 */
-	@Override
-	public String getType() {
-		return "f101 authPack";
-	}
-
 }

@@ -26,10 +26,4 @@ public class CChangeDirectoryOrStatus extends ClientBasePacket {
 				+ " and status: " + _status);
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

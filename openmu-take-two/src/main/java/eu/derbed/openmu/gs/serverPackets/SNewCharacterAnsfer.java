@@ -41,10 +41,4 @@ public class SNewCharacterAnsfer extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-
-		return null;
-	}
-
 }

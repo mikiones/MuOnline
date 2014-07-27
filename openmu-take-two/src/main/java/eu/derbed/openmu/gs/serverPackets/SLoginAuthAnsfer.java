@@ -2,7 +2,7 @@ package eu.derbed.openmu.gs.serverPackets;
 
 import java.io.IOException;
 
-public class SLoginAuthAnsfer extends ServerBasePacketNoType {
+public class SLoginAuthAnsfer extends ServerBasePacket {
 
 	private byte f = 0; // flafa
 

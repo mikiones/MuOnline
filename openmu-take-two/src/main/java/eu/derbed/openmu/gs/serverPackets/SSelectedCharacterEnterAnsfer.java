@@ -135,10 +135,4 @@ public class SSelectedCharacterEnterAnsfer extends ServerBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

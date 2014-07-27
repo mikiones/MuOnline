@@ -48,9 +48,4 @@ public class HelloFriendServer extends ClientBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-		return " Hello to FS";
-	}
-
 }

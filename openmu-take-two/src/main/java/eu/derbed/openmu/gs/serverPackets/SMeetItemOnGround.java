@@ -47,9 +47,4 @@ public class SMeetItemOnGround extends ServerBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-		return "meet itemson ground";
-	}
-
 }

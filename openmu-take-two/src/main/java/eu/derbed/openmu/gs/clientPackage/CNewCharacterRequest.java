@@ -38,10 +38,4 @@ public class CNewCharacterRequest extends ClientBasePacket {
 				new SNewCharacterAnsfer(newCB, success, position));
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

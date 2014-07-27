@@ -52,10 +52,4 @@ public class CAddLvlPointsRequest extends ClientBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-
-		return null;
-	}
-
 }

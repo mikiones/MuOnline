@@ -20,9 +20,4 @@ public class ServerListRequest extends ClientBasePacket {
 		System.out.println("CS:> Request server list");
 	}
 
-	@Override
-	public String getType() {
-		return "";
-	}
-
 }

@@ -23,10 +23,4 @@ public class CSelectedCharacterEnterRequest extends ClientBasePacket {
 		return readS(2, 10);
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

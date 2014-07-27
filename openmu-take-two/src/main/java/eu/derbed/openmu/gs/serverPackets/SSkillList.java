@@ -22,10 +22,4 @@ public class SSkillList extends ServerBasePacket {
 		return t;
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

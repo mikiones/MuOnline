@@ -24,9 +24,4 @@ public class SDeleteChar extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-		return null;
-	}
-
 }

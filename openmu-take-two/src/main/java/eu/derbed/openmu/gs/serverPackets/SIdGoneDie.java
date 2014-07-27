@@ -18,10 +18,4 @@ public class SIdGoneDie extends ServerBasePacket {
 		return _bao.toByteArray();
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return "IdGomeDie";
-	}
-
 }

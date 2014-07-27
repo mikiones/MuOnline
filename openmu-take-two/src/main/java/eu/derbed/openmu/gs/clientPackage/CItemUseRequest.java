@@ -24,8 +24,4 @@ public class CItemUseRequest extends ClientBasePacket {
 
 	}
 
-	@Override
-	public String getType() {
-		return "";
-	}
 }

@@ -30,9 +30,4 @@ public class SMoveItemResult extends ServerBasePacket {
 		return getBytes();
 	}
 
-	@Override
-	public String getType() {
-		return "Move item from one inventory to another.";
-	}
-
 }

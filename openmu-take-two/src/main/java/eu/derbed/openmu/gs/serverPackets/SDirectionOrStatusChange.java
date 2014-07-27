@@ -25,10 +25,4 @@ public class SDirectionOrStatusChange extends ServerBasePacket {
 		return _bao.toByteArray();
 	}
 
-	@Override
-	public String getType() {
-
-		return "Action result";
-	}
-
 }
