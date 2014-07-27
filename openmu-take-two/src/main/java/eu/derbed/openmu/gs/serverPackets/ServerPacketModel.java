@@ -12,13 +12,4 @@ import com.notbed.muonline.util.ByteContainer;
  * @author Miki
  */
 public interface ServerPacketModel extends ByteContainer {
-
-	/**
-	 *
-	 * @return zwraca zarartosc w byte[]
-	 */
-	byte[] getBytes();
-
-	int getLength();
-
 }

@@ -147,24 +147,9 @@ public abstract class ServerBasePacket implements ServerPacketModel {
 	}
 
 	/**
-	 * return lengh of byte array
-	 *
 	 * @return
 	 */
-	@Override
-	public int getLength() {
-		return _bao.size();
-	}
-
-	/**
-	 *
-	 * @return zwraca zarartosc w byte[]
-	 */
-	@Override
-	/**
-	 * return byte array
-	 */
-	public byte[] getBytes() {
+	protected final byte[] getBytes() {
 		return _bao.toByteArray();
 	}
 
