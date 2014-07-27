@@ -59,6 +59,7 @@ public final class MuSocket extends SocketWrapper {
 	 * @throws IOException
 	 */
 	public void sendPacket(final ByteContainer byteContainer) throws IOException{
+		log.debug("Sending {}", byteContainer.getClass().getSimpleName());
 		sendPacket(byteContainer.getContent());
 	}
 
