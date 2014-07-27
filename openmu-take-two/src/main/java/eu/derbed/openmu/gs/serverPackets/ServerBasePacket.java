@@ -3,12 +3,14 @@ package eu.derbed.openmu.gs.serverPackets;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
+import com.notbed.muonline.util.ByteContainer;
+
 /**
  * This class ...
  *
  * @version $Revision: 1.3 $ $Date: 2004/07/04 11:14:53 $
  */
-public abstract class ServerBasePacket implements ServerPacketModel {
+public abstract class ServerBasePacket implements ByteContainer {
 
 	protected ByteArrayOutputStream _bao;
 
