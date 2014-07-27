@@ -31,8 +31,7 @@ public final class DataDecrypter {
 	}
 
 	public int readC() {
-		final int result = data[_off++] & 0xff;
-		return result;
+		return data[_off++] & 0xff;
 	}
 
 	public int readH() {
@@ -84,15 +83,11 @@ public final class DataDecrypter {
 		return result;
 	}
 
-	public byte[] toByteArray() {
-		return data;
-	}
-
 	/**
 	 * @param start
 	 * @param len
 	 */
-	public void dec3bit(int start, int len) {
+	public void dec3bit(final int start, final int len) {
 		UClientPackage.Dec3bit(data, start, len);
 	}
 
