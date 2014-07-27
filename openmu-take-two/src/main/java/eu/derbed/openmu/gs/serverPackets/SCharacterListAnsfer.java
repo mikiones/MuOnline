@@ -2,6 +2,9 @@ package eu.derbed.openmu.gs.serverPackets;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.derbed.openmu.gs.muObjects.MuCharacterBase;
 import eu.derbed.openmu.gs.muObjects.MuCharacterList;
 
@@ -14,6 +17,8 @@ import eu.derbed.openmu.gs.muObjects.MuCharacterList;
  *
  */
 public class SCharacterListAnsfer extends ServerBasePacket {
+
+	private static final Logger log = LoggerFactory.getLogger(SCharacterListAnsfer.class);
 
 	/**
 	 *

@@ -8,6 +8,8 @@ import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_PassOK;
 import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.UString;
 
@@ -18,7 +20,12 @@ import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;
 import eu.derbed.util.ICallback;
 
+/**
+ *
+ */
 public class CPasVeryfcation extends ClientBasePacket {
+
+	private final static Logger log = LoggerFactory.getLogger(CPasVeryfcation.class);
 
 	/**
 	 * @param decrypt
