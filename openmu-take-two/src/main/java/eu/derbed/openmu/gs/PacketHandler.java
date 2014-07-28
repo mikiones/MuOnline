@@ -63,7 +63,7 @@ public class PacketHandler {
 			new CPublicMsg(data, _client);
 			break;
 		case 0x18:
-			new CChangeDirectoryOrStatus(data, _client);
+			new CChangeDirectoryOrStatus().process(data, _client);
 			break;
 		case 0x1C:
 			new CEnterInGateRequest(data, _client);
