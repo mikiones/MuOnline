@@ -144,19 +144,19 @@ public class ClientThread extends Thread {
 	 * @Isuase 1 read wear set bits as well
 	 * @isuase 2 move to database section
 	 * @throws java.io.IOException
-	 * @throws AbortException
 	 */
-	public void readCharacterList() throws IOException, AbortException {
+	public void readCharacterList() throws IOException {
 
 		final int ilosc_p = user.getCh_c();
 		final int id = user.getId();
 
 		try (Connection con = MuDataBaseFactory.getInstance().getConnection()) {
-
+//			close
 			final PreparedStatement statement = con
 					.prepareStatement("select * from " + MuCharactersDb.CH_TAB
 							+ " where " + MuCharactersDb.US_ID + " =?");
 			statement.setInt(1, id);
+//			close
 			final ResultSet rset = statement.executeQuery();
 			for (int i = 0; i < ilosc_p; i++) {
 				if (rset.next()) {
@@ -167,9 +167,9 @@ public class ClientThread extends Thread {
 							new MuCharacterWear()));
 				}
 			}
-			con.close();
+			con.close(); // properly close
 		} catch (final SQLException e) {
-			throw new AbortException("Failed to load character list", e);
+			throw new IOException("Failed to load character list", e);
 		}
 		ChList.noNeedRead();
 	}

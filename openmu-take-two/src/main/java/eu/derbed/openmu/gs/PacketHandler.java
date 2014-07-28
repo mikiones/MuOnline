@@ -118,7 +118,7 @@ public class PacketHandler {
 		case 0xf3: {
 			switch (id2) {
 			case 0x00: {
-				new CCharacterListRequest(data, _client);
+				new CCharacterListRequest().process(data, _client);
 			}
 				break;
 			case 0x01: {

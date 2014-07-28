@@ -1,24 +1,28 @@
 package eu.derbed.openmu.gs.clientPackage;
 
+import java.io.IOException;
+
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuCharacterList;
 import eu.derbed.openmu.gs.serverPackets.SCharacterListAnsfer;
 
 
-public class CCharacterListRequest extends ClientBasePacket {
+public class CCharacterListRequest implements ClientPackage {
 
-	public CCharacterListRequest(byte[] decrypt, ClientThread cl)
-			throws Throwable {
-		super(decrypt);
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#process(byte[], eu.derbed.openmu.gs.ClientThread)
+	 */
+	@Override
+	public void process(byte[] data, ClientThread client) throws IOException {
 		MuCharacterList result = new MuCharacterList();
 		try {
-			MuCharacterList chList = cl.getChList();
+			MuCharacterList chList = client.getChList();
 			if (chList.needRead()) {
-				cl.readCharacterList();
+				client.readCharacterList();
 			}
 			result = chList;
 		} finally {
-		cl.getConnection().sendPacket(
+			client.getConnection().sendPacket(
 				new SCharacterListAnsfer(result));
 		}
 	}
