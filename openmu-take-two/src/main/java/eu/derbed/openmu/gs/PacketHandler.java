@@ -93,7 +93,7 @@ public class PacketHandler {
 			new CAttackOnId(data, _client);
 			break;
 		case 0xc1:
-			new CAddFrendRequest(data, _client);
+			new CAddFrendRequest().process(data, _client);
 			break;
 		case 0xf1: {
 			ClientPackage cp = null;
