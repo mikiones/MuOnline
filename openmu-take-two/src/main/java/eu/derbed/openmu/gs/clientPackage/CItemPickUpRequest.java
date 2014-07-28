@@ -5,20 +5,30 @@
 
 package eu.derbed.openmu.gs.clientPackage;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.notbed.muonline.util.DataDecrypter;
+
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 
 /**
- * 
  * @author Miki i Linka
  */
-public class CItemPickUpRequest extends ClientBasePacket {
-	int id; // id wich item to get
+public class CItemPickUpRequest extends SimpleClientPackage {
 
-	public CItemPickUpRequest(byte[] decrypt, ClientThread _client) {
-		super(decrypt);
+	private static final Logger log = LoggerFactory.getLogger(CItemPickUpRequest.class);
+
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
+	 */
+	@Override
+	protected void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException {
 		// decrypt[1]=0x00 :// to fix with |0x80
-		id = decrypt[2];
+		final int id = dataDecrypter.data[2];
 		// MuObject[] obj =
 		// _client.getActiveChar().getCurrentWorldRegion().getVisibleObjects();
 		// for (int i=0; i<obj.length; i++)
@@ -28,7 +38,7 @@ public class CItemPickUpRequest extends ClientBasePacket {
 		// break;
 		// }
 		MuWorld.getInstance().removeObject(id);
-		System.out.println("Request to pickup item id:" + id);
+		log.debug("Request to pickup item id {}", id);
 	}
 
 	// 0x22 opcode

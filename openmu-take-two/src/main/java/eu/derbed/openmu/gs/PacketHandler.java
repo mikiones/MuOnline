@@ -69,7 +69,7 @@ public class PacketHandler {
 			new CEnterInGateRequest().process(data, _client);
 			break;
 		case 0x22:
-			new CItemPickUpRequest(data, _client);
+			new CItemPickUpRequest().process(data, _client);
 			break;
 		case 0x23:
 			new CItemDropFromInwentoryRequest(data, _client);
