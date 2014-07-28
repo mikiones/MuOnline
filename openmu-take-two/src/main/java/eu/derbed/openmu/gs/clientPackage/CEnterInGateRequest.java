@@ -5,8 +5,8 @@
 package eu.derbed.openmu.gs.clientPackage;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import com.notbed.muonline.util.DataDecrypter;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuGate;
@@ -18,13 +18,14 @@ import eu.derbed.openmu.gs.serverPackets.SGateEnterAnsfer;
  * 
  * @author Miki i Linka, MarcelGh
  */
-public class CEnterInGateRequest extends ClientBasePacket {
+public class CEnterInGateRequest extends SimpleClientPackage {
 
-	private final int GateNb;// number of gate in gate.bmp
-
-	public CEnterInGateRequest(byte[] decrypt, ClientThread _client) {
-		super(decrypt);
-		GateNb = decrypt[1] & 0xff;
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
+	 */
+	@Override
+	protected void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException {
+		final int GateNb = dataDecrypter.data[1] & 0xff; // number of gate in gate.bmp
 		// System.out.println("Request to enter in gate id:" + GateNb);
 		// fMap = decrypt[2] & 0xff;
 		// x = decrypt[3] & 0xff;
@@ -38,18 +39,9 @@ public class CEnterInGateRequest extends ClientBasePacket {
 		// valid
 		final MuGate gate = MuWorld.getInstance().getGate(GateNb);
 		final MuGate gateTo = MuWorld.getInstance().getGate(gate.getToGate());
-		try {
-			_client.getConnection().sendPacket(
-					new SGateEnterAnsfer(gateTo, _client.getActiveChar()
-							.getDirection()));
-		} catch (final IOException ex) {
-			Logger.getLogger(CEnterInGateRequest.class.getName()).log(
-					Level.SEVERE, null, ex);
-		} catch (final Throwable ex) {
-			Logger.getLogger(CEnterInGateRequest.class.getName()).log(
-					Level.SEVERE, null, ex);
-		}
-
+		client.getConnection().sendPacket(
+				new SGateEnterAnsfer(gateTo, client.getActiveChar()
+						.getDirection()));
 	}
 
 }

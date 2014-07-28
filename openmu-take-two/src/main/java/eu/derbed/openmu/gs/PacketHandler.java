@@ -66,7 +66,7 @@ public class PacketHandler {
 			new CChangeDirectoryOrStatus().process(data, _client);
 			break;
 		case 0x1C:
-			new CEnterInGateRequest(data, _client);
+			new CEnterInGateRequest().process(data, _client);
 			break;
 		case 0x22:
 			new CItemPickUpRequest(data, _client);
