@@ -72,10 +72,10 @@ public class PacketHandler {
 			new CItemPickUpRequest().process(data, _client);
 			break;
 		case 0x23:
-			new CItemDropFromInwentoryRequest(data, _client);
+			new CItemDropFromInwentoryRequest().process(data, _client);
 			break;
 		case 0x24:
-			new CMoveItemRequest(data, _client);
+			new CMoveItemRequest().process(data, _client);
 			break;
 		case 0x26:
 			new CItemUseRequest(data, _client);

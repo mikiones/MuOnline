@@ -4,27 +4,33 @@
  */
 package eu.derbed.openmu.gs.clientPackage;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.notbed.muonline.util.DataDecrypter;
+
 import eu.derbed.openmu.gs.ClientThread;
 
 /**
- * 
  * @author Miki
  */
-public class CItemDropFromInwentoryRequest extends ClientBasePacket {
+public class CItemDropFromInwentoryRequest extends SimpleClientPackage {
 
-	private int _xPos = 0;
-	private int _yPos = 0;
-	private int _slotFrom = 0;
+	private static final Logger log = LoggerFactory.getLogger(CItemDropFromInwentoryRequest.class);
 
-	public CItemDropFromInwentoryRequest(byte[] decrypt, ClientThread _client) {
-		super(decrypt);
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
+	 */
+	@Override
+	protected void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException {
 		// readC();
-		_xPos = decrypt[1] & 0xff;
-		_yPos = decrypt[2] & 0xff;
-		_slotFrom = decrypt[3] & 0xff;
+		final int _xPos = dataDecrypter.data[1] & 0xff;
+		final int _yPos = dataDecrypter.data[2] & 0xff;
+		final int _slotFrom = dataDecrypter.data[3] & 0xff;
 		// 23 ad 7f 0c
-		System.out.println("Drop Request from slot[" + _slotFrom + "] to wsp ["
-				+ _xPos + "," + _yPos + "]");
+		log.debug("Drop Request from slot[{}] to wsp [ {}, {} ]", _slotFrom, _xPos, _yPos);
 	}// 26 0c 00
-	// 23 ad 7f 0c
+		// 23 ad 7f 0c
 }
