@@ -130,7 +130,7 @@ public class PacketHandler {
 			}
 				break;
 			case 0x03: {
-				new CSelectedCharacterEnterRequest(data, _client);
+				new CSelectedCharacterEnterRequest().process(data, _client);
 			}
 				break;
 			case 0x06: {

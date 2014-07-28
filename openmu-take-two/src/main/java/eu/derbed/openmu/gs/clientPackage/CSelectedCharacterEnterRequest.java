@@ -1,25 +1,35 @@
 package eu.derbed.openmu.gs.clientPackage;
 
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.notbed.muonline.util.DataDecrypter;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 
 
-public class CSelectedCharacterEnterRequest extends ClientBasePacket {
+public class CSelectedCharacterEnterRequest extends SimpleClientPackage {
 
-	public CSelectedCharacterEnterRequest(byte[] decrypt, ClientThread c)
-			throws IOException {
-		super(decrypt);
-		final String selected = SelectedName();
-		final MuPcInstance cha = c.loadCharFromDisk(selected);
+	protected final static Logger log = LoggerFactory.getLogger(CSelectedCharacterEnterRequest.class);
 
-		System.out.println("Selected Character: " + selected);
-		c.setActiveChar(cha);
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
+	 */
+	@Override
+	protected void process(DataDecrypter dataDecrypter, ClientThread client) {
+		final String selected = SelectedName(dataDecrypter);
+		final MuPcInstance cha = client.loadCharFromDisk(selected);
 
+		log.debug("Selected Character: {}", selected);
+		client.setActiveChar(cha);
 	}
 
-	public String SelectedName() {
+	/**
+	 * @param decrypter
+	 * @return
+	 */
+	private static String SelectedName(DataDecrypter decrypter) {
 		return decrypter.readS(2, 10);
 	}
 
