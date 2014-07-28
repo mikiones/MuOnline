@@ -78,7 +78,7 @@ public class PacketHandler {
 			new CMoveItemRequest().process(data, _client);
 			break;
 		case 0x26:
-			new CItemUseRequest(data, _client);
+			new CItemUseRequest().process(data, _client);
 			break;
 		case 0x30:
 			new CNpcRunRequest(data, _client);
