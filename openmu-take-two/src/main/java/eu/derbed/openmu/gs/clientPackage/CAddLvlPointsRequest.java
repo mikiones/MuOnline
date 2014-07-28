@@ -1,15 +1,15 @@
 package eu.derbed.openmu.gs.clientPackage;
 
+import com.notbed.muonline.util.DataDecrypter;
+
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.serverPackets.SAddLvlPointsAnsfer;
 
-public class CAddLvlPointsRequest extends ClientBasePacket {
+public class CAddLvlPointsRequest extends SimpleClientPackage {
 
-	byte _whichPointToAdd;
-
-	public CAddLvlPointsRequest(byte[] decrypt, ClientThread client) {
-		super(decrypt);
-		_whichPointToAdd = decrypt[2];
+	@Override
+	protected void process(DataDecrypter dataDecrypter, ClientThread client) {
+		byte _whichPointToAdd = dataDecrypter.data[2];
 		final boolean czy = client.getActiveChar().getLp() > 0;
 		if (czy) {
 			switch (_whichPointToAdd) {
@@ -41,7 +41,7 @@ public class CAddLvlPointsRequest extends ClientBasePacket {
 			default:
 				break;
 			}
-			// TODO dodac odczytywanie noewj many i staminy
+			// TODO add reading the new mana and stamina
 			client.getActiveChar().sendPacket(
 					new SAddLvlPointsAnsfer(_whichPointToAdd, true, 15, 15));
 

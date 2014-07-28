@@ -134,7 +134,7 @@ public class PacketHandler {
 			}
 				break;
 			case 0x06: {
-				new CAddLvlPointsRequest(data, _client);
+				new CAddLvlPointsRequest().process(data, _client);
 			}
 				break;
 			case 0x30: {
