@@ -5,18 +5,27 @@
 
 package eu.derbed.openmu.gs.clientPackage;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.derbed.openmu.gs.ClientThread;
 
 /**
  * 
  * @author Miki i Linka
  */
-public class CBuyItemRequest extends ClientBasePacket {
+public class CBuyItemRequest implements ClientPackage {
 
-	public CBuyItemRequest(byte[] decrypt, ClientThread _client) {
-		super(decrypt);
-		System.out.println("Rquest to buy item fromslot:" + decrypt[1]);
+	private static final Logger log = LoggerFactory.getLogger(CBuyItemRequest.class);
 
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#process(byte[], eu.derbed.openmu.gs.ClientThread)
+	 */
+	@Override
+	public void process(byte[] data, ClientThread client) throws IOException {
+		log.debug("Rquest to buy item from slot {}", data[1]);
 	}
 
 }

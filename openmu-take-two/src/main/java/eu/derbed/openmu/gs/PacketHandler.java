@@ -84,13 +84,13 @@ public class PacketHandler {
 			new CNpcRunRequest(data, _client);
 			break;
 		case 0x32:
-			new CBuyItemRequest(data, _client);
+			new CBuyItemRequest().process(data, _client);
 			break;
 		case 0xd7:
 			new CMoveCharacter(data, _client);
 			break;
 		case 0xd9:
-			new CAttackOnId(data, _client);
+			new CAttackOnId().process(data, _client);
 			break;
 		case 0xc1:
 			new CAddFrendRequest().process(data, _client);
