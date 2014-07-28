@@ -28,6 +28,7 @@ import eu.derbed.openmu.gs.clientPackage.CPasVeryfcation;
 import eu.derbed.openmu.gs.clientPackage.CPublicMsg;
 import eu.derbed.openmu.gs.clientPackage.CSelectCharacterOrExitRequest;
 import eu.derbed.openmu.gs.clientPackage.CSelectedCharacterEnterRequest;
+import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 
 
 /**
@@ -95,16 +96,22 @@ public class PacketHandler {
 			new CAddFrendRequest(data, _client);
 			break;
 		case 0xf1: {
-			switch (id2) {
-			case 0x01:
-				new CPasVeryfcation().process(data, _client);
-				break;
-			case 0x02:
-				new CSelectCharacterOrExitRequest(data, _client);
-				break;
-			default:
-
-				break;
+			ClientPackage cp = null;
+				switch (id2) {
+					case 0x01:
+						cp = new CPasVeryfcation();
+						break;
+					case 0x02:
+						cp = new CSelectCharacterOrExitRequest();
+						break;
+					default:
+						break;
+				}
+			if (null == cp) {
+				log.debug("Unknown implementation " + Integer.toHexString(id));
+			} else {
+				log.debug("Received {}", cp.getClass().getSimpleName());
+				cp.process(data, _client);
 			}
 		}
 			break;
