@@ -122,7 +122,7 @@ public class PacketHandler {
 			}
 				break;
 			case 0x01: {
-				new CNewCharacterRequest(data, _client);
+				new CNewCharacterRequest().process(data, _client);
 			}
 				break;
 			case 0x02: {
