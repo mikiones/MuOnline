@@ -1,5 +1,7 @@
 package eu.derbed.openmu.gs.clientPackage;
 
+import java.io.IOException;
+
 import eu.derbed.openmu.gs.ClientThread;
 
 /**
@@ -12,6 +14,6 @@ public interface ClientPackage {
 	 * @param data
 	 * @param client
 	 */
-	void process(byte[] data, ClientThread client);
+	void process(byte[] data, ClientThread client) throws IOException;
 
 }

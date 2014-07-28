@@ -126,7 +126,7 @@ public class PacketHandler {
 			}
 				break;
 			case 0x02: {
-				new CDeleteChar(data, _client);
+				new CDeleteChar().process(data, _client);
 			}
 				break;
 			case 0x03: {

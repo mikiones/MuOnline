@@ -1,5 +1,7 @@
 package eu.derbed.openmu.gs.clientPackage;
 
+import java.io.IOException;
+
 import com.notbed.muonline.util.DataDecrypter;
 
 import eu.derbed.openmu.gs.ClientThread;
@@ -14,7 +16,7 @@ public abstract class SimpleClientPackage implements ClientPackage {
 	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#process(byte[], eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	public final void process(byte[] data, ClientThread client) {
+	public final void process(byte[] data, ClientThread client) throws IOException{
 		process(new DataDecrypter(data), client);
 	}
 
@@ -22,6 +24,6 @@ public abstract class SimpleClientPackage implements ClientPackage {
 	 * @param dataDecrypter
 	 * @param client
 	 */
-	protected abstract void process(DataDecrypter dataDecrypter, ClientThread client);
+	protected abstract void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException;
 
 }
