@@ -57,7 +57,7 @@ public class PacketHandler {
 		logTransfer(log, data, "[C->S]");
 		switch (id) {
 		case 0xa0:
-			new CA0Request(data, _client);
+			new CA0Request().process(data, _client);
 			break;
 		case 0x00:
 			new CPublicMsg(data, _client);
