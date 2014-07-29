@@ -37,7 +37,9 @@ import eu.derbed.openmu.gs.clientPackage.ClientPackage;
  * @version $Revision: 1.18 $ $Date: 2004/10/26 20:43:03 $
  */
 public class PacketHandler {
-	private Logger log = LoggerFactory.getLogger(getClass());
+
+	private static final Logger log = LoggerFactory.getLogger(PacketHandler.class);
+
 	// .getLogger(PacketHandler.class.getName());
 	private final ClientThread _client;
 
@@ -87,7 +89,7 @@ public class PacketHandler {
 			new CBuyItemRequest().process(data, _client);
 			break;
 		case 0xd7:
-			new CMoveCharacter(data, _client);
+			new CMoveCharacter().process(data, _client);
 			break;
 		case 0xd9:
 			new CAttackOnId().process(data, _client);
@@ -142,7 +144,7 @@ public class PacketHandler {
 			}
 				break;
 			default: {
-				System.out.println("Unknown Packet or no implament: "
+				log.debug("Unknown Packet or no implament: "
 						+ Integer.toHexString(id));
 
 			}
@@ -152,7 +154,7 @@ public class PacketHandler {
 			break;
 		// 24 00 0c e3 00 00 80 00 00 14
 		default:
-			System.out.println("Unknown Packet or no implament: "
+			log.debug("Unknown Packet or no implament: "
 					+ Integer.toHexString(id));
 
 		}

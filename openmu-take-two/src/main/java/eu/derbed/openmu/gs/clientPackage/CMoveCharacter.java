@@ -1,5 +1,10 @@
 package eu.derbed.openmu.gs.clientPackage;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuObject;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
@@ -64,17 +69,20 @@ import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 
  */
 
-public class CMoveCharacter extends ClientBasePacket {
+public class CMoveCharacter implements ClientPackage {
+
+	private static final Logger log = LoggerFactory.getLogger(CMoveCharacter.class);
+
 	private static final short stepDirections[] = { -1, -1, 0, -1, 1, -1, 1, 0,
 			1, 1, 0, 1, -1, 1, -1, 0 };
 
-	private short _nX;
-	private short _nY;
-
-	public CMoveCharacter(byte[] data, ClientThread _client) {
-		super(data);
-		_nX = (short) (data[1] & 0xff);
-		_nY = (short) (data[2] & 0xff);
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#process(byte[], eu.derbed.openmu.gs.ClientThread)
+	 */
+	@Override
+	public void process(byte[] data, ClientThread client) throws IOException {
+		short _nX = (short) (data[1] & 0xff);
+		short _nY = (short) (data[2] & 0xff);
 		// System.out.println("Postac sie porusza na wsp :["+_nX+","+_nY+"].");
 		final short stepCount = (short) (data[3] & 0x0F);
 		if (stepCount <= 15) {
@@ -95,13 +103,12 @@ public class CMoveCharacter extends ClientBasePacket {
 				_nX += stepDirections[stepDirection * 2];
 				_nY += stepDirections[stepDirection * 2 + 1];
 			}
-			final MuPcInstance pc = _client.getActiveChar();
+			final MuPcInstance pc = client.getActiveChar();
 			pc.setDirection((byte) headingDirection);
 			pc.moveTo(_nX, _nY);
 		} else {
 			// disconnect because of hack attempt?
-			System.out.println("Incorrect number of steps from "
-					+ _client.getActiveChar().getName());
+			log.debug("Incorrect number of steps from {}", client.getActiveChar().getName());
 		}
 
 		// if (pc.oldgetKnownObjects() != null) {
@@ -203,7 +210,7 @@ public class CMoveCharacter extends ClientBasePacket {
 	 *            objec
 	 * @return tru when in range
 	 */
-	public boolean checkInRage(MuPcInstance pc, MuObject t) {
+	public static boolean checkInRage(MuPcInstance pc, MuObject t) {
 		final int chx = t.getX() / 5;
 		final int chy = t.getY() / 5;
 		final int myx = pc.getX() / 5;
