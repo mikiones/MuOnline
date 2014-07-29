@@ -1,13 +1,18 @@
 package eu.derbed.openmu.gs.clientPackage;
 
+import java.io.IOException;
+
 import eu.derbed.openmu.gs.ClientThread;
 
-public class CClientSettingsSaveRequest extends ClientBasePacket {
+public class CClientSettingsSaveRequest implements ClientPackage {
 
-	public CClientSettingsSaveRequest(byte[] data, ClientThread _client) {
-		super(data);
-		_client.getClientSettings().fromByteArray(data, 2);
-		_client.storeClientSettingsInDb();
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#process(byte[], eu.derbed.openmu.gs.ClientThread)
+	 */
+	@Override
+	public void process(byte[] data, ClientThread client) throws IOException {
+		client.getClientSettings().fromByteArray(data, 2);
+		client.storeClientSettingsInDb();
 	}
 
 }

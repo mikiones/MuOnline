@@ -138,7 +138,7 @@ public class PacketHandler {
 			}
 				break;
 			case 0x30: {
-				new CClientSettingsSaveRequest(data, _client);
+				new CClientSettingsSaveRequest().process(data, _client);
 			}
 				break;
 			default: {
