@@ -20,13 +20,12 @@ import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemPickUpRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
+import eu.derbed.openmu.gs.clientPackage.CLoginRequest;
 import eu.derbed.openmu.gs.clientPackage.CMoveCharacter;
 import eu.derbed.openmu.gs.clientPackage.CMoveItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CNewCharacterRequest;
 import eu.derbed.openmu.gs.clientPackage.CNpcRunRequest;
-import eu.derbed.openmu.gs.clientPackage.CPasVeryfcation;
 import eu.derbed.openmu.gs.clientPackage.CPublicMsg;
-import eu.derbed.openmu.gs.clientPackage.CSelectCharacterOrExitRequest;
 import eu.derbed.openmu.gs.clientPackage.CSelectedCharacterEnterRequest;
 import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 
@@ -47,7 +46,7 @@ public class PacketHandler {
 		_client = client;
 	}
 
-	public void handlePacket(byte[] data) throws IOException, Throwable {
+	public void handlePacket(byte[] data) throws IOException {
 		// int pos = 0;
 		// System.out.println("lenght="+data.length);
 		final int id = data[0] & 0xff;
@@ -57,90 +56,75 @@ public class PacketHandler {
 			id2 = data[1] & 0xff;
 		}
 		logTransfer(log, data, "[C->S]");
+		ClientPackage cp = null;
 		switch (id) {
 		case 0xa0:
-			new CA0Request().process(data, _client);
+			cp = new CA0Request();
 			break;
 		case 0x00:
-			new CPublicMsg().process(data, _client);
+			cp = new CPublicMsg();
 			break;
 		case 0x18:
-			new CChangeDirectoryOrStatus().process(data, _client);
+			cp = new CChangeDirectoryOrStatus();
 			break;
 		case 0x1C:
-			new CEnterInGateRequest().process(data, _client);
+			cp = new CEnterInGateRequest();
 			break;
 		case 0x22:
-			new CItemPickUpRequest().process(data, _client);
+			cp = new CItemPickUpRequest();
 			break;
 		case 0x23:
-			new CItemDropFromInwentoryRequest().process(data, _client);
+			cp = new CItemDropFromInwentoryRequest();
 			break;
 		case 0x24:
-			new CMoveItemRequest().process(data, _client);
+			cp = new CMoveItemRequest();
 			break;
 		case 0x26:
-			new CItemUseRequest().process(data, _client);
+			cp = new CItemUseRequest();
 			break;
 		case 0x30:
-			new CNpcRunRequest(data, _client);
+			cp = new CNpcRunRequest();
 			break;
 		case 0x32:
-			new CBuyItemRequest().process(data, _client);
+			cp = new CBuyItemRequest();
 			break;
 		case 0xd7:
-			new CMoveCharacter().process(data, _client);
+			cp = new CMoveCharacter();
 			break;
 		case 0xd9:
-			new CAttackOnId().process(data, _client);
+			cp = new CAttackOnId();
 			break;
 		case 0xc1:
-			new CAddFrendRequest().process(data, _client);
+			cp = new CAddFrendRequest();
 			break;
 		case 0xf1: {
-			ClientPackage cp = null;
-				switch (id2) {
-					case 0x01:
-						cp = new CPasVeryfcation();
-						break;
-					case 0x02:
-						cp = new CSelectCharacterOrExitRequest();
-						break;
-					default:
-						break;
-				}
-			if (null == cp) {
-				log.debug("Unknown implementation " + Integer.toHexString(id));
-			} else {
-				log.debug("Received {}", cp.getClass().getSimpleName());
-				cp.process(data, _client);
-			}
+			cp = new CLoginRequest().resolve(data, _client);
 		}
 			break;
 		case 0xf3: {
 			switch (id2) {
 			case 0x00: {
-				new CCharacterListRequest().process(data, _client);
+				cp = new CCharacterListRequest();
 			}
 				break;
 			case 0x01: {
-				new CNewCharacterRequest().process(data, _client);
+				cp = new CNewCharacterRequest();
 			}
 				break;
 			case 0x02: {
-				new CDeleteChar().process(data, _client);
+				cp = new CDeleteChar();
 			}
 				break;
 			case 0x03: {
-				new CSelectedCharacterEnterRequest().process(data, _client);
+				cp = new CSelectedCharacterEnterRequest();
 			}
 				break;
 			case 0x06: {
-				new CAddLvlPointsRequest().process(data, _client);
+				cp = new CAddLvlPointsRequest();
 			}
 				break;
 			case 0x30: {
-				new CClientSettingsSaveRequest().process(data, _client);
+				cp = new CClientSettingsSaveRequest();
 			}
 				break;
 			default: {
@@ -158,7 +142,12 @@ public class PacketHandler {
 					+ Integer.toHexString(id));
 
 		}
-
+		if (null == cp) {
+			log.debug("Unknown implementation " + Integer.toHexString(id));
+		} else {
+			log.debug("Received {}", cp.getClass().getSimpleName());
+			cp.process(data, _client);
+		}
 	}
 
 }

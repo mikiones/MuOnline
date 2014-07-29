@@ -4,8 +4,6 @@ import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_AccInvalt;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_InvaltPassword;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_PassOK;
 
-import java.io.IOException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
