@@ -62,7 +62,7 @@ public class PacketHandler {
 			new CA0Request().process(data, _client);
 			break;
 		case 0x00:
-			new CPublicMsg(data, _client);
+			new CPublicMsg().process(data, _client);
 			break;
 		case 0x18:
 			new CChangeDirectoryOrStatus().process(data, _client);
