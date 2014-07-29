@@ -14,6 +14,7 @@ import eu.derbed.openmu.gs.clientPackage.CAttackOnId;
 import eu.derbed.openmu.gs.clientPackage.CBuyItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CChangeDirectoryOrStatus;
 import eu.derbed.openmu.gs.clientPackage.CCharacterListRequest;
+import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CClientSettingsSaveRequest;
 import eu.derbed.openmu.gs.clientPackage.CDeleteChar;
 import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
@@ -50,11 +51,6 @@ public class PacketHandler {
 		// int pos = 0;
 		// System.out.println("lenght="+data.length);
 		final int id = data[0] & 0xff;
-		int id2 = 0;
-
-		if (data.length > 1) {
-			id2 = data[1] & 0xff;
-		}
 		logTransfer(log, data, "[C->S]");
 		ClientPackage cp = null;
 		switch (id) {
@@ -97,44 +93,11 @@ public class PacketHandler {
 		case 0xc1:
 			cp = new CAddFrendRequest();
 			break;
-		case 0xf1: {
+		case 0xf1:
 			cp = new CLoginRequest().resolve(data, _client);
-		}
 			break;
-		case 0xf3: {
-			switch (id2) {
-			case 0x00: {
-				cp = new CCharacterListRequest();
-			}
-				break;
-			case 0x01: {
-				cp = new CNewCharacterRequest();
-			}
-				break;
-			case 0x02: {
-				cp = new CDeleteChar();
-			}
-				break;
-			case 0x03: {
-				cp = new CSelectedCharacterEnterRequest();
-			}
-				break;
-			case 0x06: {
-				cp = new CAddLvlPointsRequest();
-			}
-				break;
-			case 0x30: {
-				cp = new CClientSettingsSaveRequest();
-			}
-				break;
-			default: {
-				log.debug("Unknown Packet or no implament: "
-						+ Integer.toHexString(id));
-
-			}
-				break;
-			}
-		}
+		case 0xf3:
+			cp = new CCharacterManipulator().resolve(data, _client);
 			break;
 		// 24 00 0c e3 00 00 80 00 00 14
 		default:
