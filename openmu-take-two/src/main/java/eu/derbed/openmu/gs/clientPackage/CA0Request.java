@@ -102,4 +102,12 @@ public class CA0Request implements ClientPackage {
 	private static void setSkillList() {
 		log.debug("Skills loaded (no they are not!)");
 	}
+
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
+	 */
+	@Override
+	public int getIdentifier() {
+		return 0xa0;
+	}
 }

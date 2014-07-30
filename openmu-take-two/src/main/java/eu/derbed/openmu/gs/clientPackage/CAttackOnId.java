@@ -40,4 +40,12 @@ public class CAttackOnId implements ClientPackage {
 			// }
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
+	 */
+	@Override
+	public int getIdentifier() {
+		return 0xd9;
+	}
 }

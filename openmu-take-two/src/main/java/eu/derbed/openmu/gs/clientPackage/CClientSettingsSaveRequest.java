@@ -15,4 +15,13 @@ public class CClientSettingsSaveRequest implements ClientPackage {
 		client.storeClientSettingsInDb();
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
+	 */
+	@Override
+	public int getIdentifier() {
+//		0xf3 MUST be parent
+		return 0x30;
+	}
+
 }

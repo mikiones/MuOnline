@@ -27,4 +27,12 @@ public class CCharacterListRequest implements ClientPackage {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
+	 */
+	@Override
+	public int getIdentifier() {
+//		0xf3 MUST be parent
+		return 0x00;
+	}
 }

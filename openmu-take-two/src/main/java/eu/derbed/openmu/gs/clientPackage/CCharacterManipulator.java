@@ -52,4 +52,13 @@ public class CCharacterManipulator implements ClientPackage {
 		log.debug("Package identified: {}", cp.getClass().getSimpleName());
 		cp.process(data, client);
 	}
+
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
+	 */
+	@Override
+	public int getIdentifier() {
+		return 0xf3;
+	}
+
 }

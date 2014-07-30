@@ -28,4 +28,11 @@ public class CBuyItemRequest implements ClientPackage {
 		log.debug("Rquest to buy item from slot {}", data[1]);
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
+	 */
+	@Override
+	public int getIdentifier() {
+		return 0x32;
+	}
 }
