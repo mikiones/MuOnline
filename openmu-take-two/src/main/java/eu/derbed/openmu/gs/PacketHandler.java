@@ -9,14 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CAddFrendRequest;
-import eu.derbed.openmu.gs.clientPackage.CAddLvlPointsRequest;
 import eu.derbed.openmu.gs.clientPackage.CAttackOnId;
 import eu.derbed.openmu.gs.clientPackage.CBuyItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CChangeDirectoryOrStatus;
-import eu.derbed.openmu.gs.clientPackage.CCharacterListRequest;
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
-import eu.derbed.openmu.gs.clientPackage.CClientSettingsSaveRequest;
-import eu.derbed.openmu.gs.clientPackage.CDeleteChar;
 import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemPickUpRequest;
@@ -24,10 +20,8 @@ import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
 import eu.derbed.openmu.gs.clientPackage.CLoginRequest;
 import eu.derbed.openmu.gs.clientPackage.CMoveCharacter;
 import eu.derbed.openmu.gs.clientPackage.CMoveItemRequest;
-import eu.derbed.openmu.gs.clientPackage.CNewCharacterRequest;
 import eu.derbed.openmu.gs.clientPackage.CNpcRunRequest;
 import eu.derbed.openmu.gs.clientPackage.CPublicMsg;
-import eu.derbed.openmu.gs.clientPackage.CSelectedCharacterEnterRequest;
 import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 
 
