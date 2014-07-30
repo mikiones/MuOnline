@@ -26,13 +26,4 @@ public abstract class SimpleClientPackage implements ClientPackage {
 	 */
 	protected abstract void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException;
 
-	/**
-	 * @param data
-	 * @param client
-	 * @throws IOException
-	 */
-	protected void process(Data data, ClientThread client) throws IOException {
-
-	}
-
 }
