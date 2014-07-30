@@ -3,6 +3,8 @@
  */
 package com.notbed.muonline.util;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 
 /**
@@ -123,18 +125,29 @@ public final class UPacket {
 
 	/**
 	 * @param data
+	 * @return
+	 */
+	public static String fillHex(final int data) {
+		return fillHex(data, 2);
+	}
+
+	/**
+	 * @param data
 	 * @param digits
 	 * @return
 	 */
-	private static String fillHex(final int data, final int digits) {
-		String number = Integer.toHexString(data);
-
-		for (int i = number.length(); i < digits; i++) {
-			number = "0" + number;
+	public static String fillHex(final int data, final int digits) {
+		final String number = Integer.toHexString(data).toUpperCase(Locale.ENGLISH);
+		final int len = number.length();
+		if (len >= digits) {
+			return number;
 		}
-
-		return number;
+		final StringBuilder sb = new StringBuilder();
+		for (int i = len; i < digits; i++) {
+			sb.append('0');
+		}
+		sb.append(number);
+		return sb.toString();
 	}
-
 
 }

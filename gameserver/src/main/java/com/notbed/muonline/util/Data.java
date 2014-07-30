@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package com.notbed.muonline.util;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -25,6 +25,13 @@ public class Data {
 	 */
 	private byte next() {
 		return data.next();
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean hasNext() {
+		return data.hasNext();
 	}
 
 	/**
