@@ -94,10 +94,10 @@ public class PacketHandler {
 			cp = new CAddFrendRequest();
 			break;
 		case 0xf1:
-			cp = new CLoginRequest().resolve(data, _client);
+			cp = new CLoginRequest();
 			break;
 		case 0xf3:
-			cp = new CCharacterManipulator().resolve(data, _client);
+			cp = new CCharacterManipulator();
 			break;
 		// 24 00 0c e3 00 00 80 00 00 14
 		default:
