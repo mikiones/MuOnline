@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.PacketResolver;
 import com.notbed.muonline.util.RegistrationException;
 
 import eu.derbed.openmu.gs.client.ClientPacketResolver;
@@ -36,17 +37,23 @@ public class PacketHandler {
 
 	private static final Logger log = LoggerFactory.getLogger(PacketHandler.class);
 
-	private ClientPacketResolver resolver;
-	// .getLogger(PacketHandler.class.getName());
+	private final PacketResolver<ClientPackage> resolver;
+
 	private final ClientThread _client;
 
+	/**
+	 * @param client
+	 */
 	public PacketHandler(ClientThread client) {
 		_client = client;
+		PacketResolver<ClientPackage> resolver;
 		try {
 			resolver = new ClientPacketResolver();
 		} catch (RegistrationException e) {
 			log.error("REMOVE THIS, PROPERLY HANDLE!!", e);
+			resolver = null;
 		}
+		this.resolver = resolver;
 	}
 
 	public void handlePacket(byte[] data) throws IOException {
