@@ -5,8 +5,8 @@
 
 package eu.derbed.openmu.fs.clientPackets;
 
+import eu.derbed.openmu.fs.ClientBasePacket;
 import eu.derbed.openmu.fs.FriendTheard;
-import eu.derbed.openmu.gs.clientPackage.ClientBasePacket;
 
 
 /**

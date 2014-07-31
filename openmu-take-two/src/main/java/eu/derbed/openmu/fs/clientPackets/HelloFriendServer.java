@@ -9,10 +9,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+import eu.derbed.openmu.fs.ClientBasePacket;
 import eu.derbed.openmu.fs.FriendTheard;
 import eu.derbed.openmu.fs.serverPackets.FriendHelloAnsfer;
-import eu.derbed.openmu.gs.clientPackage.ClientBasePacket;
 
 /**
  * 
