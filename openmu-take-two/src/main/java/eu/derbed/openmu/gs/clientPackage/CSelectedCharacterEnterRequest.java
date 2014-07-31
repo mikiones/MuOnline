@@ -4,11 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 
-
+@Header ({0xf3, 0x03})
 public class CSelectedCharacterEnterRequest extends SimpleClientPackage {
 
 	protected final static Logger log = LoggerFactory.getLogger(CSelectedCharacterEnterRequest.class);

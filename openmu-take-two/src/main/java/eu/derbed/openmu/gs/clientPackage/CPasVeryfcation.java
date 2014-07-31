@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 import com.notbed.muonline.util.UString;
 
 import eu.derbed.openmu.database.LoadUser;
@@ -21,6 +22,7 @@ import eu.derbed.util.ICallback;
 /**
  *
  */
+@Header ({0xf1, 0x01})
 public class CPasVeryfcation extends SimpleClientPackage {
 
 	private final static Logger log = LoggerFactory.getLogger(CPasVeryfcation.class);

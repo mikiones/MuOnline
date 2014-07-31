@@ -1,10 +1,12 @@
 package eu.derbed.openmu.gs.clientPackage;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.serverPackets.SAddLvlPointsAnsfer;
 
+@Header ({0xf3, 0x06})
 public class CAddLvlPointsRequest extends SimpleClientPackage {
 
 	@Override

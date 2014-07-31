@@ -6,6 +6,7 @@
 package eu.derbed.openmu.gs.clientPackage;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 
@@ -13,6 +14,7 @@ import eu.derbed.openmu.gs.ClientThread;
  * 
  * @author Miki i Linka
  */
+@Header (0xc1)
 public class CAddFrendRequest extends SimpleClientPackage {
 
 	/* (non-Javadoc)
