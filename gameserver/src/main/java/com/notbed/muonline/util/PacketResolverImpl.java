@@ -4,15 +4,12 @@
 package com.notbed.muonline.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,9 +82,6 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 	 */
 	@SuppressWarnings ("unchecked")
 	private Collection<T> getPackets(final Object object) {
-		if (null == object) {
-			throw new NullPointerException();
-		}
 		if (packetClasz.isAssignableFrom(object.getClass())) {
 			return Collections.singleton((T) object);
 		}
