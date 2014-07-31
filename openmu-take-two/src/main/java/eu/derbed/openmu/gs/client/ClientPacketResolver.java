@@ -23,6 +23,7 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 		resolver.register(new CSelectCharacterOrExitRequest());
 		resolver.register(new CPublicMsg());
 		resolver.register(new CChangeDirectoryOrStatus());
+		resolver.register(new CMoveCharacter());
 	}
 
 	/* (non-Javadoc)

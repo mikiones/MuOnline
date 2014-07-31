@@ -20,7 +20,6 @@ import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemPickUpRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
-import eu.derbed.openmu.gs.clientPackage.CMoveCharacter;
 import eu.derbed.openmu.gs.clientPackage.CMoveItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CNpcRunRequest;
 import eu.derbed.openmu.gs.clientPackage.ClientPackage;
@@ -84,9 +83,6 @@ public class PacketHandler {
 			break;
 		case 0x32:
 			cp = new CBuyItemRequest();
-			break;
-		case 0xd7:
-			cp = new CMoveCharacter();
 			break;
 		case 0xd9:
 			cp = new CAttackOnId();

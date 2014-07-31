@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuObject;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 
@@ -72,7 +73,7 @@ import eu.derbed.openmu.gs.muObjects.MuPcInstance;
  */
 
 @Header (0xd7)
-public class CMoveCharacter implements ClientPackage {
+class CMoveCharacter implements ClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CMoveCharacter.class);
 
