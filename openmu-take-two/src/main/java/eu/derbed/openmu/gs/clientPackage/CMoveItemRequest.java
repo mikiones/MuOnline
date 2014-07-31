@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuInventory;
@@ -15,6 +16,7 @@ import eu.derbed.openmu.gs.serverPackets.SMoveItemResult;
 /**
  * @author Marcel, Miki
  */
+@Header (0x24)
 public class CMoveItemRequest extends SimpleClientPackage {
 //	example 24 00 01 c0 00 16 00 00 00 0c
 

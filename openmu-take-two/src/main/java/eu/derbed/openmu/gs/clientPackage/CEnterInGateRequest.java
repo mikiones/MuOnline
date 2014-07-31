@@ -7,6 +7,7 @@ package eu.derbed.openmu.gs.clientPackage;
 import java.io.IOException;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuGate;
@@ -18,6 +19,7 @@ import eu.derbed.openmu.gs.serverPackets.SGateEnterAnsfer;
  * 
  * @author Miki i Linka, MarcelGh
  */
+@Header (0x1C)
 public class CEnterInGateRequest extends SimpleClientPackage {
 
 	/* (non-Javadoc)

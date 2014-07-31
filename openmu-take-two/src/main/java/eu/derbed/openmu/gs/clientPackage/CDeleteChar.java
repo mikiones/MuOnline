@@ -3,6 +3,7 @@ package eu.derbed.openmu.gs.clientPackage;
 import java.io.IOException;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
@@ -14,6 +15,7 @@ import eu.derbed.openmu.gs.serverPackets.SDeleteChar;
  * @author Marcel , Mikione
  * 
  */
+@Header ({0xf3, 0x02})
 public class CDeleteChar extends SimpleClientPackage {
 
 	/* (non-Javadoc)

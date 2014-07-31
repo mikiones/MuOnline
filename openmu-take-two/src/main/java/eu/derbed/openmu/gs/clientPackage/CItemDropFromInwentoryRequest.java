@@ -10,12 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 
 /**
  * @author Miki
  */
+@Header (0x23)
 public class CItemDropFromInwentoryRequest extends SimpleClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CItemDropFromInwentoryRequest.class);

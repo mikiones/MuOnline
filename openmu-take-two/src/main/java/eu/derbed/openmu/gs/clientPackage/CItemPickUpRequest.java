@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
@@ -18,6 +19,7 @@ import eu.derbed.openmu.gs.muObjects.MuWorld;
 /**
  * @author Miki i Linka
  */
+@Header (0x22)
 public class CItemPickUpRequest extends SimpleClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CItemPickUpRequest.class);
