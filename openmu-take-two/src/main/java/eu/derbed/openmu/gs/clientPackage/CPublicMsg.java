@@ -6,11 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.DataDecrypter;
+import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.CommandHandler;
 import eu.derbed.openmu.gs.serverPackets.SPublicMsg;
 
+@Header (0x00)
 public class CPublicMsg extends SimpleClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CPublicMsg.class);
