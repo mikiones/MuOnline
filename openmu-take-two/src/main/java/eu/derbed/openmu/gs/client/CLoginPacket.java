@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_AccInvalt;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_InvaltPassword;
@@ -14,6 +14,7 @@ import com.notbed.muonline.util.UString;
 
 import eu.derbed.openmu.database.LoadUser;
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;
@@ -23,9 +24,9 @@ import eu.derbed.util.ICallback;
  *
  */
 @Header ({0xf1, 0x01})
-public class CPasVeryfcation extends SimpleClientPackage {
+class CLoginPacket extends SimpleClientPackage {
 
-	private final static Logger log = LoggerFactory.getLogger(CPasVeryfcation.class);
+	private final static Logger log = LoggerFactory.getLogger(CLoginPacket.class);
 
 	/* (non-Javadoc)
 	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(eu.derbed.openmu.gs.clientPackage.DataDecrypter, eu.derbed.openmu.gs.ClientThread)

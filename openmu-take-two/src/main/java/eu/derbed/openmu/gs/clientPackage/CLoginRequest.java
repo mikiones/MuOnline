@@ -29,9 +29,6 @@ public class CLoginRequest implements ClientPackage {
 		}
 		ClientPackage cp = null;
 		switch (id2) {
-			case 0x01:
-				cp = new CPasVeryfcation();
-				break;
 			case 0x02:
 				cp = new CSelectCharacterOrExitRequest();
 				break;
