@@ -2,11 +2,13 @@ package eu.derbed.openmu.gs.clientPackage;
 
 import java.io.IOException;
 
+import com.notbed.muonline.util.Header;
+
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuCharacterList;
 import eu.derbed.openmu.gs.serverPackets.SCharacterListAnsfer;
 
-
+@Header ({0xf3, 0x00})
 public class CCharacterListRequest implements ClientPackage {
 
 	/* (non-Javadoc)
@@ -27,12 +29,4 @@ public class CCharacterListRequest implements ClientPackage {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
-	 */
-	@Override
-	public int getIdentifier() {
-//		0xf3 MUST be parent
-		return 0x00;
-	}
 }

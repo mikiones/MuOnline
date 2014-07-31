@@ -3,6 +3,8 @@ package eu.derbed.openmu.gs.clientPackage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.Header;
+
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 import eu.derbed.openmu.gs.serverPackets.SInwentoryList;
@@ -10,7 +12,7 @@ import eu.derbed.openmu.gs.serverPackets.SLiveStats;
 import eu.derbed.openmu.gs.serverPackets.SManaStaminaStats;
 import eu.derbed.openmu.gs.serverPackets.SSelectedCharacterEnterAnsfer;
 
-
+@Header (0xa0)
 public class CA0Request implements ClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CA0Request.class);
@@ -103,11 +105,4 @@ public class CA0Request implements ClientPackage {
 		log.debug("Skills loaded (no they are not!)");
 	}
 
-	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
-	 */
-	@Override
-	public int getIdentifier() {
-		return 0xa0;
-	}
 }

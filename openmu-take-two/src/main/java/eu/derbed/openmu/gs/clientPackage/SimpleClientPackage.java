@@ -26,11 +26,4 @@ public abstract class SimpleClientPackage implements ClientPackage {
 	 */
 	protected abstract void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException;
 
-	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
-	 */
-	@Override
-	public int getIdentifier() {
-		return Integer.MAX_VALUE; // dummy
-	}
 }

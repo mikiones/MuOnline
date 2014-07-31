@@ -5,12 +5,15 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.Header;
+
 import eu.derbed.openmu.gs.ClientThread;
 
 /**
  * @author Alexandru Bledea
  * @since Jul 29, 2014
  */
+@Header (0xf1)
 public class CLoginRequest implements ClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CLoginRequest.class);
@@ -39,14 +42,6 @@ public class CLoginRequest implements ClientPackage {
 		}
 		log.debug("Package identified: {}", cp.getClass().getSimpleName());
 		cp.process(data, client);
-	}
-
-	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
-	 */
-	@Override
-	public int getIdentifier() {
-		return 0xf1;
 	}
 
 }

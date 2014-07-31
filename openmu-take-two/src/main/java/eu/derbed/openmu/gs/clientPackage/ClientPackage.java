@@ -16,8 +16,4 @@ public interface ClientPackage {
 	 */
 	void process(byte[] data, ClientThread client) throws IOException;
 
-	/**
-	 * @return
-	 */
-	int getIdentifier();
 }

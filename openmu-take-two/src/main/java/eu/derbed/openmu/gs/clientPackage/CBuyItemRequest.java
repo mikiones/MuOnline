@@ -10,12 +10,15 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.Header;
+
 import eu.derbed.openmu.gs.ClientThread;
 
 /**
  * 
  * @author Miki i Linka
  */
+@Header (0x32)
 public class CBuyItemRequest implements ClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CBuyItemRequest.class);
@@ -28,11 +31,4 @@ public class CBuyItemRequest implements ClientPackage {
 		log.debug("Rquest to buy item from slot {}", data[1]);
 	}
 
-	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
-	 */
-	@Override
-	public int getIdentifier() {
-		return 0x32;
-	}
 }

@@ -2,8 +2,11 @@ package eu.derbed.openmu.gs.clientPackage;
 
 import java.io.IOException;
 
+import com.notbed.muonline.util.Header;
+
 import eu.derbed.openmu.gs.ClientThread;
 
+@Header ({0xf3, 0x30})
 public class CClientSettingsSaveRequest implements ClientPackage {
 
 	/* (non-Javadoc)
@@ -13,15 +16,6 @@ public class CClientSettingsSaveRequest implements ClientPackage {
 	public void process(byte[] data, ClientThread client) throws IOException {
 		client.getClientSettings().fromByteArray(data, 2);
 		client.storeClientSettingsInDb();
-	}
-
-	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#getIdentifier()
-	 */
-	@Override
-	public int getIdentifier() {
-//		0xf3 MUST be parent
-		return 0x30;
 	}
 
 }
