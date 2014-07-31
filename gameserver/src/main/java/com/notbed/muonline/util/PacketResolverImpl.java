@@ -130,9 +130,9 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 				final Object object = map.get(current);
 				if (packetClasz.isAssignableFrom(object.getClass())) {
 					return (T) object; // found it!
-				} else if (object instanceof Map<?, ?>) {
-					map = (Map<Integer, Object>) object; // identified part of
-															// header
+				}
+				if (object instanceof Map<?, ?>) {
+					map = (Map<Integer, Object>) object; // identified part of // header
 				} else {
 					break; // impossible... maybe?
 				}

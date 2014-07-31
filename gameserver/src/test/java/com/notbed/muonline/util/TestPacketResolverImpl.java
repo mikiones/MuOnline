@@ -2,6 +2,7 @@ package com.notbed.muonline.util;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,6 +40,38 @@ public class TestPacketResolverImpl {
 	}
 
 	/**
+	 * @throws RegistrationConflictException
+	 */
+	@Test
+	public void testFailRegistration2() throws RegistrationException {
+		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
+
+		final Packet reason = new Packet_0x5B();
+		final Packet failure = new Packet_0x5B_0x59_0x0();
+
+		resolver.register(reason);
+		try {
+			resolver.register(failure);
+			Assert.fail("Should have thrown an error!");
+		} catch (final RegistrationConflictException ex) {
+			Assert.assertSame(failure, ex.getFailedObject());
+			assertSameElements(Collections.<Object> singleton(reason), ex.getReasons());
+		}
+	}
+
+	/**
+	 * @throws RegistrationConflictException
+	 */
+	@Test (expected = RegistrationException.class)
+	public void testFailNoHeader() throws RegistrationException {
+		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
+
+		final Packet reason = new Packet();
+		resolver.register(reason);
+		Assert.fail("Should have thrown an error!");
+	}
+
+	/**
 	 * @param expected
 	 * @param actual
 	 */
@@ -48,4 +81,5 @@ public class TestPacketResolverImpl {
 		Assert.assertEquals(c1a.size(), c2a.size());
 		Assert.assertEquals(c1a, c2a);
 	}
+
 }
