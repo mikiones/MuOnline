@@ -15,7 +15,6 @@ import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CAddFrendRequest;
 import eu.derbed.openmu.gs.clientPackage.CAttackOnId;
 import eu.derbed.openmu.gs.clientPackage.CBuyItemRequest;
-import eu.derbed.openmu.gs.clientPackage.CChangeDirectoryOrStatus;
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
@@ -65,9 +64,6 @@ public class PacketHandler {
 		case 0xa0:
 			cp = new CA0Request();
 			break;
-		case 0x18:
-			cp = new CChangeDirectoryOrStatus();
-			break;
 		case 0x1C:
 			cp = new CEnterInGateRequest();
 			break;
@@ -103,11 +99,6 @@ public class PacketHandler {
 			break;
 		// 24 00 0c e3 00 00 80 00 00 14
 		default:
-			log.debug("Unknown Packet or no implament: "
-					+ Integer.toHexString(id));
-
-		}
-		if (null == cp) {
 //			try the new method!
 			cp = resolver.resolvePacket(data);
 		}
