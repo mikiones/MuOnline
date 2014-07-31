@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,9 +7,10 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 
 @Header ({0xf1, 0x02})
-public class CSelectCharacterOrExitRequest extends SimpleClientPackage {
+class CSelectCharacterOrExitRequest extends SimpleClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CSelectCharacterOrExitRequest.class);
 

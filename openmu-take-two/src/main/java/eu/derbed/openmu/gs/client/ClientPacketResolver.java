@@ -19,6 +19,7 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 	 */
 	public ClientPacketResolver() throws RegistrationException {
 		resolver.register(new CLoginPacket());
+		resolver.register(new CSelectCharacterOrExitRequest());
 	}
 
 	/* (non-Javadoc)

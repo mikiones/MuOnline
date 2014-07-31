@@ -7,6 +7,9 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.RegistrationException;
+
+import eu.derbed.openmu.gs.client.ClientPacketResolver;
 import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CAddFrendRequest;
 import eu.derbed.openmu.gs.clientPackage.CAttackOnId;
@@ -17,7 +20,6 @@ import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemPickUpRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
-import eu.derbed.openmu.gs.clientPackage.CLoginRequest;
 import eu.derbed.openmu.gs.clientPackage.CMoveCharacter;
 import eu.derbed.openmu.gs.clientPackage.CMoveItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CNpcRunRequest;
@@ -34,11 +36,17 @@ public class PacketHandler {
 
 	private static final Logger log = LoggerFactory.getLogger(PacketHandler.class);
 
+	private ClientPacketResolver resolver;
 	// .getLogger(PacketHandler.class.getName());
 	private final ClientThread _client;
 
 	public PacketHandler(ClientThread client) {
 		_client = client;
+		try {
+			resolver = new ClientPacketResolver();
+		} catch (RegistrationException e) {
+			log.error("REMOVE THIS, PROPERLY HANDLE!!", e);
+		}
 	}
 
 	public void handlePacket(byte[] data) throws IOException {
@@ -87,9 +95,6 @@ public class PacketHandler {
 		case 0xc1:
 			cp = new CAddFrendRequest();
 			break;
-		case 0xf1:
-			cp = new CLoginRequest();
-			break;
 		case 0xf3:
 			cp = new CCharacterManipulator();
 			break;
@@ -98,6 +103,10 @@ public class PacketHandler {
 			log.debug("Unknown Packet or no implament: "
 					+ Integer.toHexString(id));
 
+		}
+		if (null == cp) {
+//			try the new method!
+			cp = resolver.resolvePacket(data);
 		}
 		if (null == cp) {
 			log.debug("Unknown implementation " + Integer.toHexString(id));
