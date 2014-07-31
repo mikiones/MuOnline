@@ -24,7 +24,6 @@ import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
 import eu.derbed.openmu.gs.clientPackage.CMoveCharacter;
 import eu.derbed.openmu.gs.clientPackage.CMoveItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CNpcRunRequest;
-import eu.derbed.openmu.gs.clientPackage.CPublicMsg;
 import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 
 
@@ -65,9 +64,6 @@ public class PacketHandler {
 		switch (id) {
 		case 0xa0:
 			cp = new CA0Request();
-			break;
-		case 0x00:
-			cp = new CPublicMsg();
 			break;
 		case 0x18:
 			cp = new CChangeDirectoryOrStatus();

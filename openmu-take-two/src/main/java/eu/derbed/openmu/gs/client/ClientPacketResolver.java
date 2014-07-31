@@ -18,8 +18,10 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 	 * @throws RegistrationException
 	 */
 	public ClientPacketResolver() throws RegistrationException {
+//		maybe load this from xml?
 		resolver.register(new CLoginPacket());
 		resolver.register(new CSelectCharacterOrExitRequest());
+		resolver.register(new CPublicMsg());
 	}
 
 	/* (non-Javadoc)
