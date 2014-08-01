@@ -1,5 +1,7 @@
 package com.notbed.muonline.util;
 
+import static org.junit.Assert.*;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +15,7 @@ import org.junit.Test;
  * @author Alexandru Bledea
  * @since Jul 31, 2014
  */
-@SuppressWarnings("static-method")
+@SuppressWarnings ("static-method")
 public class TestPacketResolverImpl {
 
 	/**
@@ -33,9 +35,9 @@ public class TestPacketResolverImpl {
 		resolver.register(problem2);
 		try {
 			resolver.register(failure);
-			Assert.fail("Should have thrown an error!");
+			fail("Should have thrown an error!");
 		} catch (final RegistrationConflictException ex) {
-			Assert.assertSame(failure, ex.getFailedObject());
+			assertSame(failure, ex.getFailedObject());
 			assertSameElements(reason, ex.getReasons());
 		}
 	}
@@ -53,9 +55,9 @@ public class TestPacketResolverImpl {
 		resolver.register(reason);
 		try {
 			resolver.register(failure);
-			Assert.fail("Should have thrown an error!");
+			fail("Should have thrown an error!");
 		} catch (final RegistrationConflictException ex) {
-			Assert.assertSame(failure, ex.getFailedObject());
+			assertSame(failure, ex.getFailedObject());
 			assertSameElements(Collections.<Object> singleton(reason), ex.getReasons());
 		}
 	}
@@ -69,7 +71,7 @@ public class TestPacketResolverImpl {
 
 		final Packet reason = new Packet();
 		resolver.register(reason);
-		Assert.fail("Should have thrown an error!");
+		fail("Should have thrown an error!");
 	}
 
 	/**
@@ -81,7 +83,7 @@ public class TestPacketResolverImpl {
 
 		final Packet reason = new PacketEmptyHeader();
 		resolver.register(reason);
-		Assert.fail("Should have thrown an error!");
+		fail("Should have thrown an error!");
 	}
 
 	/**
@@ -99,11 +101,21 @@ public class TestPacketResolverImpl {
 		resolver.register(p5b590);
 		resolver.register(pc);
 
-		final Packet nothing = resolver.resolvePacket(new byte[] {0x0, 0x5});
-		Assert.assertNull(nothing);
+		final Packet nothing = resolver.resolvePacket(new byte[]{0x0, 0x5});
+		assertNull(nothing);
 
-		final Packet packet = resolver.resolvePacket(new byte[] {0x5B, 0x60, 0x55});
-		Assert.assertSame(p5b60, packet);
+		final Packet packet = resolver.resolvePacket(new byte[]{0x5B, 0x60, 0x55});
+		assertSame(p5b60, packet);
+	}
+
+	@Test
+	public void testName() throws Exception {
+//		failed here
+//		[Thread-40] DEBUG PacketHandler - [C->S] 0000: A9 01 00 08                                        ....
+		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
+		resolver.register(new Packet_0x00());
+		final Packet nothing = resolver.resolvePacket(new byte[]{(byte) 0xA9, 0x01, 0x00, 0x08});
+		assertNull(nothing);
 	}
 
 	/**
