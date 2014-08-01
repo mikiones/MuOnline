@@ -22,12 +22,32 @@ public class TestPacketResolverImpl {
 	 * @throws RegistrationConflictException
 	 */
 	@Test
+	public void testFailRegistrationConflict3() throws RegistrationException {
+		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
+
+		final Packet problem1 = new Packet_0x5B_0x59_0x0();
+		resolver.register(problem1);
+
+		final Packet failure = new Packet_0x5B();
+		try {
+			resolver.register(failure);
+			fail("Should have thrown an error!");
+		} catch (final RegistrationConflictException ex) {
+			assertSame(failure, ex.getFailedObject());
+			assertSameElements(Collections.singleton(problem1), ex.getReasons());
+		}
+	}
+
+	/**
+	 * @throws RegistrationConflictException
+	 */
+	@Test
 	public void testFailRegistrationConflict2() throws RegistrationException {
 		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
 
 		final Packet problem1 = new Packet_0x5B_0x59_0x0();
 		final Packet problem2 = new Packet_0x5B_0x60();
-		final Collection<Object> reason = Arrays.<Object> asList(problem1, problem2);
+		final Collection<Packet> reason = Arrays.asList(problem1, problem2);
 
 		final Packet failure = new Packet_0x5B();
 
@@ -122,9 +142,9 @@ public class TestPacketResolverImpl {
 	 * @param expected
 	 * @param actual
 	 */
-	private static <E> void assertSameElements(final Collection<E> expected, final Collection<E> actual) {
-		final Set<E> c1a = new HashSet<>(expected);
-		final Set<E> c2a = new HashSet<>(actual);
+	private static void assertSameElements(final Collection<?> expected, final Collection<?> actual) {
+		final Set<Object> c1a = new HashSet<>(expected);
+		final Set<Object> c2a = new HashSet<>(actual);
 		Assert.assertEquals(c1a.size(), c2a.size());
 		Assert.assertEquals(c1a, c2a);
 	}

@@ -23,11 +23,16 @@ final class HeaderUtil {
 	 * @return
 	 */
 	static String getName(final Object object) {
+		if (null == object) {
+			return "null"; // bad, hopefully never happens
+		}
+		if (object instanceof Collection<?>) {
+			return getNameFromCollection((Collection<?>) object);
+		}
 		if (object instanceof Map<?, ?>) {
 			return getName(((Map<?, ?>) object).values());
 		}
-		final Class<? extends Object> class1 = object.getClass();
-		return class1.getSimpleName() + getHeaderFormatted(getHeader(class1));
+		return getNameWithHeader(object);
 	}
 
 	/**
@@ -35,9 +40,6 @@ final class HeaderUtil {
 	 * @return
 	 */
 	private static String getHeaderFormatted(final int[] header) {
-		if (0 == header.length) {
-			return "";
-		}
 		final StringBuilder sb = new StringBuilder("[ ");
 		for (final int element : header) {
 			sb.append(UPacket.fillHex(element));
@@ -45,19 +47,24 @@ final class HeaderUtil {
 		}
 		return sb.append(']').toString();
 	}
-	
+
 	/**
-	 * @param header
+	 * @param object
 	 * @return
 	 */
-	static String getHeaderFormatted(final Object object) {
-		return getHeaderFormatted(getHeader(object.getClass()));
+	private static String getNameWithHeader(Object object) {
+		final Class<? extends Object> class1 = object.getClass();
+		final String className = class1.getSimpleName();
+		if (!hasHeader(class1)) {
+			return className;
+		}
+		return className + getHeaderFormatted(getHeader(class1));
 	}
 
 	/**
 	 * @param entries
 	 */
-	static String getName(final Collection<?> entries) {
+	private static String getNameFromCollection(final Collection<?> entries) {
 		final StringBuilder sb = new StringBuilder();
 		final boolean moreThanOneElement = entries.size() > 1;
 		if (moreThanOneElement) {
@@ -79,13 +86,18 @@ final class HeaderUtil {
 	}
 
 	/**
+	 * @param clasz
+	 * @return
+	 */
+	private static boolean hasHeader(final Class<?> clasz) {
+		return clasz.isAnnotationPresent(Header.class);
+	}
+
+	/**
 	 * @param object
 	 * @return
 	 */
 	static int[] getHeader(final Class<?> clasz) {
-		if (!clasz.isAnnotationPresent(Header.class)) {
-			return ArrayUtils.EMPTY_INT_ARRAY;
-		}
 		return clasz.getAnnotation(Header.class).value();
 	}
 
