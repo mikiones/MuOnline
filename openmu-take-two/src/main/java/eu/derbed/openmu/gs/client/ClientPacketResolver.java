@@ -25,6 +25,8 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 		resolver.register(new CChangeDirectoryOrStatus());
 		resolver.register(new CMoveCharacter());
 		resolver.register(new CAttackOnId());
+		resolver.register(new CBuyItemRequest());
+		resolver.register(new CItemPickUpRequest());
 	}
 
 	/* (non-Javadoc)

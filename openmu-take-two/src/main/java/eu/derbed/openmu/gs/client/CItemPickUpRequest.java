@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 
@@ -14,13 +14,14 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 
 /**
  * @author Miki i Linka
  */
 @Header (0x22)
-public class CItemPickUpRequest extends SimpleClientPackage {
+class CItemPickUpRequest extends SimpleClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CItemPickUpRequest.class);
 
@@ -28,7 +29,7 @@ public class CItemPickUpRequest extends SimpleClientPackage {
 	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	protected void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException {
+	protected void process(final DataDecrypter dataDecrypter, final ClientThread client) throws IOException {
 		// decrypt[1]=0x00 :// to fix with |0x80
 		final int id = dataDecrypter.data[2];
 		// MuObject[] obj =

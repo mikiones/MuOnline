@@ -11,11 +11,9 @@ import com.notbed.muonline.util.PacketResolver;
 
 import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CAddFrendRequest;
-import eu.derbed.openmu.gs.clientPackage.CBuyItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
-import eu.derbed.openmu.gs.clientPackage.CItemPickUpRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
 import eu.derbed.openmu.gs.clientPackage.CMoveItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CNpcRunRequest;
@@ -57,9 +55,6 @@ public class PacketHandler {
 			case 0x1C:
 				cp = new CEnterInGateRequest();
 				break;
-			case 0x22:
-				cp = new CItemPickUpRequest();
-				break;
 			case 0x23:
 				cp = new CItemDropFromInwentoryRequest();
 				break;
@@ -71,9 +66,6 @@ public class PacketHandler {
 				break;
 			case 0x30:
 				cp = new CNpcRunRequest();
-				break;
-			case 0x32:
-				cp = new CBuyItemRequest();
 				break;
 			case 0xc1:
 				cp = new CAddFrendRequest();
