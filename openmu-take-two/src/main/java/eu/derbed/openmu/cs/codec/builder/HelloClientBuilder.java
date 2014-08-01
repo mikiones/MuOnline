@@ -18,7 +18,6 @@
 package eu.derbed.openmu.cs.codec.builder;
 
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
 
 import eu.derbed.openmu.cs.codec.data.HelloClientData;
 import eu.derbed.openmu.netty.abstracts.AbstractMuPackageBuilder;

@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.MuSocket;
 
-import eu.derbed.openmu.exceptions.AbortException;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
 import eu.derbed.openmu.gs.database.MuCharactersDb;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;

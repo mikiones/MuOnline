@@ -2,11 +2,9 @@ package eu.derbed.openmu.cs;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Set;
 
 import eu.derbed.openmu.cs.codec.data.ServerEntry;
 import eu.derbed.openmu.gs.GameServerConfig;

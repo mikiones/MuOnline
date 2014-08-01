@@ -17,7 +17,6 @@
 package eu.derbed.openmu.netty.abstracts;
 
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
 
 /**
  * 

@@ -7,7 +7,6 @@ package eu.derbed.openmu.gs.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.derbed.openmu.gs.muObjects.MuObject;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 
 

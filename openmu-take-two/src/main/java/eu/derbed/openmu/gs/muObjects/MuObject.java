@@ -1,15 +1,6 @@
 package eu.derbed.openmu.gs.muObjects;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
 import eu.derbed.openmu.gs.IdFactory;
-
-
-import javolution.util.FastMap;
 
 /**
  * @author Miki, Marcel

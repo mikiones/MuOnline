@@ -6,13 +6,9 @@ package eu.derbed.openmu.gs.commands;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import eu.derbed.openmu.gs.ClientThread;
-import eu.derbed.openmu.gs.IdFactory;
 import eu.derbed.openmu.gs.muObjects.MuMonsterInstance;
-import eu.derbed.openmu.gs.muObjects.MuWorld;
 import eu.derbed.openmu.gs.templates.MuNpc;
 
 

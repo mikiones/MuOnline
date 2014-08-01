@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 /**
  * @author Alexandru Bledea
  * @since Jul 30, 2014
@@ -13,7 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 final class HeaderUtil {
 
 	/**
-	 * 
+	 *
 	 */
 	private HeaderUtil() {
 	}
@@ -52,7 +50,7 @@ final class HeaderUtil {
 	 * @param object
 	 * @return
 	 */
-	private static String getNameWithHeader(Object object) {
+	private static String getNameWithHeader(final Object object) {
 		final Class<? extends Object> class1 = object.getClass();
 		final String className = class1.getSimpleName();
 		if (!hasHeader(class1)) {

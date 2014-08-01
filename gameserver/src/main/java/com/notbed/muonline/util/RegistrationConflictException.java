@@ -4,7 +4,6 @@
 package com.notbed.muonline.util;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 
 /**

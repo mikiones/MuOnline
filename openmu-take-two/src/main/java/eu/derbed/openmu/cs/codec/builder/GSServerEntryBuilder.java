@@ -18,7 +18,6 @@
 package eu.derbed.openmu.cs.codec.builder;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
