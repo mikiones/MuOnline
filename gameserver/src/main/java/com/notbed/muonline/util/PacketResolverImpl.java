@@ -42,7 +42,6 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 		add(o);
 	}
 
-
 	/**
 	 * @param o
 	 * @throws RegistrationException
@@ -123,15 +122,16 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 			if (!map.containsKey(current)) {
 				break;
 			}
-				final Object object = map.get(current);
-				if (packetClasz.isAssignableFrom(object.getClass())) {
-					return (T) object; // found it!
-				}
-				if (object instanceof Map<?, ?>) {
-					map = (Map<Integer, Object>) object; // identified part of // header
-				} else {
-					break; // impossible... maybe?
-				}
+			final Object object = map.get(current);
+			if (packetClasz.isAssignableFrom(object.getClass())) {
+				return (T) object; // found it!
+			}
+			if (object instanceof Map<?, ?>) {
+				map = (Map<Integer, Object>) object; // identified part of header
+			} else { // impossible... maybe?
+				log.debug("Unexpected object in map: {}", object.getClass());
+				break;
+			}
 		}
 		return null;
 	}
