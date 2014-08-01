@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 
@@ -8,13 +8,14 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuMonsterInstance;
 import eu.derbed.openmu.gs.muObjects.MuObject;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 
 @Header (0xd9)
-public class CAttackOnId implements ClientPackage {
+class CAttackOnId implements ClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CAttackOnId.class);
 

@@ -13,7 +13,6 @@ import com.notbed.muonline.util.RegistrationException;
 import eu.derbed.openmu.gs.client.ClientPacketResolver;
 import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CAddFrendRequest;
-import eu.derbed.openmu.gs.clientPackage.CAttackOnId;
 import eu.derbed.openmu.gs.clientPackage.CBuyItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
@@ -83,9 +82,6 @@ public class PacketHandler {
 			break;
 		case 0x32:
 			cp = new CBuyItemRequest();
-			break;
-		case 0xd9:
-			cp = new CAttackOnId();
 			break;
 		case 0xc1:
 			cp = new CAddFrendRequest();
