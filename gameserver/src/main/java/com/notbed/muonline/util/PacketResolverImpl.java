@@ -124,6 +124,7 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 			}
 			final Object object = map.get(current);
 			if (packetClasz.isAssignableFrom(object.getClass())) {
+				log.debug("Identified {}", HeaderUtil.getName(object));
 				return (T) object; // found it!
 			}
 			if (object instanceof Map<?, ?>) {
