@@ -33,13 +33,13 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 	}
 
 	/**
-	 * @param o
+	 * @param object
 	 * @throws RegistrationException
 	 */
-	public void register(final T o) throws RegistrationException {
-		log.debug("Request to register " + o.getClass().getSimpleName() + HeaderUtil.getHeaderFormatted(o));
-		checkValidFormat(o);
-		add(o);
+	public void register(final T object) throws RegistrationException {
+		log.debug("Request to register {}", HeaderUtil.getName(object));
+		checkValidFormat(object);
+		add(object);
 	}
 
 	/**
