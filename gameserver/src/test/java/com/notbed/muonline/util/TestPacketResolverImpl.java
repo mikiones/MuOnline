@@ -22,7 +22,7 @@ public class TestPacketResolverImpl {
 	 * @throws RegistrationConflictException
 	 */
 	@Test
-	public void testFailRegistration() throws RegistrationException {
+	public void testFailRegistrationConflict2() throws RegistrationException {
 		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
 
 		final Packet problem1 = new Packet_0x5B_0x59_0x0();
@@ -46,7 +46,7 @@ public class TestPacketResolverImpl {
 	 * @throws RegistrationConflictException
 	 */
 	@Test
-	public void testFailRegistration2() throws RegistrationException {
+	public void testFailRegistrationConflict() throws RegistrationException {
 		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
 
 		final Packet reason = new Packet_0x5B();
