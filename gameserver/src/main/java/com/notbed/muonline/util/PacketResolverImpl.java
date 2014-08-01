@@ -120,7 +120,9 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 		Map<Integer, Object> map = packets;
 		for (int i = 0; i < rawData.length && data.hasNext(); i++) {
 			final int current = data.readC();
-			if (map.containsKey(current)) {
+			if (!map.containsKey(current)) {
+				break;
+			}
 				final Object object = map.get(current);
 				if (packetClasz.isAssignableFrom(object.getClass())) {
 					return (T) object; // found it!
@@ -130,7 +132,6 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 				} else {
 					break; // impossible... maybe?
 				}
-			}
 		}
 		return null;
 	}

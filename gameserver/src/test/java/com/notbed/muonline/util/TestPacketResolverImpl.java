@@ -114,7 +114,7 @@ public class TestPacketResolverImpl {
 //		[Thread-40] DEBUG PacketHandler - [C->S] 0000: A9 01 00 08                                        ....
 		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
 		resolver.register(new Packet_0x00());
-		final Packet nothing = resolver.resolvePacket(new byte[]{(byte) 0xA9, 0x01, 0x00, 0x08});
+		final Packet nothing = resolver.resolvePacket(new byte[]{0x18, 0x01, 0x00, 0x08});
 		assertNull(nothing);
 	}
 
