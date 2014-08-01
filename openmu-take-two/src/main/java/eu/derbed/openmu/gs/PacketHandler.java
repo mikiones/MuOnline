@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.PacketResolver;
 
 import eu.derbed.openmu.gs.clientPackage.CA0Request;
-import eu.derbed.openmu.gs.clientPackage.CAddFrendRequest;
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
@@ -66,9 +65,6 @@ public class PacketHandler {
 				break;
 			case 0x30:
 				cp = new CNpcRunRequest();
-				break;
-			case 0xc1:
-				cp = new CAddFrendRequest();
 				break;
 			case 0xf3:
 				cp = new CCharacterManipulator();
