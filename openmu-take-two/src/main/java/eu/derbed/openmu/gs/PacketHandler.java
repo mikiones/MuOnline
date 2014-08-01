@@ -8,9 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.PacketResolver;
-import com.notbed.muonline.util.RegistrationException;
 
-import eu.derbed.openmu.gs.client.ClientPacketResolver;
 import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CAddFrendRequest;
 import eu.derbed.openmu.gs.clientPackage.CBuyItemRequest;
@@ -39,60 +37,54 @@ public class PacketHandler {
 
 	/**
 	 * @param client
+	 * @param resolver
 	 */
-	public PacketHandler(ClientThread client) {
+	public PacketHandler(final ClientThread client, final PacketResolver<ClientPackage> resolver) {
 		_client = client;
-		PacketResolver<ClientPackage> resolver;
-		try {
-			resolver = new ClientPacketResolver();
-		} catch (RegistrationException e) {
-			log.error("REMOVE THIS, PROPERLY HANDLE!!", e);
-			resolver = null;
-		}
 		this.resolver = resolver;
 	}
 
-	public void handlePacket(byte[] data) throws IOException {
+	public void handlePacket(final byte[] data) throws IOException {
 		// int pos = 0;
 		// System.out.println("lenght="+data.length);
 		final int id = data[0] & 0xff;
 		logTransfer(log, data, "[C->S]");
 		ClientPackage cp = null;
 		switch (id) {
-		case 0xa0:
-			cp = new CA0Request();
-			break;
-		case 0x1C:
-			cp = new CEnterInGateRequest();
-			break;
-		case 0x22:
-			cp = new CItemPickUpRequest();
-			break;
-		case 0x23:
-			cp = new CItemDropFromInwentoryRequest();
-			break;
-		case 0x24:
-			cp = new CMoveItemRequest();
-			break;
-		case 0x26:
-			cp = new CItemUseRequest();
-			break;
-		case 0x30:
-			cp = new CNpcRunRequest();
-			break;
-		case 0x32:
-			cp = new CBuyItemRequest();
-			break;
-		case 0xc1:
-			cp = new CAddFrendRequest();
-			break;
-		case 0xf3:
-			cp = new CCharacterManipulator();
-			break;
-		// 24 00 0c e3 00 00 80 00 00 14
-		default:
+			case 0xa0:
+				cp = new CA0Request();
+				break;
+			case 0x1C:
+				cp = new CEnterInGateRequest();
+				break;
+			case 0x22:
+				cp = new CItemPickUpRequest();
+				break;
+			case 0x23:
+				cp = new CItemDropFromInwentoryRequest();
+				break;
+			case 0x24:
+				cp = new CMoveItemRequest();
+				break;
+			case 0x26:
+				cp = new CItemUseRequest();
+				break;
+			case 0x30:
+				cp = new CNpcRunRequest();
+				break;
+			case 0x32:
+				cp = new CBuyItemRequest();
+				break;
+			case 0xc1:
+				cp = new CAddFrendRequest();
+				break;
+			case 0xf3:
+				cp = new CCharacterManipulator();
+				break;
+				// 24 00 0c e3 00 00 80 00 00 14
+			default:
 //			try the new method!
-			cp = resolver.resolvePacket(data);
+				cp = resolver.resolvePacket(data);
 		}
 		if (null == cp) {
 			log.debug("Unknown implementation " + Integer.toHexString(id));

@@ -3,20 +3,25 @@ package eu.derbed.openmu;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.PacketResolver;
+import com.notbed.muonline.util.RegistrationException;
+
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.CommandHandler;
 import eu.derbed.openmu.gs.GameServerConfig;
+import eu.derbed.openmu.gs.client.ClientPacketResolver;
+import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 
-public class GameServer extends Thread {
+public class GameServer {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	private final PacketResolver<ClientPackage> resolver;
 
 	// Socket listener
 
@@ -25,9 +30,11 @@ public class GameServer extends Thread {
 
 	/**
 	 * @throws IOException
+	 * @throws RegistrationException
 	 */
-	public GameServer() throws IOException {
-		super("AppMain");
+	public GameServer() throws IOException, RegistrationException {
+
+		this.resolver = new ClientPacketResolver();
 
 		log.info("WorkingDir: " + System.getProperty("user.dir"));
 
@@ -63,7 +70,9 @@ public class GameServer extends Thread {
 		// Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
 	}
 
-	@Override
+	/**
+	 *
+	 */
 	public void run() {
 		try {
 			log.info("Init Regions:...");
@@ -76,14 +85,13 @@ public class GameServer extends Thread {
 
 			while (true) {
 				try {
-					final Socket connection = _serverSocket.accept();
-					new ClientThread(connection);
+					new ClientThread(_serverSocket.accept(), resolver);
 				} catch (final IOException e) {
 					// not a real problem
 				}
 			}
 
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			log.error("Game Server Crashed!", t);
 		}
 	}

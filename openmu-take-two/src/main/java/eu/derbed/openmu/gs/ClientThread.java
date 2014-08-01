@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.MuSocket;
+import com.notbed.muonline.util.PacketResolver;
 
+import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
 import eu.derbed.openmu.gs.database.MuCharactersDb;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;
@@ -92,12 +94,13 @@ public class ClientThread extends Thread {
 	 *
 	 * @param client
 	 *            Socket to connect to client
+	 * @param resolver
 	 * @throws java.io.IOException
 	 */
-	public ClientThread(Socket client) throws IOException {
+	public ClientThread(final Socket client, final PacketResolver<ClientPackage> resolver) throws IOException {
 
 		_connection = new MuSocket(client);
-		_handler = new PacketHandler(this);
+		_handler = new PacketHandler(this, resolver);
 		_world = MuWorld.getInstance();
 
 		start();
