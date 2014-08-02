@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.PacketResolver;
 
 import eu.derbed.openmu.gs.client.ClientPackage;
-import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
 
 
@@ -55,9 +54,6 @@ public class PacketHandler {
 			switch (id) {
 				case 0x26:
 					cp = new CItemUseRequest();
-					break;
-				case 0xf3:
-					cp = new CCharacterManipulator();
 					break;
 					// 24 00 0c e3 00 00 80 00 00 14
 			}
