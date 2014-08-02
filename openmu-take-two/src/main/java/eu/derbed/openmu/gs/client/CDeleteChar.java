@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 
@@ -6,22 +6,23 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
 import eu.derbed.openmu.gs.serverPackets.SDeleteChar;
 
-
 /**
- * 
+ *
  * @author Marcel , Mikione
- * 
+ *
  */
 @Header ({0xf3, 0x02})
-public class CDeleteChar extends SimpleClientPackage {
+class CDeleteChar extends SimpleClientPackage {
 
 	/* (non-Javadoc)
 	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
 	 */
-	protected void process(DataDecrypter decrypter, ClientThread _client) throws IOException {
+	@Override
+	protected void process(final DataDecrypter decrypter, final ClientThread _client) throws IOException {
 		String p_code = _client.getUser().getChCode();
 		// TODO sometimes if its nathing set i DB there is null so w relace it
 		// as ""
