@@ -31,9 +31,6 @@ public class CCharacterManipulator implements ClientPackage {
 		}
 		ClientPackage cp = null;
 		switch (id2) {
-			case 0x03:
-				cp = new CSelectedCharacterEnterRequest();
-				break;
 			case 0x30:
 				cp = new CClientSettingsSaveRequest();
 				break;
