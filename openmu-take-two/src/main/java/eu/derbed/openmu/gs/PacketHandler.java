@@ -11,7 +11,6 @@ import com.notbed.muonline.util.PacketResolver;
 
 import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
-import eu.derbed.openmu.gs.clientPackage.CEnterInGateRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
 import eu.derbed.openmu.gs.clientPackage.CMoveItemRequest;
@@ -50,9 +49,6 @@ public class PacketHandler {
 		switch (id) {
 			case 0xa0:
 				cp = new CA0Request();
-				break;
-			case 0x1C:
-				cp = new CEnterInGateRequest();
 				break;
 			case 0x23:
 				cp = new CItemDropFromInwentoryRequest();

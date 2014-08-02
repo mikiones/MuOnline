@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 
@@ -10,23 +10,24 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuGate;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 import eu.derbed.openmu.gs.serverPackets.SGateEnterAnsfer;
 
 
 /**
- * 
+ *
  * @author Miki i Linka, MarcelGh
  */
 @Header (0x1C)
-public class CEnterInGateRequest extends SimpleClientPackage {
+class CEnterInGateRequest extends SimpleClientPackage {
 
 	/* (non-Javadoc)
 	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	protected void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException {
+	protected void process(final DataDecrypter dataDecrypter, final ClientThread client) throws IOException {
 		final int GateNb = dataDecrypter.data[1] & 0xff; // number of gate in gate.bmp
 		// System.out.println("Request to enter in gate id:" + GateNb);
 		// fMap = decrypt[2] & 0xff;
