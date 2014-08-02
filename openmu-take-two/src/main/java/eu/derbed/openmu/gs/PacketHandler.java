@@ -11,7 +11,6 @@ import com.notbed.muonline.util.PacketResolver;
 
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
-import eu.derbed.openmu.gs.clientPackage.CNpcRunRequest;
 import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 
 
@@ -56,9 +55,6 @@ public class PacketHandler {
 			switch (id) {
 				case 0x26:
 					cp = new CItemUseRequest();
-					break;
-				case 0x30:
-					cp = new CNpcRunRequest();
 					break;
 				case 0xf3:
 					cp = new CCharacterManipulator();

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 
@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuNpcInstance;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 
@@ -19,7 +20,7 @@ import eu.derbed.openmu.gs.muObjects.MuWorld;
  * @author Miki i Linka
  */
 @Header (0x30)
-public class CNpcRunRequest implements ClientPackage {
+class CNpcRunRequest implements ClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CNpcRunRequest.class);
 
@@ -27,7 +28,7 @@ public class CNpcRunRequest implements ClientPackage {
 	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#process(byte[], eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	public void process(byte[] data, ClientThread client) throws IOException {
+	public void process(final byte[] data, final ClientThread client) throws IOException {
 		final int _idNpcToRun = data[1];
 		log.debug("Request to npc it :" + _idNpcToRun + " ");
 		final Object o = MuWorld.getInstance().getObject(_idNpcToRun);
