@@ -10,7 +10,6 @@ import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.CommandHandler;
-import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.serverPackets.SPublicMsg;
 
 @Header (0x00)

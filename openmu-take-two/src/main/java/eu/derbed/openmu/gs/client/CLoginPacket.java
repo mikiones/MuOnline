@@ -14,7 +14,6 @@ import com.notbed.muonline.util.UString;
 
 import eu.derbed.openmu.database.LoadUser;
 import eu.derbed.openmu.gs.ClientThread;
-import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;

@@ -9,7 +9,6 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
-import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 import eu.derbed.openmu.gs.serverPackets.SDirectionOrStatusChange;
 

@@ -13,7 +13,6 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
-import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 
 /**
  * @author Miki
