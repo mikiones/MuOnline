@@ -24,7 +24,7 @@ public class CCharacterManipulator implements ClientPackage {
 	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#process(byte[], eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	public void process(byte[] data, ClientThread client) throws IOException {
+	public void process(final byte[] data, final ClientThread client) throws IOException {
 		int id2 = 0;
 		if (data.length > 1) {
 			id2 = data[1] & 0xff;
@@ -42,9 +42,6 @@ public class CCharacterManipulator implements ClientPackage {
 				break;
 			case 0x03:
 				cp = new CSelectedCharacterEnterRequest();
-				break;
-			case 0x06:
-				cp = new CAddLvlPointsRequest();
 				break;
 			case 0x30:
 				cp = new CClientSettingsSaveRequest();

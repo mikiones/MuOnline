@@ -31,6 +31,7 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 		resolver.register(new CItemDropFromInwentoryRequest());
 		resolver.register(new CMoveItemRequest());
 		resolver.register(new CNpcRunRequest());
+		resolver.register(new CAddLvlPointsRequest());
 	}
 
 	/* (non-Javadoc)
