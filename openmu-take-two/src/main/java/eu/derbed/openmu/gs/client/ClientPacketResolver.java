@@ -29,6 +29,7 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 		resolver.register(new CItemPickUpRequest());
 		resolver.register(new CAddFrendRequest());
 		resolver.register(new CEnterInGateRequest());
+		resolver.register(new CA0Request());
 	}
 
 	/* (non-Javadoc)

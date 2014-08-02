@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.PacketResolver;
 
-import eu.derbed.openmu.gs.clientPackage.CA0Request;
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CItemDropFromInwentoryRequest;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
@@ -47,9 +46,6 @@ public class PacketHandler {
 		logTransfer(log, data, "[C->S]");
 		ClientPackage cp = null;
 		switch (id) {
-			case 0xa0:
-				cp = new CA0Request();
-				break;
 			case 0x23:
 				cp = new CItemDropFromInwentoryRequest();
 				break;
