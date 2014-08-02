@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 
@@ -9,12 +9,13 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuCharacterBase;
 import eu.derbed.openmu.gs.muObjects.MuCharacterWear;
 import eu.derbed.openmu.gs.serverPackets.SNewCharacterAnsfer;
 
 @Header ({0xf3, 0x01})
-public class CNewCharacterRequest extends SimpleClientPackage {
+class CNewCharacterRequest extends SimpleClientPackage {
 
 	private static final Logger log = LoggerFactory.getLogger(CNewCharacterRequest.class);
 
@@ -22,9 +23,9 @@ public class CNewCharacterRequest extends SimpleClientPackage {
 	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	protected void process(DataDecrypter decrypter, ClientThread client) throws IOException {
+	protected void process(final DataDecrypter decrypter, final ClientThread client) throws IOException {
 		final String _name = decrypter.readS(2, 10).trim();
-		byte[] decrypt = decrypter.data;
+		final byte[] decrypt = decrypter.data;
 
 		final int _class = decrypt[12] * 2;
 		log.debug(String.valueOf(decrypt.length));

@@ -33,6 +33,7 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 		resolver.register(new CNpcRunRequest());
 		resolver.register(new CAddLvlPointsRequest());
 		resolver.register(new CCharacterListRequest());
+		resolver.register(new CNewCharacterRequest());
 	}
 
 	/* (non-Javadoc)
