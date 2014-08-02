@@ -1,5 +1,7 @@
 package eu.derbed.openmu.gs;
 
+import static com.notbed.muonline.util.UPacket.logTransfer;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.Connection;
@@ -87,7 +89,8 @@ public class ClientThread extends Thread {
 //			(byte) 0x00, (byte) 0xa1, (byte) 0x6c, (byte) 0x54, (byte) 0x87 // these
 //	};
 	private final MuSocket _connection;
-	private final PacketHandler _handler;
+
+	private final PacketResolver<ClientPackage> resolver;
 
 	/**
 	 * constructor
@@ -100,7 +103,7 @@ public class ClientThread extends Thread {
 	public ClientThread(final Socket client, final PacketResolver<ClientPackage> resolver) throws IOException {
 
 		_connection = new MuSocket(client);
-		_handler = new PacketHandler(this, resolver);
+		this.resolver = resolver;
 		_world = MuWorld.getInstance();
 
 		start();
@@ -198,7 +201,7 @@ public class ClientThread extends Thread {
 				// System.out.println("czekam na odpowiedz");
 				final byte[] decrypt = _connection.getPacket();
 				if (decrypt != null) {
-					_handler.handlePacket(decrypt);
+					handlePacket(decrypt);
 				} else {
 					_while = false;
 				}
@@ -240,6 +243,27 @@ public class ClientThread extends Thread {
 
 		String username = user == null ? "" : user.getUser();
 		log.info("Client Thread [{}] stopped.", username.trim());
+	}
+
+	/**
+	 * Synchronized because when entering gates the character sometimes doesn't
+	 * appear on the other side. Synchronizing this doesn't eliminate the problem
+	 * but it does seem to happen less often, investigate this when you have time
+	 *
+	 * @param decrypt
+	 * @throws IOException
+	 */
+	private void handlePacket(final byte[] data) throws IOException {
+		logTransfer(log, data, "[C->S]");
+		final ClientPackage cp = resolver.resolvePacket(data);
+
+		if (null == cp) {
+			final int id = data[0] & 0xff;
+			log.debug("Unknown implementation " + Integer.toHexString(id));
+		} else {
+			cp.process(data, this);
+		}
+
 	}
 
 	public int getIdConnection() {
