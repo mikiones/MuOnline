@@ -117,7 +117,7 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 	public T resolvePacket(final byte[] rawData) {
 		final Data data = new Data(rawData);
 		Map<Integer, Object> map = packets;
-		for (int i = 0; i < rawData.length && data.hasNext(); i++) {
+		while (data.hasNext()) {
 			final int current = data.readC();
 			if (!map.containsKey(current)) {
 				break;

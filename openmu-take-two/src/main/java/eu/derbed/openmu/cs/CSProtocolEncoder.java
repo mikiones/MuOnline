@@ -61,7 +61,7 @@ public class CSProtocolEncoder extends OneToOneEncoder {
 			return msg;
 		}
 
-		logTransfer(log, out.array(), true);
+		logTransfer(log, out.array());
 		//return ChannelBuffers.EMPTY_BUFFER;
 
 		return out;

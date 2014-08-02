@@ -33,32 +33,10 @@ public final class UPacket {
 	 *
 	 * @param log
 	 * @param data
-	 * @param forceUpperCase
-	 */
-	public static void logTransfer(final Logger log, final byte[] data, final boolean forceUpperCase) {
-		logTransfer(log, data, null, forceUpperCase);
-	}
-
-	/**
-	 * Convert byte array to String for that Hex editor look
-	 *
-	 * @param log
-	 * @param data
 	 * @param string
+	 * @param forceUpperCase
 	 */
 	public static void logTransfer(final Logger log, final byte[] data, final String string) {
-		logTransfer(log, data, string, false);
-	}
-
-	/**
-	 * Convert byte array to String for that Hex editor look
-	 *
-	 * @param log
-	 * @param data
-	 * @param string
-	 * @param forceUpperCase
-	 */
-	public static void logTransfer(final Logger log, final byte[] data, final String string, final boolean forceUpperCase) {
 		final StringBuffer result = new StringBuffer();
 
 		int counter = 0;
@@ -87,7 +65,7 @@ public final class UPacket {
 					}
 				}
 
-				flush(log, result, forceUpperCase);
+				flush(log, result);
 				counter = 0;
 			}
 		}
@@ -108,17 +86,14 @@ public final class UPacket {
 				}
 			}
 		}
-		flush(log, result, forceUpperCase);
+		flush(log, result);
 	}
 
 	/**
 	 * @param s
 	 */
-	private static void flush(final Logger log, final StringBuffer sb, final boolean forceUpperCase) {
-		String string = sb.toString();
-		if (forceUpperCase) {
-			string = string.toLowerCase();
-		}
+	private static void flush(final Logger log, final StringBuffer sb) {
+		final String string = sb.toString().toLowerCase();
 		log.debug(string);
 		sb.setLength(0);
 	}
