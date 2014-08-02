@@ -4,6 +4,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eu.derbed.openmu.gs.serverPackets.SDMgOnScreen;
 import eu.derbed.openmu.gs.serverPackets.SGoneExp;
 import eu.derbed.openmu.gs.serverPackets.ServerBasePacket;
@@ -14,11 +17,13 @@ import eu.derbed.openmu.gs.templates.MuWeapon;
 /**
  * this class is basicli interface for lice gameobicets on maps <br>
  * like mmobs,npcs
- * 
+ *
  * @author Miki
- * 
+ *
  */
 public abstract class MuCharacter extends MuObject {
+
+	private static final Logger log = LoggerFactory.getLogger(MuCharacter.class);
 
 	private final MuAura _aura = new MuAura();
 	public static final int ST_IDE = 0;
@@ -41,7 +46,7 @@ public abstract class MuCharacter extends MuObject {
 	class MoveSynchTask extends TimerTask {
 		MuCharacter _who;
 
-		public MoveSynchTask(MuCharacter _who) {
+		public MoveSynchTask(final MuCharacter _who) {
 			this._who = _who;
 		}
 
@@ -60,7 +65,7 @@ public abstract class MuCharacter extends MuObject {
 		return _myStatus;
 	}
 
-	public void setMyStatus(int st) {
+	public void setMyStatus(final int st) {
 		_myStatus = st;
 	}
 
@@ -76,20 +81,20 @@ public abstract class MuCharacter extends MuObject {
 	void onMyStatusUpdate() {
 		final int status = getMyStatus();
 		switch (status) {
-		case ST_IDE:
-			break;
-		case ST_DIE:
-			break;
-		case ST_EMOT:
-			break;
-		case ST_ROTA:
-			break;
-		case ST_ATAC:
-			break;
-		case ST_SPOw:
-			break;
-		case ST_WALK:
-			break;
+			case ST_IDE:
+				break;
+			case ST_DIE:
+				break;
+			case ST_EMOT:
+				break;
+			case ST_ROTA:
+				break;
+			case ST_ATAC:
+				break;
+			case ST_SPOw:
+				break;
+			case ST_WALK:
+				break;
 		}
 	}
 
@@ -107,7 +112,7 @@ public abstract class MuCharacter extends MuObject {
 
 		MuCharacter _instance;
 
-		public AttackTask(MuCharacter c) {
+		public AttackTask(final MuCharacter c) {
 			_instance = c;
 		}
 
@@ -128,7 +133,7 @@ public abstract class MuCharacter extends MuObject {
 	 * szukamy graczy<br>
 	 * 3. dodajemy ie na mape a widocznym nam gracza dajemy paczke ze nas widza<br>
 	 * 4. uruchamiamy ai taski jesli takie sa<br>
-	 * 
+	 *
 	 * @see getMaxHp()
 	 * @see getMaxMp()
 	 */
@@ -138,7 +143,7 @@ public abstract class MuCharacter extends MuObject {
 		private int _resX = 0;
 		private int _resY = 0;
 
-		public RespownTask(MuCharacter _instance, int x, int y) {
+		public RespownTask(final MuCharacter _instance, final int x, final int y) {
 			System.out.println("Respown setup  start");
 			this._resX = x;
 			this._resY = y;
@@ -155,7 +160,7 @@ public abstract class MuCharacter extends MuObject {
 		public void run() {
 			synchronized (_respownLock) {
 				System.out
-						.println("-=-=-=-=--=-=-=respown starting=-=-=-=-=-=-=-=-=");
+				.println("-=-=-=-=--=-=-=respown starting=-=-=-=-=-=-=-=-=");
 				// sets back live stats
 				_instance.setCurentHp(_instance.getMaxHp());
 				System.out.println("actuualie live...done");
@@ -165,7 +170,7 @@ public abstract class MuCharacter extends MuObject {
 				MuWorld.getInstance().addObject(_instance);
 				System.out.println("added to map ... done");
 				System.out
-						.println("-=-=-=-=-=-=-=-=-=-respown end=-=-=-=-=-=-=-=-=-=-");
+				.println("-=-=-=-=-=-=-=-=-=-respown end=-=-=-=-=-=-=-=-=-=-");
 
 				// obiect must be respown onmap
 			}
@@ -175,13 +180,13 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * hp regenerationtask...
-	 * 
+	 *
 	 */
 	class HpRegenTask extends TimerTask {
 
 		private final MuCharacter _instance;
 
-		public HpRegenTask(MuCharacter c) {
+		public HpRegenTask(final MuCharacter c) {
 			_instance = c;
 		}
 
@@ -202,7 +207,7 @@ public abstract class MuCharacter extends MuObject {
 
 	class MpRegenTask extends TimerTask {
 
-		public MpRegenTask(MuCharacter c) {
+		public MpRegenTask(final MuCharacter c) {
 			_instance = c;
 		}
 
@@ -232,7 +237,7 @@ public abstract class MuCharacter extends MuObject {
 		int _dmg;
 		int _f;
 
-		public HitTask(MuCharacter in, MuCharacter t, int dmg, int f) {
+		public HitTask(final MuCharacter in, final MuCharacter t, final int dmg, final int f) {
 			_instance = in;
 			_target = t;
 			_dmg = dmg;
@@ -292,7 +297,7 @@ public abstract class MuCharacter extends MuObject {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return actualhead direction
 	 */
 	public byte getDirection() {
@@ -301,10 +306,10 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * set head direction
-	 * 
+	 *
 	 * @param newDirection
 	 */
-	public void setDirection(byte newDirection) {
+	public void setDirection(final byte newDirection) {
 		_direction = newDirection;
 	}
 
@@ -312,14 +317,14 @@ public abstract class MuCharacter extends MuObject {
 		return _murderStatus;
 	}
 
-	public void setMurderStatus(byte NewStatus) {
+	public void setMurderStatus(final byte NewStatus) {
 		_murderStatus = NewStatus;
 	}
 
 	// staf 4 hits
-	public void onHitTimer(MuCharacter target, int dmg, int f) {
-		if (isDead() || target.isDead()){ 
-			//|| !target.knownsObject(this) || !knownsObject(target)) {			
+	public void onHitTimer(final MuCharacter target, final int dmg, final int f) {
+		if (isDead() || target.isDead()){
+			//|| !target.knownsObject(this) || !knownsObject(target)) {
 			setInCombat(false);
 			setTarget(null);
 		} else {
@@ -336,7 +341,7 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * send package hit on id
-	 * 
+	 *
 	 * @param target
 	 *            ID atacked
 	 * @param dmg
@@ -344,7 +349,7 @@ public abstract class MuCharacter extends MuObject {
 	 * @param f
 	 *            dmg flag // todo set tye of flags like 00= normal atak itc
 	 */
-	private void displayHitMessage(MuCharacter target, int dmg, int f) {
+	private void displayHitMessage(final MuCharacter target, final int dmg, final int f) {
 		System.out.println("Hit :dmg[" + dmg + "] on id["
 				+ target.getObjectId() + "] who has live["
 				+ target.getCurentHp());
@@ -356,19 +361,19 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * counting speed of atack
-	 * 
+	 *
 	 * @param weaponItem
 	 *            weapon
 	 * @return attack speed
 	 */
-	public int calculateAttackSpeed(MuWeapon weaponItem) {
+	public int calculateAttackSpeed(final MuWeapon weaponItem) {
 		return 3;// weaponItem.getAttackSpeed(); // actualy we dont have weapon
-					// so sets const
+		// so sets const
 	}
 
 	/**
 	 * weturn actualweapon
-	 * 
+	 *
 	 * @return weapon
 	 */
 	public abstract MuWeapon getActiveWeapon();
@@ -378,14 +383,14 @@ public abstract class MuCharacter extends MuObject {
 	 * if value isbehaind max then run {@link #startMpRegeneration()} if value
 	 * ismax and task is runed thenstop id {@link #_mpRegenActive} <br>
 	 * {@link #stopMpRegeneration()}
-	 * 
+	 *
 	 * @param i
 	 *            value to set
 	 * @see #startMpRegeneration() uruchamianie uzupelnianie mp
 	 * @see #stopMpRegeneration() zatrzymanie uzupelniania mp
-	 * 
+	 *
 	 */
-	public void setCurentMP(int i) {
+	public void setCurentMP(final int i) {
 		_curentMP = i;
 		if (_curentMP >= getMaxMp()) {
 			stopMpRegeneration();
@@ -398,7 +403,7 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * Started mp task
-	 * 
+	 *
 	 * @see #stopMpRegeneration() stops mp task
 	 */
 	private void startMpRegeneration() {
@@ -426,10 +431,10 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * set curent hp valuw
-	 * 
+	 *
 	 * @param curHp
 	 */
-	public void setCurentHp(int curHp) {
+	public void setCurentHp(final int curHp) {
 		System.out.print("HpReg ");
 		System.out.print(" O:(" + getObjectId() + ")");
 		System.out.println("HP:(" + getCurentHp() + "/" + getMaxHp() + ").");
@@ -465,7 +470,7 @@ public abstract class MuCharacter extends MuObject {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return if i ded
 	 */
 	private boolean isDead() {
@@ -486,7 +491,7 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * retune max hp value for this obiect
-	 * 
+	 *
 	 * @return hp max
 	 */
 	public int getMaxHp() {
@@ -494,7 +499,7 @@ public abstract class MuCharacter extends MuObject {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return actual value of Hp
 	 */
 	public int getCurentHp() {
@@ -503,7 +508,7 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * Consructor
-	 * 
+	 *
 	 * @param obiectId
 	 *            theid to bind this object unical
 	 * @param _x
@@ -513,7 +518,7 @@ public abstract class MuCharacter extends MuObject {
 	 * @param _m
 	 *            the opcode map
 	 */
-	public MuCharacter(short obiectId, byte _x, byte _y, byte _m) {
+	public MuCharacter(final short obiectId, final byte _x, final byte _y, final byte _m) {
 		super(obiectId, _x, _y, _m);
 
 	}
@@ -540,7 +545,7 @@ public abstract class MuCharacter extends MuObject {
 	// return players;
 	// }
 
-	public void reduceCurrentMp(int i) {
+	public void reduceCurrentMp(final int i) {
 		synchronized (_mpLock) {
 			_curentMP -= i;
 			if (!_mpRegenActive && !isDead()) {
@@ -549,7 +554,7 @@ public abstract class MuCharacter extends MuObject {
 		}
 	}
 
-	public void reduceCurrentHp(int i, MuCharacter c) {
+	public void reduceCurrentHp(final int i, final MuCharacter c) {
 		synchronized (_hpLock) {
 			_curentHP -= i;
 			final SDMgOnScreen dmg = new SDMgOnScreen(getObjectId(), i,
@@ -664,7 +669,7 @@ public abstract class MuCharacter extends MuObject {
 	public static final int UpdateStatsLPAdd = 1;
 	public static final int UpdateStatsMyDie = 2;
 
-	public void updateMaxMpSp(int relase) {
+	public void updateMaxMpSp(final int relase) {
 		_maxMp = MuClassStatsCalculate.getMaxMp(_clas, _lvl, _ene);
 		_maxSP = MuClassStatsCalculate.getMaxSP(_clas, _lvl, _str, _ene);
 		if (!_mpRegenActive) {
@@ -676,7 +681,7 @@ public abstract class MuCharacter extends MuObject {
 
 	}
 
-	public void updateMaxHp(int why) {
+	public void updateMaxHp(final int why) {
 		_maxHp = MuClassStatsCalculate.getMaxHp(_clas, _lvl, _vit);
 		if (!_hpRegenActive) {
 			_curentHP = _maxHp;
@@ -717,19 +722,18 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * move obiect to new position and send to all knowns players it
-	 * 
+	 *
 	 * @param x
 	 *            new x Pos
 	 * @param y
 	 *            new Y Pos
 	 */
-	public void moveTo(int x, int y) {
+	public void moveTo(final int x, final int y) {
 		setOldX(getX());
 		setOldY(getY());
 		setX(x);
 		setY(y);
-		System.out.println(this + " Moving from [" + _oldX + "][" + _oldY
-				+ "] to ->[" + _coordX + "][" + _coordY + "].");
+		log.debug("Moving {} from [{}][{}] to [{}][{}]", _name, _oldX, _oldY, _coordX, _coordY);
 		// first we must chceck we can move
 		if (!getCurrentWorldRegion().moveCharacter(this)) {
 			// If movement failed, it means the client could be cheating.
@@ -739,11 +743,11 @@ public abstract class MuCharacter extends MuObject {
 			// updateKnownsLists();
 			// IMove(); // send we moved
 			_updateKnowTimer.schedule(new MoveSynchTask(this), 3000); // todo
-																		// time
-																		// need
-																		// o
-																		// move
-																		// object
+			// time
+			// need
+			// o
+			// move
+			// object
 		}
 	}
 
@@ -783,7 +787,7 @@ public abstract class MuCharacter extends MuObject {
 		_currentAttackTask = null;
 		final MuCharacter target = (MuCharacter) _attackTarget;
 		if (isDead() || target == null || target.isDead()) {
-				//|| target.knownsObject(this) || knownsObject(target)) {
+			//|| target.knownsObject(this) || knownsObject(target)) {
 			setInCombat(false);
 			// return;
 		}
@@ -833,7 +837,7 @@ public abstract class MuCharacter extends MuObject {
 
 	}
 
-	private long calculateHitSpeed(MuWeapon weaponitem, int i) {
+	private long calculateHitSpeed(final MuWeapon weaponitem, final int i) {
 
 		return 50;
 	}
@@ -853,45 +857,45 @@ public abstract class MuCharacter extends MuObject {
 	private static Random _rnd = new Random();
 	private MuObject _attackTarget;
 
-	public void sendPacket(ServerBasePacket mov) {
+	public void sendPacket(final ServerBasePacket mov) {
 		// default implementation
 	}
 
-	public void setAgi(int agi) {
+	public void setAgi(final int agi) {
 		_agi = agi;
 	}
 
-	public void setClas(int cl) {
+	public void setClas(final int cl) {
 		_clas = (byte) cl;
 	}
 
-	public void setCom(int com) {
+	public void setCom(final int com) {
 		_com = com;
 	}
 
-	public void setEne(int ene) {
+	public void setEne(final int ene) {
 		_ene = ene;
 	}
 
-	private void setInCombat(boolean b) {
+	private void setInCombat(final boolean b) {
 		_inCombat = b;
 
 	}
 
-	public void setLvl(int lvl) {
+	public void setLvl(final int lvl) {
 		_lvl = lvl;
 	}
 
-	public void setName(String string) {
+	public void setName(final String string) {
 		_name = string;
 
 	}
 
-	public void setStr(int str) {
+	public void setStr(final int str) {
 		_str = str;
 	}
 
-	public void setTarget(MuObject t) {
+	public void setTarget(final MuObject t) {
 		if (t == null) {
 			System.out.println("void setTarget(MuObject t) lostpointer");
 		}
@@ -902,7 +906,7 @@ public abstract class MuCharacter extends MuObject {
 		_target = t;
 	}
 
-	public void setVit(int vit) {
+	public void setVit(final int vit) {
 		_vit = vit;
 	}
 
@@ -924,7 +928,7 @@ public abstract class MuCharacter extends MuObject {
 		// }
 	}
 
-	public void startAttack(MuCharacter target) {
+	public void startAttack(final MuCharacter target) {
 		if (target == null) {
 			setInCombat(false);
 		}
@@ -933,7 +937,7 @@ public abstract class MuCharacter extends MuObject {
 		// moveCharacter(target.getX(), target.getY());
 	}
 
-	public void setMaxHp(int maxHp) {
+	public void setMaxHp(final int maxHp) {
 		_maxHp = maxHp;
 	}
 
@@ -941,7 +945,7 @@ public abstract class MuCharacter extends MuObject {
 		return _curentSP;
 	}
 
-	public void setCurentSp(int curentSP) {
+	public void setCurentSp(final int curentSP) {
 		_curentSP = curentSP;
 	}
 
@@ -949,7 +953,7 @@ public abstract class MuCharacter extends MuObject {
 		return _maxSP;
 	}
 
-	public void setMaxSp(int maxSP) {
+	public void setMaxSp(final int maxSP) {
 		_maxSP = maxSP;
 	}
 
@@ -957,7 +961,7 @@ public abstract class MuCharacter extends MuObject {
 		return _clas;
 	}
 
-	public int getDistance(int x, int y) {
+	public int getDistance(final int x, final int y) {
 		final long dx = x - getX();
 		final long dy = y - getY();
 		final double distance = Math.sqrt(dx * dx + dy * dy);
@@ -968,7 +972,7 @@ public abstract class MuCharacter extends MuObject {
 		return _lvl;
 	}
 
-	public void setMaxMp(int maxMp) {
+	public void setMaxMp(final int maxMp) {
 		_maxMp = maxMp;
 	}
 
@@ -978,7 +982,7 @@ public abstract class MuCharacter extends MuObject {
 
 	/**
 	 * basic to string return " [mapid][id][xpos][upos][name][name of class]
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -990,17 +994,17 @@ public abstract class MuCharacter extends MuObject {
 	}
 
 	@Override
-	public void SetPos(int x, int y, int f) {
+	public void SetPos(final int x, final int y, final int f) {
 		super.SetPos(x, y, f);
 		_oldX = x;
 		_oldY = y;
 	}
 
-	public void setOldX(int x) {
+	public void setOldX(final int x) {
 		_oldX = x;
 	}
 
-	public void setOldY(int y) {
+	public void setOldY(final int y) {
 		_oldY = y;
 	}
 

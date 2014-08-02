@@ -35,7 +35,7 @@ final class PackageUtil {
 	 */
 	public static byte[] read(final InputStream inputStream) throws IOException {
 		final int typ = inputStream.read();
-		log.debug("Type is " + typ);
+		log.debug("Type is {}", UPacket.fillHex(typ));
 
 		int lengthHi = 0;
 		int lengthLo = 0;
