@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.clientPackage.SimpleClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuInventory;
 import eu.derbed.openmu.gs.muObjects.MuStoreableItem;
 import eu.derbed.openmu.gs.serverPackets.SMoveItemResult;
@@ -17,7 +18,7 @@ import eu.derbed.openmu.gs.serverPackets.SMoveItemResult;
  * @author Marcel, Miki
  */
 @Header (0x24)
-public class CMoveItemRequest extends SimpleClientPackage {
+class CMoveItemRequest extends SimpleClientPackage {
 //	example 24 00 01 c0 00 16 00 00 00 0c
 
 	// 23 ad 7f 0c
@@ -28,8 +29,8 @@ public class CMoveItemRequest extends SimpleClientPackage {
 	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	protected void process(DataDecrypter dataDecrypter, ClientThread client) throws IOException {
-		byte[] decrypt = dataDecrypter.data;
+	protected void process(final DataDecrypter dataDecrypter, final ClientThread client) throws IOException {
+		final byte[] decrypt = dataDecrypter.data;
 		// Invalid values
 		boolean _result = true;
 		MuInventory _fromInventory = null;
@@ -37,10 +38,10 @@ public class CMoveItemRequest extends SimpleClientPackage {
 		byte[] _itemHex = {0, 0, 0, 0, 0};
 		// 24 00 01 c0 00 16 00 00 00 0c
 		// 24 00 0c e3 00 00 80 00 00 14
-		int _windowFrom = decrypt[1];
-		int _windowTo = decrypt[8];
-		int _slotFrom = decrypt[2];
-		int _slotTo = decrypt[9];
+		final int _windowFrom = decrypt[1];
+		final int _windowTo = decrypt[8];
+		final int _slotFrom = decrypt[2];
+		final int _slotTo = decrypt[9];
 
 		log.debug("Move Item Request : from wid[{}] slot[{}] to wid[{}] slot[{}]", _windowFrom, _slotFrom, _windowTo, _slotTo);
 

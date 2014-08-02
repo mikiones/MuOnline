@@ -11,7 +11,6 @@ import com.notbed.muonline.util.PacketResolver;
 
 import eu.derbed.openmu.gs.clientPackage.CCharacterManipulator;
 import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
-import eu.derbed.openmu.gs.clientPackage.CMoveItemRequest;
 import eu.derbed.openmu.gs.clientPackage.CNpcRunRequest;
 import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 
@@ -45,9 +44,6 @@ public class PacketHandler {
 		logTransfer(log, data, "[C->S]");
 		ClientPackage cp = null;
 		switch (id) {
-			case 0x24:
-				cp = new CMoveItemRequest();
-				break;
 			case 0x26:
 				cp = new CItemUseRequest();
 				break;
