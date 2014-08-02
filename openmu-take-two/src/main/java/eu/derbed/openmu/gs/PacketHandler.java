@@ -42,22 +42,23 @@ public class PacketHandler {
 		// System.out.println("lenght="+data.length);
 		final int id = data[0] & 0xff;
 		logTransfer(log, data, "[C->S]");
-		ClientPackage cp = null;
-		switch (id) {
-			case 0x26:
-				cp = new CItemUseRequest();
-				break;
-			case 0x30:
-				cp = new CNpcRunRequest();
-				break;
-			case 0xf3:
-				cp = new CCharacterManipulator();
-				break;
-				// 24 00 0c e3 00 00 80 00 00 14
-			default:
-//			try the new method!
-				cp = resolver.resolvePacket(data);
+		ClientPackage cp = resolver.resolvePacket(data);
+
+		if (cp == null) { // try old method
+			switch (id) {
+				case 0x26:
+					cp = new CItemUseRequest();
+					break;
+				case 0x30:
+					cp = new CNpcRunRequest();
+					break;
+				case 0xf3:
+					cp = new CCharacterManipulator();
+					break;
+					// 24 00 0c e3 00 00 80 00 00 14
+			}
 		}
+
 		if (null == cp) {
 			log.debug("Unknown implementation " + Integer.toHexString(id));
 		} else {

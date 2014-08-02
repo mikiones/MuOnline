@@ -11,6 +11,7 @@ import java.util.Map;
 import eu.derbed.openmu.gs.commands.CmdGiveSheld;
 import eu.derbed.openmu.gs.commands.CmdHelp;
 import eu.derbed.openmu.gs.commands.CmdMake;
+import eu.derbed.openmu.gs.commands.CmdMake2;
 import eu.derbed.openmu.gs.commands.CmdMobTest;
 import eu.derbed.openmu.gs.commands.CmdOpenTookWnd;
 import eu.derbed.openmu.gs.commands.CmdShowInvSlots;
@@ -23,7 +24,7 @@ import eu.derbed.openmu.gs.commands.GsBaseCommand;
 /**
  * CLass to manage and run commands in server Command Must be type of
  * GsBaseCommand
- * 
+ *
  * @see GsBaseCommand
  * @author Miki i Linka
  */
@@ -39,12 +40,12 @@ public class CommandHandler {
 
 	/**
 	 * registe new command 'com' Com must be type of GSbaseCommand
-	 * 
+	 *
 	 * @see GsBaseCommand
 	 * @param com
 	 *            command to register
 	 */
-	public void registeNewCommand(GsBaseCommand com) {
+	public void registeNewCommand(final GsBaseCommand com) {
 		System.out.println("Register New Command '" + com.getCmdString()
 				+ "'  -   " + com.getShortDesc());
 		_commands.put(com.getCmdString().toLowerCase(), com);
@@ -53,12 +54,12 @@ public class CommandHandler {
 
 	/**
 	 * get help string for selected command
-	 * 
+	 *
 	 * @param Com
 	 *            command
 	 * @return string of help
 	 */
-	public String GetHelpStr(String Com) {
+	public String GetHelpStr(final String Com) {
 		System.out.println("try gethelp  for: '" + Com + "'");
 		final GsBaseCommand commandToExecute = (GsBaseCommand) _commands
 				.get(Com);
@@ -70,7 +71,7 @@ public class CommandHandler {
 
 	/**
 	 * constructor actuali we there added all comand to menager
-	 * 
+	 *
 	 * @ISUASE 1 we can write get command from directory
 	 */
 	private CommandHandler() {
@@ -83,13 +84,14 @@ public class CommandHandler {
 		registeNewCommand(new CmdStartMove());
 		registeNewCommand(new CmdMobTest());
 		registeNewCommand(new CmdMake());
+		registeNewCommand(new CmdMake2());
 		registeNewCommand(new CmdShowInvSlots());
 		System.out.println("=-=-=-=-=- Commands Registring End =-=-=-=-");
 	}
 
 	/**
 	 * geting instace to CommandHandler
-	 * 
+	 *
 	 * @return
 	 */
 	static public CommandHandler getInstancec() {
@@ -101,7 +103,7 @@ public class CommandHandler {
 
 	/**
 	 * run the command
-	 * 
+	 *
 	 * @param _cli
 	 *            clientTheard whos runcommand
 	 * @see ClientThread
@@ -112,7 +114,7 @@ public class CommandHandler {
 	 * @return true if seccesful flase if command dont exist or command
 	 *         returnfalse
 	 */
-	public boolean Execude(ClientThread _cli, String CommandLine) {
+	public boolean Execude(final ClientThread _cli, final String CommandLine) {
 		final String[] commP = CommandLine.toLowerCase().split(" ");
 		final GsBaseCommand commandToExecute = (GsBaseCommand) _commands
 				.get(commP[0]);
