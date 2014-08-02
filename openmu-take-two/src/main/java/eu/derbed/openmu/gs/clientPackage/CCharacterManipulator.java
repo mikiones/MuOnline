@@ -31,9 +31,6 @@ public class CCharacterManipulator implements ClientPackage {
 		}
 		ClientPackage cp = null;
 		switch (id2) {
-			case 0x00:
-				cp = new CCharacterListRequest();
-				break;
 			case 0x01:
 				cp = new CNewCharacterRequest();
 				break;
