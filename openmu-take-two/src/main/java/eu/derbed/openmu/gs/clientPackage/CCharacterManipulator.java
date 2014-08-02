@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.Header;
+import com.notbed.muonline.util.UPacket;
 
 import eu.derbed.openmu.gs.ClientThread;
 
@@ -49,7 +50,7 @@ public class CCharacterManipulator implements ClientPackage {
 				break;
 		}
 		if (null == cp) {
-			log.debug("Failed to identify package.");
+			log.debug("Failed to identify package {}", UPacket.fillHex(id2));
 			return;
 		}
 		log.debug("Package identified: {}", cp.getClass().getSimpleName());

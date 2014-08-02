@@ -37,7 +37,15 @@ public class PacketHandler {
 		this.resolver = resolver;
 	}
 
-	public void handlePacket(final byte[] data) throws IOException {
+	/**
+	 * Synchronized because when entering gates the character sometimes doesn't
+	 * appear on the other side. Synchronizing this doesn't eliminate the problem
+	 * but it does seem to happen less often, investigate this when you have time
+	 *
+	 * @param data
+	 * @throws IOException
+	 */
+	public synchronized void handlePacket(final byte[] data) throws IOException {
 		// int pos = 0;
 		// System.out.println("lenght="+data.length);
 		final int id = data[0] & 0xff;
