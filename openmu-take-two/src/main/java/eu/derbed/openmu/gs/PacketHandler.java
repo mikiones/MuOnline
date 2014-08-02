@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.PacketResolver;
 
 import eu.derbed.openmu.gs.client.ClientPackage;
-import eu.derbed.openmu.gs.clientPackage.CItemUseRequest;
 
 
 /**
@@ -48,21 +47,11 @@ public class PacketHandler {
 		// System.out.println("lenght="+data.length);
 		final int id = data[0] & 0xff;
 		logTransfer(log, data, "[C->S]");
-		ClientPackage cp = resolver.resolvePacket(data);
-
-		if (cp == null) { // try old method
-			switch (id) {
-				case 0x26:
-					cp = new CItemUseRequest();
-					break;
-					// 24 00 0c e3 00 00 80 00 00 14
-			}
-		}
+		final ClientPackage cp = resolver.resolvePacket(data);
 
 		if (null == cp) {
 			log.debug("Unknown implementation " + Integer.toHexString(id));
 		} else {
-			log.debug("Received {}", cp.getClass().getSimpleName());
 			cp.process(data, _client);
 		}
 	}

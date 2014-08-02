@@ -37,6 +37,7 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 		resolver.register(new CDeleteChar());
 		resolver.register(new CSelectedCharacterEnterRequest());
 		resolver.register(new CClientSettingsSaveRequest());
+		resolver.register(new CItemUseRequest());
 	}
 
 	/* (non-Javadoc)
