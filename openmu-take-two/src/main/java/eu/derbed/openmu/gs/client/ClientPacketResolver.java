@@ -4,8 +4,6 @@ import com.notbed.muonline.util.PacketResolver;
 import com.notbed.muonline.util.PacketResolverImpl;
 import com.notbed.muonline.util.RegistrationException;
 
-import eu.derbed.openmu.gs.clientPackage.ClientPackage;
-
 /**
  * @author Alexandru Bledea
  * @since Jul 31, 2014

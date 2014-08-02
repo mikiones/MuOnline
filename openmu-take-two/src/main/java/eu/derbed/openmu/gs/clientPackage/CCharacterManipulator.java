@@ -9,6 +9,7 @@ import com.notbed.muonline.util.Header;
 import com.notbed.muonline.util.UPacket;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.client.ClientPackage;
 
 /**
  * @author Alexandru Bledea

@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.client.ClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuCharacterList;
 import eu.derbed.openmu.gs.serverPackets.SCharacterListAnsfer;
 

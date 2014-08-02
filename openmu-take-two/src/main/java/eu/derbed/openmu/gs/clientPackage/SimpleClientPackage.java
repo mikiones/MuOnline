@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.notbed.muonline.util.DataDecrypter;
 
 import eu.derbed.openmu.gs.ClientThread;
+import eu.derbed.openmu.gs.client.ClientPackage;
 
 /**
  * @author Alexandru Bledea

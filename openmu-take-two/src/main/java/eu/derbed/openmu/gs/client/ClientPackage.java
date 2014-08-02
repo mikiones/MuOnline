@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.clientPackage;
+package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
 

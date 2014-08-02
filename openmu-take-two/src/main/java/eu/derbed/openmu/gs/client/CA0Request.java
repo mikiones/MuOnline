@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
-import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 import eu.derbed.openmu.gs.serverPackets.SInwentoryList;
 import eu.derbed.openmu.gs.serverPackets.SLiveStats;

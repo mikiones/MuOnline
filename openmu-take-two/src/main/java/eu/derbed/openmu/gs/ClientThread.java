@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.MuSocket;
 import com.notbed.muonline.util.PacketResolver;
 
-import eu.derbed.openmu.gs.clientPackage.ClientPackage;
+import eu.derbed.openmu.gs.client.ClientPackage;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
 import eu.derbed.openmu.gs.database.MuCharactersDb;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;

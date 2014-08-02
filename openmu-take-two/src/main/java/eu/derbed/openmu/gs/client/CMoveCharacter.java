@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
-import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 import eu.derbed.openmu.gs.muObjects.MuObject;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 

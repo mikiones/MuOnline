@@ -13,8 +13,8 @@ import com.notbed.muonline.util.RegistrationException;
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.CommandHandler;
 import eu.derbed.openmu.gs.GameServerConfig;
+import eu.derbed.openmu.gs.client.ClientPackage;
 import eu.derbed.openmu.gs.client.ClientPacketResolver;
-import eu.derbed.openmu.gs.clientPackage.ClientPackage;
 import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 
