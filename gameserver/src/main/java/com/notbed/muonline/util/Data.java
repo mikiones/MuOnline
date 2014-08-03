@@ -37,7 +37,7 @@ public class Data {
 	/**
 	 * @return
 	 */
-	public int readC() {
+	public int readUnsignedByte() {
 		return next() & 0xff;
 	}
 }
