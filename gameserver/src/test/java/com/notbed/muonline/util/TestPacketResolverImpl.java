@@ -1,6 +1,8 @@
 package com.notbed.muonline.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -121,10 +123,10 @@ public class TestPacketResolverImpl {
 		resolver.register(p5b590);
 		resolver.register(pc);
 
-		final Packet nothing = resolver.resolvePacket(new byte[]{0x0, 0x5});
+		final Packet nothing = resolver.resolvePacket(data(0x0, 0x5));
 		assertNull(nothing);
 
-		final Packet packet = resolver.resolvePacket(new byte[]{0x5B, 0x60, 0x55});
+		final Packet packet = resolver.resolvePacket(data(0x5B, 0x60, 0x55));
 		assertSame(p5b60, packet);
 	}
 
@@ -134,7 +136,7 @@ public class TestPacketResolverImpl {
 //		[Thread-40] DEBUG PacketHandler - [C->S] 0000: A9 01 00 08                                        ....
 		final PacketResolverImpl<Packet> resolver = new PacketResolverImpl<>(Packet.class);
 		resolver.register(new Packet_0x00());
-		final Packet nothing = resolver.resolvePacket(new byte[]{0x18, 0x01, 0x00, 0x08});
+		final Packet nothing = resolver.resolvePacket(data(0x18, 0x01, 0x00, 0x08));
 		assertNull(nothing);
 	}
 
@@ -149,4 +151,15 @@ public class TestPacketResolverImpl {
 		Assert.assertEquals(c1a, c2a);
 	}
 
+	/**
+	 * @param bytes
+	 * @return
+	 */
+	private static Data data(final int... unsigned) {
+		final byte[] bytes = new byte[unsigned.length];
+		for (int i = 0; i < unsigned.length; i++) {
+			bytes[i] = (byte) unsigned[i];
+		}
+		return new Data(bytes);
+	}
 }

@@ -13,6 +13,6 @@ public interface PacketResolver<T> {
 	 * @param data
 	 * @return
 	 */
-	T resolvePacket(byte[] data);
+	T resolvePacket(final Data data);
 
 }

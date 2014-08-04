@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.Data;
 import com.notbed.muonline.util.MuSocket;
 import com.notbed.muonline.util.PacketResolver;
 
@@ -255,7 +256,7 @@ public class ClientThread extends Thread {
 	 */
 	private void handlePacket(final byte[] data) throws IOException {
 		logTransfer(log, data, "[C->S]");
-		final ClientPackage cp = resolver.resolvePacket(data);
+		final ClientPackage cp = resolver.resolvePacket(new Data(data));
 
 		if (null == cp) {
 			final int id = data[0] & 0xff;

@@ -114,8 +114,7 @@ public final class PacketResolverImpl<T> implements PacketResolver<T> {
 	 */
 	@SuppressWarnings ("unchecked")
 	@Override
-	public T resolvePacket(final byte[] rawData) {
-		final Data data = new Data(rawData);
+	public T resolvePacket(final Data data) {
 		Map<Integer, Object> map = packets;
 		while (data.hasNext()) {
 			final int current = data.readUnsignedByte();

@@ -1,5 +1,6 @@
 package eu.derbed.openmu.gs.client;
 
+import com.notbed.muonline.util.Data;
 import com.notbed.muonline.util.PacketResolver;
 import com.notbed.muonline.util.PacketResolverImpl;
 import com.notbed.muonline.util.RegistrationException;
@@ -41,10 +42,10 @@ public class ClientPacketResolver implements PacketResolver<ClientPackage> {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.notbed.muonline.util.PacketResolver#resolvePacket(byte[])
+	 * @see com.notbed.muonline.util.PacketResolver#resolvePacket(com.notbed.muonline.util.Data)
 	 */
 	@Override
-	public ClientPackage resolvePacket(final byte[] data) {
+	public ClientPackage resolvePacket(final Data data) {
 		return resolver.resolvePacket(data);
 	}
 

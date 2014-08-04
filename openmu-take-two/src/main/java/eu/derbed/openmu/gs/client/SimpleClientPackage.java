@@ -16,7 +16,7 @@ public abstract class SimpleClientPackage implements ClientPackage {
 	 * @see eu.derbed.openmu.gs.clientPackage.ClientPackage#process(byte[], eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	public final void process(byte[] data, ClientThread client) throws IOException {
+	public final void process(final byte[] data, final ClientThread client) throws IOException {
 		process(new DataDecrypter(data), client);
 	}
 
