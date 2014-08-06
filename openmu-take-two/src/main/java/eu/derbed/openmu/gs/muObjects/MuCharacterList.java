@@ -1,6 +1,5 @@
 package eu.derbed.openmu.gs.muObjects;
 
-import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.util.LoggableObject;
 
 /**
@@ -16,12 +15,6 @@ public class MuCharacterList extends LoggableObject {
 	private boolean _needRead = true;
 	private final MuCharacterBase[] _chars = { null, null, null, null, null };
 
-	ClientThread _th = null;
-
-	public MuCharacterList() {
-
-	}
-
 	/**
 	 * get character base fron name
 	 *
@@ -29,7 +22,7 @@ public class MuCharacterList extends LoggableObject {
 	 *            to get
 	 * @return character base
 	 */
-	public MuCharacterBase getChar(String _name) {
+	public MuCharacterBase getChar(final String _name) {
 		for (final MuCharacterBase muCharacterBase : _chars) {
 			if (muCharacterBase != null) {
 				if (muCharacterBase.getName().compareTo(_name) == 0) {
@@ -54,7 +47,7 @@ public class MuCharacterList extends LoggableObject {
 		return i;
 	}
 
-	public boolean addNew(MuCharacterBase c) {
+	public boolean addNew(final MuCharacterBase c) {
 		final int count = getCharsCount();
 		if (count >= 5) {
 			return false;
@@ -65,7 +58,7 @@ public class MuCharacterList extends LoggableObject {
 		return true;
 	}
 
-	public boolean removeChar(String name) {
+	public boolean removeChar(final String name) {
 		byte i;
 		for (i = 0; i < 5; i++) {
 			if (name.equalsIgnoreCase(_chars[i].getName())) {
@@ -80,7 +73,7 @@ public class MuCharacterList extends LoggableObject {
 		}
 	}
 
-	public MuCharacterBase getChar(int nr) {
+	public MuCharacterBase getChar(final int nr) {
 		return _chars[nr];
 	}
 
