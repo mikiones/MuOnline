@@ -3,11 +3,13 @@
  */
 package eu.derbed.openmu.database;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import eu.derbed.openmu.gs.muObjects.MuUser;
+import eu.derbed.util.CallbackException;
 import eu.derbed.util.ICallback;
 import eu.derbed.util.database.PreparedStatementEvaluator;
 
@@ -29,10 +31,10 @@ public class LoadUser extends PreparedStatementEvaluator<MuUser> {
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.derbed.util.ICallback#resultArrived(java.lang.Object)
+	 * @see eu.derbed.util.database.PreparedStatementEvaluator#process(java.sql.ResultSet)
 	 */
 	@Override
-	public void resultArrived(final ResultSet rs) throws Throwable {
+	protected void process(final ResultSet rs) throws SQLException, CallbackException, IOException {
 		MuUser user = null;
 		if (rs.next()) {
 			user = new MuUser(rs.getInt("u_id"), rs.getString("u_user"),

@@ -3,9 +3,11 @@
  */
 package eu.derbed.util.database;
 
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.SQLException;
 
+import eu.derbed.util.CallbackException;
 import eu.derbed.util.LoggableObject;
 
 /**
@@ -19,20 +21,22 @@ public final class DatabaseHelper extends LoggableObject {
 	/**
 	 * @param connectionProvider
 	 */
-	public DatabaseHelper(IConnectionProvider connectionProvider) {
+	public DatabaseHelper(final IConnectionProvider connectionProvider) {
 		this.connectionProvider = connectionProvider;
 	}
 
 	/**
 	 * @param evaluator
-	 * @param callback
-	 * @throws Throwable
+	 * @throws CallbackException
+	 * @throws IOException
 	 */
-	public <S extends Statement, R> void execute(ResultStatementEvaluator<S, R> evaluator) throws Throwable {
+	public <R> void execute(final ResultStatementEvaluator<R> evaluator) throws CallbackException, IOException {
 
 		try (Connection con = connectionProvider.getConnection()) {
-			R evaluate = evaluator.evaluate(con);
+			final R evaluate = evaluator.evaluate(con);
 			evaluator.resultArrived(evaluate);
+		} catch (final SQLException ex) {
+			throw new CallbackException("Failed to work with database", ex);
 		}
 
 	}

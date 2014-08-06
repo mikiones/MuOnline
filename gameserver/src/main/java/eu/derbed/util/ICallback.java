@@ -3,6 +3,7 @@
  */
 package eu.derbed.util;
 
+import java.io.IOException;
 
 /**
  * @author Alexandru Bledea
@@ -12,8 +13,9 @@ public interface ICallback<A> {
 
 	/**
 	 * @param result
-	 * @throws Throwable
+	 * @throws CallbackException
+	 * @throws IOException
 	 */
-	void resultArrived(A result) throws Throwable;
+	void resultArrived(A result) throws CallbackException, IOException;
 
 }

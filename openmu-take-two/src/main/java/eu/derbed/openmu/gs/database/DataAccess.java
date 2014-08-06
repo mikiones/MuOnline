@@ -3,7 +3,7 @@
  */
 package eu.derbed.openmu.gs.database;
 
-import java.sql.Statement;
+import java.io.IOException;
 
 import eu.derbed.util.database.IConnectionProvider;
 import eu.derbed.util.database.ResultStatementEvaluator;
@@ -17,6 +17,6 @@ public interface DataAccess extends IConnectionProvider {
 	/**
 	 * @param evaluator
 	 */
-	<S extends Statement, R> void execute(final ResultStatementEvaluator<S, R> evaluator);
+	<R> void execute(final ResultStatementEvaluator<R> evaluator) throws IOException;
 
 }

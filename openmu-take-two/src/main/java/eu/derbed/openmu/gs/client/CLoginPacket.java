@@ -4,6 +4,8 @@ import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_AccInvalt;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_InvaltPassword;
 import static eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer.PA_PassOK;
 
+import java.io.IOException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import eu.derbed.openmu.database.LoadUser;
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;
+import eu.derbed.util.CallbackException;
 import eu.derbed.util.ICallback;
 
 /**
@@ -31,7 +34,7 @@ class CLoginPacket extends SimpleClientPackage {
 	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(eu.derbed.openmu.gs.clientPackage.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	protected void process(final DataDecrypter decrypter, final ClientThread client) {
+	protected void process(final DataDecrypter decrypter, final ClientThread client) throws IOException {
 		UPacket.logTransfer(log, decrypter.data);
 		decrypter.dec3bit(2, 10);
 		decrypter.dec3bit(12, 10);
@@ -45,8 +48,11 @@ class CLoginPacket extends SimpleClientPackage {
 
 		client.getDataAccess().execute(new LoadUser(username, new ICallback<MuUser>() {
 
+			/* (non-Javadoc)
+			 * @see eu.derbed.util.ICallback#resultArrived(java.lang.Object)
+			 */
 			@Override
-			public void resultArrived(final MuUser user) throws Throwable {
+			public void resultArrived(final MuUser user) throws CallbackException, IOException {
 
 				final byte response;
 

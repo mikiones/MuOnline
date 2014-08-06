@@ -3,11 +3,13 @@
  */
 package eu.derbed.util.database;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import eu.derbed.util.CallbackException;
 import eu.derbed.util.ICallback;
 
 /**
@@ -50,5 +52,22 @@ public abstract class PreparedStatementEvaluator<Q> extends ResultStatementEvalu
 	protected final ResultSet evaluate(final PreparedStatement stmt) throws SQLException {
 		return stmt.executeQuery();
 	}
+
+	/* (non-Javadoc)
+	 * @see eu.derbed.util.ICallback#resultArrived(java.lang.Object)
+	 */
+	@Override
+	public final void resultArrived(final ResultSet result) throws CallbackException, IOException {
+		try {
+			process(result);
+		} catch (final SQLException ex) {
+			throw new CallbackException("Failed to process resultset", ex);
+		}
+	}
+
+	/**
+	 * @param result
+	 */
+	protected abstract void process(final ResultSet result) throws SQLException, CallbackException, IOException;
 
 }

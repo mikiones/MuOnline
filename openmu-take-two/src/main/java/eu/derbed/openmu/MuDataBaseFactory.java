@@ -2,6 +2,7 @@ package eu.derbed.openmu;
 
 //~--- non-JDK imports --------------------------------------------------------
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,6 +14,7 @@ import com.mchange.v2.c3p0.DataSources;
 
 import eu.derbed.openmu.gs.GameServerConfig;
 import eu.derbed.openmu.gs.database.DataAccess;
+import eu.derbed.util.CallbackException;
 import eu.derbed.util.database.DatabaseHelper;
 import eu.derbed.util.database.ResultStatementEvaluator;
 
@@ -76,14 +78,14 @@ class MuDataBaseFactory implements DataAccess {
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.database.DataAccess#execute(eu.derbed.util.database.ResultStatementEvaluator)
+	 * @see eu.derbed.openmu.MuDataBaseFactory#execute(eu.derbed.util.database.ResultStatementEvaluator)
 	 */
 	@Override
-	public <S extends Statement, R> void execute(final ResultStatementEvaluator<S, R> evaluator) {
+	public <R> void execute(final ResultStatementEvaluator<R> evaluator) throws IOException {
 		try {
 			dbhelper.execute(evaluator);
-		} catch (final Throwable e) {
-			throw new IllegalStateException("Failed to execute query.", e);
+		} catch (final CallbackException e) {
+			throw new IOException("Failed to execute the callback", e);
 		}
 	}
 
