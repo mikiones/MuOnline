@@ -14,7 +14,7 @@ import eu.derbed.util.ICallback;
  * @author Alexandru Bledea
  * @since Dec 21, 2013
  */
-public abstract class PreparedStatementEvaluator<Q> extends ResultStatementEvaluator<PreparedStatement, ResultSet> {
+public abstract class PreparedStatementEvaluator<Q> extends ResultStatementEvaluator<ResultSet> {
 
 	protected final ICallback<Q> callback;
 
