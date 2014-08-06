@@ -5,6 +5,7 @@ package eu.derbed.util.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import eu.derbed.util.ICallback;
@@ -13,7 +14,7 @@ import eu.derbed.util.ICallback;
  * @author Alexandru Bledea
  * @since Dec 21, 2013
  */
-public abstract class PreparedStatementEvaluator<R, Q> extends ResultStatementEvaluator<PreparedStatement, R> {
+public abstract class PreparedStatementEvaluator<Q> extends ResultStatementEvaluator<PreparedStatement, ResultSet> {
 
 	protected final ICallback<Q> callback;
 
@@ -21,7 +22,7 @@ public abstract class PreparedStatementEvaluator<R, Q> extends ResultStatementEv
 	 * @param query
 	 * @param callback
 	 */
-	public PreparedStatementEvaluator(String query, ICallback<Q> callback) {
+	public PreparedStatementEvaluator(final String query, final ICallback<Q> callback) {
 		super(query);
 		this.callback = callback;
 	}
@@ -30,8 +31,8 @@ public abstract class PreparedStatementEvaluator<R, Q> extends ResultStatementEv
 	 * @see eu.derbed.openmu.utils.database.ResultStatementEvaluator#createStatement(java.sql.Connection)
 	 */
 	@Override
-	protected final PreparedStatement createStatement(Connection parameter) throws SQLException {
-		PreparedStatement prepareStatement = parameter.prepareStatement(query);
+	protected final PreparedStatement createStatement(final Connection parameter) throws SQLException {
+		final PreparedStatement prepareStatement = parameter.prepareStatement(query);
 		setParameters(prepareStatement);
 		return prepareStatement;
 	}
@@ -41,5 +42,13 @@ public abstract class PreparedStatementEvaluator<R, Q> extends ResultStatementEv
 	 * @throws SQLException
 	 */
 	protected abstract void setParameters(PreparedStatement stmt) throws SQLException;
+
+	/* (non-Javadoc)
+	 * @see eu.derbed.util.database.ResultStatementEvaluator#evaluate(java.sql.Statement)
+	 */
+	@Override
+	protected final ResultSet evaluate(final PreparedStatement stmt) throws SQLException {
+		return stmt.executeQuery();
+	}
 
 }

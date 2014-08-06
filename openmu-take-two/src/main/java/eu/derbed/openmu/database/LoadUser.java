@@ -9,13 +9,13 @@ import java.sql.SQLException;
 
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.util.ICallback;
-import eu.derbed.util.database.RsStmtEval;
+import eu.derbed.util.database.PreparedStatementEvaluator;
 
 /**
  * @author Alexandru Bledea
  * @since Dec 21, 2013
  */
-public class LoadUser extends RsStmtEval<MuUser> {
+public class LoadUser extends PreparedStatementEvaluator<MuUser> {
 
 	private final String name;
 
@@ -23,7 +23,7 @@ public class LoadUser extends RsStmtEval<MuUser> {
 	 * @param name
 	 * @param callback
 	 */
-	public LoadUser(String name, ICallback<MuUser> callback) {
+	public LoadUser(final String name, final ICallback<MuUser> callback) {
 		super("SELECT * FROM users where u_user=?", callback);
 		this.name = name;
 	}
@@ -32,7 +32,7 @@ public class LoadUser extends RsStmtEval<MuUser> {
 	 * @see eu.derbed.util.ICallback#resultArrived(java.lang.Object)
 	 */
 	@Override
-	public void resultArrived(ResultSet rs) throws Throwable {
+	public void resultArrived(final ResultSet rs) throws Throwable {
 		MuUser user = null;
 		if (rs.next()) {
 			user = new MuUser(rs.getInt("u_id"), rs.getString("u_user"),
@@ -47,7 +47,7 @@ public class LoadUser extends RsStmtEval<MuUser> {
 	 * @see eu.derbed.util.database.PreparedStatementEvaluator#setParameters(java.sql.PreparedStatement)
 	 */
 	@Override
-	protected void setParameters(PreparedStatement stmt) throws SQLException {
+	protected void setParameters(final PreparedStatement stmt) throws SQLException {
 		stmt.setString(1, name);
 	}
 
