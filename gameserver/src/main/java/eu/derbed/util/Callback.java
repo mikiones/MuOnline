@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author Alexandru Bledea
  * @since Dec 21, 2013
  */
-public interface ICallback<A> {
+public interface Callback<A> {
 
 	/**
 	 * @param result

@@ -9,8 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import eu.derbed.util.Callback;
+import eu.derbed.util.CallbackAdapter;
 import eu.derbed.util.CallbackException;
-import eu.derbed.util.ICallback;
 
 /**
  * @author Alexandru Bledea
@@ -18,15 +19,22 @@ import eu.derbed.util.ICallback;
  */
 public abstract class PreparedStatementEvaluator<Q> extends ResultStatementEvaluator<ResultSet> {
 
-	protected final ICallback<Q> callback;
+	protected final Callback<Q> callback;
+
+	/**
+	 * @param query
+	 */
+	public PreparedStatementEvaluator(final String query) {
+		this(query, null);
+	}
 
 	/**
 	 * @param query
 	 * @param callback
 	 */
-	public PreparedStatementEvaluator(final String query, final ICallback<Q> callback) {
+	public PreparedStatementEvaluator(final String query, final Callback<Q> callback) {
 		super(query);
-		this.callback = callback;
+		this.callback = CallbackAdapter.maybeWrap(callback);
 	}
 
 	/* (non-Javadoc)

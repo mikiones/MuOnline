@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.util.CallbackException;
-import eu.derbed.util.ICallback;
+import eu.derbed.util.Callback;
 import eu.derbed.util.database.PreparedStatementEvaluator;
 
 /**
@@ -25,7 +25,7 @@ public class LoadUser extends PreparedStatementEvaluator<MuUser> {
 	 * @param name
 	 * @param callback
 	 */
-	public LoadUser(final String name, final ICallback<MuUser> callback) {
+	public LoadUser(final String name, final Callback<MuUser> callback) {
 		super("SELECT * FROM users where u_user=?", callback);
 		this.name = name;
 	}

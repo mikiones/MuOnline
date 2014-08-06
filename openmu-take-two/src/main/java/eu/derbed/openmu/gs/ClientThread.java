@@ -4,7 +4,6 @@ import static com.notbed.muonline.util.UPacket.logTransfer;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,11 +16,11 @@ import com.notbed.muonline.util.MuSocket;
 import com.notbed.muonline.util.PacketResolver;
 
 import eu.derbed.openmu.MuApplication;
+import eu.derbed.openmu.database.LoadCharacterList;
 import eu.derbed.openmu.gs.client.ClientPackage;
 import eu.derbed.openmu.gs.database.DataAccess;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
 import eu.derbed.openmu.gs.database.MuCharactersDb;
-import eu.derbed.openmu.gs.muObjects.MuCharacterBase;
 import eu.derbed.openmu.gs.muObjects.MuCharacterInventory;
 import eu.derbed.openmu.gs.muObjects.MuCharacterList;
 import eu.derbed.openmu.gs.muObjects.MuCharacterWear;
@@ -156,31 +155,8 @@ public class ClientThread extends Thread {
 	 * @throws java.io.IOException
 	 */
 	public void readCharacterList() throws IOException {
-
-		final int ilosc_p = user.getCh_c();
 		final int id = user.getId();
-
-		try (Connection con = application.getConnection()) {
-//			close
-			final PreparedStatement statement = con
-					.prepareStatement("select * from " + MuCharactersDb.CH_TAB
-							+ " where " + MuCharactersDb.US_ID + " =?");
-			statement.setInt(1, id);
-//			close
-			final ResultSet rset = statement.executeQuery();
-			for (int i = 0; i < ilosc_p; i++) {
-				if (rset.next()) {
-					ChList.addNew(new MuCharacterBase(rset.getString(
-							MuCharactersDb.CH_NAME).trim(), rset
-							.getInt(MuCharactersDb.CH_LVL), rset
-							.getInt(MuCharactersDb.CH_CLASS), i,
-							new MuCharacterWear()));
-				}
-			}
-			con.close(); // properly close
-		} catch (final SQLException e) {
-			throw new IOException("Failed to load character list", e);
-		}
+		application.getDataAccess().execute(new LoadCharacterList(id, ChList));
 		ChList.noNeedRead();
 	}
 

@@ -7,13 +7,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import eu.derbed.util.ICallback;
+import eu.derbed.util.Callback;
 
 /**
  * @author Alexandru Bledea
  * @since Dec 21, 2013
  */
-public abstract class ResultStatementEvaluator<R> implements IConnectionEvaluator<R>, ICallback<R> {
+public abstract class ResultStatementEvaluator<R> implements IConnectionEvaluator<R>, Callback<R> {
 
 	protected final String query;
 

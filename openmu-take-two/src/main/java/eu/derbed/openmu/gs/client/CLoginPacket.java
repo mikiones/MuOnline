@@ -20,7 +20,7 @@ import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;
 import eu.derbed.util.CallbackException;
-import eu.derbed.util.ICallback;
+import eu.derbed.util.Callback;
 
 /**
  *
@@ -46,7 +46,7 @@ class CLoginPacket extends SimpleClientPackage {
 
 		log.debug("Authentication request received [user: '{}', password: '{}']", username, password);
 
-		client.getDataAccess().execute(new LoadUser(username, new ICallback<MuUser>() {
+		client.getDataAccess().execute(new LoadUser(username, new Callback<MuUser>() {
 
 			/* (non-Javadoc)
 			 * @see eu.derbed.util.ICallback#resultArrived(java.lang.Object)
