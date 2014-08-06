@@ -16,10 +16,11 @@ import com.notbed.muonline.util.Data;
 import com.notbed.muonline.util.MuSocket;
 import com.notbed.muonline.util.PacketResolver;
 
+import eu.derbed.openmu.MuApplication;
 import eu.derbed.openmu.gs.client.ClientPackage;
+import eu.derbed.openmu.gs.database.DataAccess;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
 import eu.derbed.openmu.gs.database.MuCharactersDb;
-import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuCharacterBase;
 import eu.derbed.openmu.gs.muObjects.MuCharacterInventory;
 import eu.derbed.openmu.gs.muObjects.MuCharacterList;
@@ -72,7 +73,7 @@ public class ClientThread extends Thread {
 	 *
 	 * @param i
 	 */
-	public void setActiveNpc(MuNpcInstance i) {
+	public void setActiveNpc(final MuNpcInstance i) {
 		_activeNpc = i;
 	}
 
@@ -93,18 +94,21 @@ public class ClientThread extends Thread {
 
 	private final PacketResolver<ClientPackage> resolver;
 
+	private final MuApplication application;
+
 	/**
 	 * constructor
 	 *
 	 * @param client
 	 *            Socket to connect to client
-	 * @param resolver
+	 * @param application
 	 * @throws java.io.IOException
 	 */
-	public ClientThread(final Socket client, final PacketResolver<ClientPackage> resolver) throws IOException {
+	public ClientThread(final Socket client, final MuApplication application) throws IOException {
 
 		_connection = new MuSocket(client);
-		this.resolver = resolver;
+		this.resolver = application.getResolver();
+		this.application = application;
 		_world = MuWorld.getInstance();
 
 		start();
@@ -156,7 +160,7 @@ public class ClientThread extends Thread {
 		final int ilosc_p = user.getCh_c();
 		final int id = user.getId();
 
-		try (Connection con = MuDataBaseFactory.getInstance().getConnection()) {
+		try (Connection con = application.getConnection()) {
 //			close
 			final PreparedStatement statement = con
 					.prepareStatement("select * from " + MuCharactersDb.CH_TAB
@@ -183,7 +187,7 @@ public class ClientThread extends Thread {
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(MuUser user) {
+	public void setUser(final MuUser user) {
 		this.user = user;
 	}
 
@@ -209,14 +213,14 @@ public class ClientThread extends Thread {
 				// System.out.println("odebralem");
 
 			}
-		} catch (Throwable t) {
-			String username = user == null ? "" : user.getUser();
-			String message = String.format("Client thread [%s] encountered an error", username.trim());
+		} catch (final Throwable t) {
+			final String username = user == null ? "" : user.getUser();
+			final String message = String.format("Client thread [%s] encountered an error", username.trim());
 			log.error(message, t);
 		} finally {
 			try {
 				if (_activeChar != null) // this should only happen on
-				// connection loss
+					// connection loss
 				{
 					// notify the world about our disconnect
 					_activeChar.deleteMe();
@@ -233,7 +237,7 @@ public class ClientThread extends Thread {
 			} finally {
 				try {
 					_connection.close();
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					log.error("Failed to close client", e);
 				}
 				// remove the account
@@ -242,7 +246,7 @@ public class ClientThread extends Thread {
 		}
 		IdFactory.getInstance().deleteId(_idConection);
 
-		String username = user == null ? "" : user.getUser();
+		final String username = user == null ? "" : user.getUser();
 		log.info("Client Thread [{}] stopped.", username.trim());
 	}
 
@@ -277,7 +281,7 @@ public class ClientThread extends Thread {
 	 * @Isuasse 1 storge inwentory, skills, settings
 	 * @param char1
 	 */
-	private void saveCharToDataBase(MuPcInstance char1) {
+	private void saveCharToDataBase(final MuPcInstance char1) {
 		storeChar(char1);
 		// storeInventory(cha);
 		// storeSkills(cha);
@@ -293,7 +297,7 @@ public class ClientThread extends Thread {
 	 * @ISuase1 Critical Need implementation
 	 * @param char1
 	 */
-	private void storeChar(MuPcInstance char1) {
+	private void storeChar(final MuPcInstance char1) {
 //		AAA actually store character
 		log.info("Character data stored in database");
 
@@ -305,9 +309,10 @@ public class ClientThread extends Thread {
 	 * @param char_name
 	 * @param char_class
 	 * @return boolean
+	 * @throws SQLException
 	 */
-	public boolean storeNewChar(int id, String name, int clas) {
-		final MuCharacterListDB cdb = new MuCharacterListDB(id);
+	public boolean storeNewChar(final int id, final String name, final int clas) throws SQLException {
+		final MuCharacterListDB cdb = new MuCharacterListDB(id, application.getConnection());
 		return cdb.addNewCharacter(name, clas);
 	}
 
@@ -316,7 +321,7 @@ public class ClientThread extends Thread {
 	 *
 	 * @param loginName
 	 */
-	public void setLoginName(String loginName) {
+	public void setLoginName(final String loginName) {
 		_loginName = loginName;
 	}
 
@@ -328,12 +333,12 @@ public class ClientThread extends Thread {
 	 *            of character to restore
 	 * @return new pcinstane obiect
 	 */
-	private MuPcInstance restoreChar(String name) {
+	private MuPcInstance restoreChar(final String name) {
 		final MuPcInstance oldChar = new MuPcInstance();
 		oldChar.setNetConnection(getConnection());
 		try {
 			java.sql.Connection con = null;
-			con = MuDataBaseFactory.getInstance().getConnection();
+			con = application.getConnection();
 			final PreparedStatement statement = con
 					.prepareStatement("select*  from " + MuCharactersDb.CH_TAB
 							+ " where " + MuCharactersDb.CH_NAME + " = '"
@@ -382,7 +387,7 @@ public class ClientThread extends Thread {
 	 *            name of selected character
 	 * @return
 	 */
-	public MuPcInstance loadCharFromDisk(String selected) {
+	public MuPcInstance loadCharFromDisk(final String selected) {
 		MuPcInstance character = new MuPcInstance();
 		character.setNetConnection(_connection);
 
@@ -410,7 +415,7 @@ public class ClientThread extends Thread {
 	 * @Isuase Critic: Implementation
 	 * @param character
 	 */
-	private void restoreWarehouse(MuPcInstance character) {
+	private void restoreWarehouse(final MuPcInstance character) {
 		// TODO Auto-generated method stub
 	}
 
@@ -420,7 +425,7 @@ public class ClientThread extends Thread {
 	 * @Isuase 1 Now get default value Must to get data from DB
 	 * @param character
 	 */
-	private void restoreShortCuts(MuPcInstance character) {
+	private void restoreShortCuts(final MuPcInstance character) {
 		_clientSettings = new MuClientSettings();
 		_clientSettings.LoadDefault();
 
@@ -432,7 +437,7 @@ public class ClientThread extends Thread {
 	 * @ISUASE 1 CRITIC: Imlementation
 	 * @param character
 	 */
-	private void restoreSkills(MuPcInstance character) {
+	private void restoreSkills(final MuPcInstance character) {
 		// TODO Auto-generated method stub
 	}
 
@@ -442,7 +447,7 @@ public class ClientThread extends Thread {
 	 * @ISUASE 1 CRITIC: Implementation
 	 * @param character
 	 */
-	private void restoreInventory(MuPcInstance character) {
+	private void restoreInventory(final MuPcInstance character) {
 		final MuCharacterInventory inw = new MuCharacterInventory();
 		// inw.storeItem(new MuStoreableItem(inw.InventoryWindow, 1, new
 		// MuItemHex().MakeItem(1, 1, 20, 1, 1, 1, false, false)));
@@ -456,7 +461,7 @@ public class ClientThread extends Thread {
 	 * @param cha
 	 *            character chose in character list to play
 	 */
-	public void setActiveChar(MuPcInstance cha) {
+	public void setActiveChar(final MuPcInstance cha) {
 		_activeChar = cha;
 		if (cha != null) {
 			// we store the connection in the player object so that external
@@ -500,5 +505,12 @@ public class ClientThread extends Thread {
 
 		log.info("Client Settings saved in DB!");
 
+	}
+
+	/**
+	 * @return
+	 */
+	public DataAccess getDataAccess() {
+		return application.getDataAccess();
 	}
 }

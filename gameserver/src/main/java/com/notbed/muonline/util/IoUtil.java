@@ -2,6 +2,8 @@ package com.notbed.muonline.util;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import org.slf4j.Logger;
@@ -16,7 +18,7 @@ public final class IoUtil {
 	private static final Logger log = LoggerFactory.getLogger(IoUtil.class);
 
 	/**
-	 * 
+	 *
 	 */
 	private IoUtil() {
 	}
@@ -34,9 +36,23 @@ public final class IoUtil {
 			}
 			try {
 				closeable.close();
-			} catch (IOException ex) {
+			} catch (final IOException ex) {
 				log.error("Failed to close " + closeable.getClass(), ex);
 			}
+		}
+	}
+
+	/**
+	 * @param closeables
+	 */
+	public static void close(final Connection connection) {
+		if (null == connection) {
+			return;
+		}
+		try {
+			connection.close();
+		} catch (final SQLException ex) {
+			log.error("Failed to close database connection", ex);
 		}
 	}
 

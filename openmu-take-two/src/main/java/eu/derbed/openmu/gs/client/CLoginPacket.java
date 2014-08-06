@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
+import com.notbed.muonline.util.UPacket;
 import com.notbed.muonline.util.UString;
 
 import eu.derbed.openmu.database.LoadUser;
 import eu.derbed.openmu.gs.ClientThread;
-import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.serverPackets.SLoginAuthAnsfer;
 import eu.derbed.util.ICallback;
@@ -32,9 +32,10 @@ class CLoginPacket extends SimpleClientPackage {
 	 */
 	@Override
 	protected void process(final DataDecrypter decrypter, final ClientThread client) {
+		UPacket.logTransfer(log, decrypter.data);
 		decrypter.dec3bit(2, 10);
 		decrypter.dec3bit(12, 10);
-
+		UPacket.logTransfer(log, decrypter.data);
 		decrypter.logTransfer(log);
 
 		final String username = decrypter.readS(2, 10);
@@ -42,10 +43,10 @@ class CLoginPacket extends SimpleClientPackage {
 
 		log.debug("Authentication request received [user: '{}', password: '{}']", username, password);
 
-		MuDataBaseFactory.execute(new LoadUser(username, new ICallback<MuUser>() {
+		client.getDataAccess().execute(new LoadUser(username, new ICallback<MuUser>() {
 
 			@Override
-			public void resultArrived(MuUser user) throws Throwable {
+			public void resultArrived(final MuUser user) throws Throwable {
 
 				final byte response;
 

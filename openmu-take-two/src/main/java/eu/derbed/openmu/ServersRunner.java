@@ -31,7 +31,7 @@ public class ServersRunner {
 		final ServersRunner s = new ServersRunner();
 		s.PreareSettings();
 
-		final GameServer gs = new GameServer();
+		final OldGameServer gs = new OldGameServer();
 		final FS fs = new FS();
 //	 gs.start();
 		fs.start();

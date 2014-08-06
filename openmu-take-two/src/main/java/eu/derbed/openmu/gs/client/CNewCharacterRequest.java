@@ -1,6 +1,7 @@
 package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +36,15 @@ class CNewCharacterRequest extends SimpleClientPackage {
 		final MuCharacterBase newCB = new MuCharacterBase(_name, 1, _class,
 				position, new MuCharacterWear());
 
-		final boolean success = client.storeNewChar(client.getUser().getId(),
-				_name, _class);
-		if (success) {
-			client.getChList().addNew(newCB);
+		boolean success = false;
+		try {
+			success = client.storeNewChar(client.getUser().getId(),
+					_name, _class);
+			if (success) {
+				client.getChList().addNew(newCB);
+			}
+		} catch (final SQLException ex) {
+			log.error("Failed to store new character", ex);
 		}
 		client.getConnection().sendPacket(
 				new SNewCharacterAnsfer(newCB, success, position));

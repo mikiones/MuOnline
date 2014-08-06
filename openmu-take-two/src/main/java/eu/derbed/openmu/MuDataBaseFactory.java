@@ -1,4 +1,4 @@
-package eu.derbed.openmu.gs.database;
+package eu.derbed.openmu;
 
 //~--- non-JDK imports --------------------------------------------------------
 
@@ -12,26 +12,24 @@ import javax.sql.DataSource;
 import com.mchange.v2.c3p0.DataSources;
 
 import eu.derbed.openmu.gs.GameServerConfig;
+import eu.derbed.openmu.gs.database.DataAccess;
 import eu.derbed.util.database.DatabaseHelper;
-import eu.derbed.util.database.IConnectionProvider;
 import eu.derbed.util.database.ResultStatementEvaluator;
 
-public class MuDataBaseFactory implements IConnectionProvider {
+class MuDataBaseFactory implements DataAccess {
 
 	private final String driver;
 	private final String url;
 	private final String username;
 	private final String password;
 
-	private static MuDataBaseFactory _instance;
-
 	private final DatabaseHelper dbhelper;
 
 	private DataSource _source;
 	private Statement _syst;
 
-	public MuDataBaseFactory() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		Properties db = GameServerConfig.databse;
+	public MuDataBaseFactory() {
+		final Properties db = GameServerConfig.databse;
 		driver = db.getProperty("driver");
 		url = db.getProperty("url");
 		username = db.getProperty("user");
@@ -60,32 +58,13 @@ public class MuDataBaseFactory implements IConnectionProvider {
 			// _source.close();
 			_source.getConnection().close();
 
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			String message = "Failed to connect to '%s' using user '%s', password '%s', driver '%s'";
 			message = String.format(message, url, username, password, driver);
 			throw new IllegalStateException(message, t);
 		}
 
 		dbhelper = new DatabaseHelper(this);
-	}
-
-	public static MuDataBaseFactory getInstance() throws SQLException {
-		if (_instance == null) {
-			throw new IllegalStateException("MuDataBaseFactory not initialized!");
-		}
-
-		return _instance;
-	}
-
-	/**
-	 *
-	 */
-	public static void initiate() {
-		try {
-			_instance = new MuDataBaseFactory();
-		} catch (Throwable t) {
-			throw new IllegalStateException("Failed to initiate Database factory", t);
-		}
 	}
 
 	/* (non-Javadoc)
@@ -96,13 +75,14 @@ public class MuDataBaseFactory implements IConnectionProvider {
 		return _source.getConnection();
 	}
 
-	/**
-	 * @param evaluator
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.gs.database.DataAccess#execute(eu.derbed.util.database.ResultStatementEvaluator)
 	 */
-	public static <S extends Statement, R> void execute(ResultStatementEvaluator<S, R> evaluator) {
+	@Override
+	public <S extends Statement, R> void execute(final ResultStatementEvaluator<S, R> evaluator) {
 		try {
-			getInstance().dbhelper.execute(evaluator);
-		} catch (Throwable e) {
+			dbhelper.execute(evaluator);
+		} catch (final Throwable e) {
 			throw new IllegalStateException("Failed to execute query.", e);
 		}
 	}
@@ -112,4 +92,3 @@ public class MuDataBaseFactory implements IConnectionProvider {
 	}
 }
 
-// ~ Formatted by Jindent --- http://www.jindent.com

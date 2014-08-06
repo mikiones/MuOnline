@@ -3,38 +3,41 @@ package eu.derbed.openmu;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.notbed.muonline.util.PacketResolver;
 import com.notbed.muonline.util.RegistrationException;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.CommandHandler;
 import eu.derbed.openmu.gs.GameServerConfig;
-import eu.derbed.openmu.gs.client.ClientPackage;
-import eu.derbed.openmu.gs.client.ClientPacketResolver;
-import eu.derbed.openmu.gs.database.MuDataBaseFactory;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 
-public class GameServer {
+public class OldGameServer {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	private final PacketResolver<ClientPackage> resolver;
 
 	// Socket listener
 
 	private ServerSocket _serverSocket;
 	public static int _port;
 
+	private final MuApplication app;
+
 	/**
 	 * @throws IOException
 	 * @throws RegistrationException
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public GameServer() throws IOException, RegistrationException {
+	public OldGameServer()
+			throws IOException, RegistrationException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
-		this.resolver = new ClientPacketResolver();
+		app = new MuApplication(new MuDataBaseFactory());
 
 		log.info("WorkingDir: " + System.getProperty("user.dir"));
 
@@ -54,8 +57,8 @@ public class GameServer {
 			final InetAddress adr = InetAddress.getByName(hostname);
 //			_ip = adr.getHostAddress();
 			_serverSocket = new ServerSocket(_port, 50, adr);
-			log.info("GameServer Listening on port " + _port);
 			// application.AddLog("GameServer listening on IP:" + _ip + " Port "
+			log.info("GameServer Listening on port " + _port);
 			// + _port);
 		} else {
 			_serverSocket = new ServerSocket(_port);
@@ -81,11 +84,10 @@ public class GameServer {
 			MuWorld.getInstance().InitGates();
 			CommandHandler.getInstancec();
 
-			MuDataBaseFactory.initiate();
 
 			while (true) {
 				try {
-					new ClientThread(_serverSocket.accept(), resolver);
+					new ClientThread(_serverSocket.accept(), app);
 				} catch (final IOException e) {
 					// not a real problem
 				}

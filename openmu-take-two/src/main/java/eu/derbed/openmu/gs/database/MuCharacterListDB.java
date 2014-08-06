@@ -4,6 +4,7 @@
  */
 package eu.derbed.openmu.gs.database;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * 
+ *
  * @author Miki i Linka
  */
 public class MuCharacterListDB {
@@ -30,29 +31,29 @@ public class MuCharacterListDB {
 	// connection to database
 	java.sql.Connection con = null;
 
-	public MuCharacterListDB(int UserIdInDatabase) {
+	/**
+	 * @param UserIdInDatabase
+	 * @param con
+	 */
+	public MuCharacterListDB(final int UserIdInDatabase, final Connection con) {
 		_userId = UserIdInDatabase;
-		try {
-			con = MuDataBaseFactory.getInstance().getConnection();
-		} catch (final SQLException ex) {
-			Logger.getLogger(MuCharacterListDB.class.getName()).log(
-					Level.SEVERE, null, ex);
-		}
+		this.con = con;
 	}
 
 	/**
 	 * get the template stats fo new character
-	 * 
+	 *
 	 * @param classCode
 	 * @return
 	 */
-	private BasicStat getBaseStats(int classCode) {
+	private BasicStat getBaseStats(final int classCode) {
 		final BasicStat t = new BasicStat();
 		try {
 			final PreparedStatement statement = con
 					.prepareStatement("SELECT *  from chatacter_base_stats where ch_base_class ="
 							+ classCode);
 
+//			AAA close this
 			final ResultSet rset = statement.executeQuery();
 			if (!rset.next()) {
 				System.out.println("Wrong CharCode " + classCode);
@@ -76,11 +77,11 @@ public class MuCharacterListDB {
 
 	/**
 	 * check avalible nick
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
-	private boolean isNickAvailable(String name) {
+	private boolean isNickAvailable(final String name) {
 		boolean success = false;
 		try {
 
@@ -106,7 +107,7 @@ public class MuCharacterListDB {
 
 	/**
 	 * getspaces availbele
-	 * 
+	 *
 	 * @return
 	 */
 	private int getAvailableSpace() {
@@ -131,12 +132,12 @@ public class MuCharacterListDB {
 
 	/**
 	 * added new character todatabase
-	 * 
+	 *
 	 * @param name
 	 * @param classCode
 	 * @return true when done
 	 */
-	public boolean addNewCharacter(String name, int classCode) {
+	public boolean addNewCharacter(final String name, final int classCode) {
 		boolean success = false;
 		PreparedStatement statement;
 		// firs check aailible name
@@ -190,7 +191,7 @@ public class MuCharacterListDB {
 						statement.close();
 					} catch (final SQLException ex) {
 						Logger.getLogger(MuCharacterListDB.class.getName())
-								.log(Level.SEVERE, null, ex);
+						.log(Level.SEVERE, null, ex);
 					}
 				}
 			}
@@ -200,11 +201,11 @@ public class MuCharacterListDB {
 
 	/**
 	 * removing character from Database
-	 * 
+	 *
 	 * @param name
 	 * @return true when done
 	 */
-	public boolean removeCharacterFromDB(String name) {
+	public boolean removeCharacterFromDB(final String name) {
 		boolean success = false;
 		try {
 

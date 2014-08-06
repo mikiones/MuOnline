@@ -1,9 +1,12 @@
 package eu.derbed.openmu.gs.client;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
+import com.notbed.muonline.util.IoUtil;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
@@ -18,10 +21,10 @@ import eu.derbed.openmu.gs.serverPackets.SDeleteChar;
 class CDeleteChar extends SimpleClientPackage {
 
 	/* (non-Javadoc)
-	 * @see eu.derbed.openmu.gs.clientPackage.SimpleClientPackage#process(com.notbed.muonline.util.DataDecrypter, eu.derbed.openmu.gs.ClientThread)
+	 * @see eu.derbed.openmu.gs.client.ClientPackage#process(com.notbed.muonline.util.Data, eu.derbed.openmu.gs.ClientThread)
 	 */
 	@Override
-	protected void process(final DataDecrypter decrypter, final ClientThread _client) throws IOException {
+	public void process(final DataDecrypter decrypter, final ClientThread _client) throws IOException {
 		String p_code = _client.getUser().getChCode();
 		// TODO sometimes if its nathing set i DB there is null so w relace it
 		// as ""
@@ -41,9 +44,17 @@ class CDeleteChar extends SimpleClientPackage {
 		}
 		if (result == 0x01) {
 			_client.getChList().removeChar(_name);
-			final MuCharacterListDB cdb = new MuCharacterListDB(_client
-					.getUser().getId());
-			cdb.removeCharacterFromDB(_name);
+			Connection connection = null;
+			try {
+				connection = _client.getDataAccess().getConnection();
+				final MuCharacterListDB cdb = new MuCharacterListDB(_client
+						.getUser().getId(), connection);
+				cdb.removeCharacterFromDB(_name);
+			} catch (final SQLException e) {
+				throw new IOException("Failed to get database connection");
+			} finally {
+				IoUtil.close(connection);
+			}
 		}
 		_client.getConnection().sendPacket(new SDeleteChar(_name, result));
 	}
