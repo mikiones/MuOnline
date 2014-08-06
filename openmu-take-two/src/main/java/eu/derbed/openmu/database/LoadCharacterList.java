@@ -52,9 +52,9 @@ public final class LoadCharacterList extends PreparedStatementEvaluator<MuCharac
 		callback.resultArrived(list);
 	}
 
-/* (non-Javadoc)
- * @see eu.derbed.util.database.PreparedStatementEvaluator#setParameters(java.sql.PreparedStatement)
- */
+	/* (non-Javadoc)
+	 * @see eu.derbed.util.database.PreparedStatementEvaluator#setParameters(java.sql.PreparedStatement)
+	 */
 	@Override
 	protected void setParameters(final PreparedStatement stmt) throws SQLException {
 		stmt.setInt(1, userId);

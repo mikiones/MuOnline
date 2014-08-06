@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import eu.derbed.openmu.gs.muObjects.MuUser;
-import eu.derbed.util.CallbackException;
 import eu.derbed.util.Callback;
+import eu.derbed.util.CallbackException;
 import eu.derbed.util.database.PreparedStatementEvaluator;
 
 /**
@@ -38,8 +38,7 @@ public class LoadUser extends PreparedStatementEvaluator<MuUser> {
 		MuUser user = null;
 		if (rs.next()) {
 			user = new MuUser(rs.getInt("u_id"), rs.getString("u_user"),
-					rs.getString("u_pass"), rs.getInt("u_flag"),
-					rs.getInt("u_ch_c"), rs.getString("u_vol_code"));
+					rs.getString("u_pass"), rs.getInt("u_flag"), rs.getString("u_vol_code"));
 		}
 
 		callback.resultArrived(user);

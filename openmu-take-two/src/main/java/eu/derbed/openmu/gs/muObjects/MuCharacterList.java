@@ -12,6 +12,9 @@ import eu.derbed.util.LoggableObject;
  */
 public class MuCharacterList extends LoggableObject {
 
+	private static final int MAXIMUM_NUMBER_OF_CHARACTERS = 5;
+
+	//	AAA merge with chlistdb
 	private boolean _needRead = true;
 	private final MuCharacterBase[] _chars = { null, null, null, null, null };
 
@@ -85,6 +88,13 @@ public class MuCharacterList extends LoggableObject {
 			}
 		}
 		return count;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isFull() {
+		return MAXIMUM_NUMBER_OF_CHARACTERS == getCharsCount();
 	}
 
 	public boolean needRead() {

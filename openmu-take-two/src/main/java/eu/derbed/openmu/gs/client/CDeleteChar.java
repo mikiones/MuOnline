@@ -46,7 +46,7 @@ class CDeleteChar extends SimpleClientPackage {
 			_client.getChList().removeChar(_name);
 			Connection connection = null;
 			try {
-				connection = _client.getDataAccess().getConnection();
+				connection = _client.getDatabaseConnection();
 				final MuCharacterListDB cdb = new MuCharacterListDB(_client
 						.getUser().getId(), connection);
 				cdb.removeCharacterFromDB(_name);

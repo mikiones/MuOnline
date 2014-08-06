@@ -4,6 +4,7 @@ import static com.notbed.muonline.util.UPacket.logTransfer;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,6 @@ import com.notbed.muonline.util.PacketResolver;
 import eu.derbed.openmu.MuApplication;
 import eu.derbed.openmu.database.LoadCharacterList;
 import eu.derbed.openmu.gs.client.ClientPackage;
-import eu.derbed.openmu.gs.database.DataAccess;
 import eu.derbed.openmu.gs.database.MuCharacterListDB;
 import eu.derbed.openmu.gs.database.MuCharactersDb;
 import eu.derbed.openmu.gs.muObjects.MuCharacterInventory;
@@ -30,6 +30,7 @@ import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 import eu.derbed.openmu.gs.serverPackets.SHello;
+import eu.derbed.util.database.ResultStatementEvaluator;
 
 
 /**
@@ -350,7 +351,7 @@ public class ClientThread extends Thread {
 			log.error("Cannot restore charatre data from database!!", e);
 		}
 		log.info("Character restored from database succesfuly");
-		;
+
 		return oldChar;
 	}
 
@@ -484,9 +485,19 @@ public class ClientThread extends Thread {
 	}
 
 	/**
-	 * @return
+	 * @param evaluator
+	 * @throws IOException
 	 */
-	public DataAccess getDataAccess() {
-		return application.getDataAccess();
+	public <R> void execute(final ResultStatementEvaluator<R> evaluator) throws IOException {
+		application.getDataAccess().execute(evaluator);
 	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public Connection getDatabaseConnection() throws SQLException {
+		return application.getDataAccess().getConnection();
+	}
+
 }
