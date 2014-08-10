@@ -8,34 +8,35 @@ import eu.derbed.openmu.utils.MuTimeCotroler;
 
 /**
  * The TimeTicket class
- * 
+ *
  * @author Miki i Linka
  * @version
  */
 public class MuTimeTicket {
 
 	private final int tick;
+	private final MuTimeCotroler controller = new MuTimeCotroler();
 
 	/**
 	 * set ticket to s sec
-	 * 
+	 *
 	 * @param s
 	 *            how long ticket is ok
 	 */
-	public MuTimeTicket(int s) {
-		tick = MuTimeCotroler.getInstance().getGameTime() + s;
+	public MuTimeTicket(final int s) {
+		tick = controller.getGameTime() + s;
 	}
 
 	/**
-	 * 
+	 *
 	 * @return true when ticket expired
 	 */
 	public boolean TicketEnd() {
-		return tick < MuTimeCotroler.getInstance().getGameTime();
+		return tick < controller.getGameTime();
 	}
 
 	/**
-	 * 
+	 *
 	 * @return time when ticket expired
 	 */
 	public int getTime() {
@@ -44,14 +45,15 @@ public class MuTimeTicket {
 
 	/**
 	 * compare 2 tickets
-	 * 
+	 *
 	 * @param a
 	 *            1'st ticket
 	 * @param b
 	 *            2'nd ticket
 	 * @return true when 1'st ticket expired before secend
 	 */
-	public boolean compareTicket(MuTimeTicket a, MuTimeTicket b) {
+	public static boolean compareTicket(final MuTimeTicket a, final MuTimeTicket b) {
 		return a.getTime() < b.getTime();
 	}
+
 }
