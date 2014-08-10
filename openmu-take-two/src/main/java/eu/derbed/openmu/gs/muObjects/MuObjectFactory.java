@@ -19,25 +19,15 @@ public class MuObjectFactory {
      * the max amount of object in game
      */
     private static final int MaxObjecs = 0xffff;
-    /**
-     * Singlethon thing
-     */
-    private static MuObjectFactory _instance = null;
 
-    public static MuObjectFactory getInstance() {
-        if (_instance == null) {
-            _instance = new MuObjectFactory();
-        }
-        return _instance;
-    }
-
-    private MuObjectFactory() {
+    public MuObjectFactory() {
         objectPool = new MuObject[MaxObjecs];
-        freeCells = new Stack();
+        freeCells = new Stack<>();
         for (int i = 0; i <= MaxObjecs; i++) {
             freeCells.push(i);
         }
     }
+
     private int cObject = 0;
     private int cPcInstances = 0;
     private int cNPCInstanes = 0;
@@ -114,17 +104,16 @@ public class MuObjectFactory {
      * @return new created object
      * @throws ObiectIDAllreadyInUse if provided ID is all ready in use
      */
-    public static MuPcInstance NewPcInstance(short id, byte _x, byte _y, byte _m) throws ObjectIDAllreadyInUse {
-        getInstance();
-        if (_instance.objectPool[id] != null) {
+    public MuPcInstance NewPcInstance(short id, byte _x, byte _y, byte _m) throws ObjectIDAllreadyInUse {
+        if (objectPool[id] != null) {
             throw new ObjectIDAllreadyInUse(id);
         }
 
-        _instance.objectPool[id] = new MuPcInstance(id, _x, _y, _m);
-        _instance.cObject++;
-        _instance.cPcInstances++;
+        objectPool[id] = new MuPcInstance(id, _x, _y, _m);
+        cObject++;
+        cPcInstances++;
 
-        return (MuPcInstance) _instance.objectPool[id];
+        return (MuPcInstance) objectPool[id];
     }
 
     /**
@@ -132,21 +121,19 @@ public class MuObjectFactory {
      * @return new ItemOn Ground object
      * @throws ObiectIDAllreadyInUse if Id is used
      */
-    public static MuItemOnGround NewItemOnGround() throws ObjectIDAllreadyInUse {
-
-        getInstance();
-        int id = _instance.getNewId();
-        if (_instance.objectPool[id] != null) {
+    public MuItemOnGround NewItemOnGround() throws ObjectIDAllreadyInUse {
+        int id = getNewId();
+        if (objectPool[id] != null) {
             throw new ObjectIDAllreadyInUse(id);
         }
 
-        _instance.objectPool[id] = new MuItemOnGround();
-        _instance.objectPool[id].setObiectId((short) id);
+        objectPool[id] = new MuItemOnGround();
+        objectPool[id].setObiectId((short) id);
 
-        _instance.cObject++;
-        _instance.cItemInstances++;
+        cObject++;
+        cItemInstances++;
 
-        return (MuItemOnGround) _instance.objectPool[id];
+        return (MuItemOnGround) objectPool[id];
     }
 
     /**
@@ -156,21 +143,19 @@ public class MuObjectFactory {
      * @return new Monster object
      * @throws ObiectIDAllreadyInUse if id in use
      */
-    public static MuMonsterInstance NewMonsterInstance(final MuNpc template, final MuWorld world) throws ObjectIDAllreadyInUse {
-
-        getInstance();
-        int id = _instance.getNewId();
-        if (_instance.objectPool[id] != null) {
+    public MuMonsterInstance NewMonsterInstance(final MuNpc template, final MuWorld world) throws ObjectIDAllreadyInUse {
+        int id = getNewId();
+        if (objectPool[id] != null) {
             throw new ObjectIDAllreadyInUse(id);
         }
 
-        _instance.objectPool[id] = new MuMonsterInstance(template, world);
-        _instance.objectPool[id].setObiectId((short) id);
+        objectPool[id] = new MuMonsterInstance(template, world);
+        objectPool[id].setObiectId((short) id);
 
-        _instance.cObject++;
-        _instance.cItemInstances++;
+        cObject++;
+        cItemInstances++;
 
-        return (MuMonsterInstance) _instance.objectPool[id];
+        return (MuMonsterInstance) objectPool[id];
     }
 
     /**
@@ -178,20 +163,18 @@ public class MuObjectFactory {
      * @return
      * @throws ObjectIDAllreadyInUse
      */
-    public static MuPcActorInstance NewActorInstance() throws ObjectIDAllreadyInUse
-    {
-        getInstance();
-        int id = _instance.getNewId();
-        if (_instance.objectPool[id] != null) {
+    public MuPcActorInstance NewActorInstance() throws ObjectIDAllreadyInUse {
+        final int id = getNewId();
+        if (objectPool[id] != null) {
             throw new ObjectIDAllreadyInUse(id);
         }
 
-        _instance.objectPool[id] = new MuPcActorInstance();
-        _instance.objectPool[id].setObiectId((short) id);
+        objectPool[id] = new MuPcActorInstance();
+        objectPool[id].setObiectId((short) id);
 
-        _instance.cObject++;
-        _instance.cActorInstances++;
-        return (MuPcActorInstance) _instance.objectPool[id];
+        cObject++;
+        cActorInstances++;
+        return (MuPcActorInstance) objectPool[id];
 
     }
 }
