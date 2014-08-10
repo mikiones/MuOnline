@@ -201,10 +201,10 @@ public class MuMap extends LoggableObject {
 			}
 		}
 		if (loadTerrain()) {
-			System.out.println("| [" + _mapCode + "]" + _mapName
+			log.debug("| [" + _mapCode + "]" + _mapName
 					+ " loaded successfully.");
 		} else {
-			System.out.println("| [" + _mapCode + "]" + _mapName
+			log.debug("| [" + _mapCode + "]" + _mapName
 					+ " could not be loaded.");
 		}
 	}

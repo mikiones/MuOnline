@@ -165,7 +165,7 @@ public class MuWorld {
 	 */
 	public void initWorld() {
 
-		System.out.println("-=-=-=-=-=-=-= Loading Maps =-=-=-=-=-=-=-");
+		log.debug("-=-=-=-=-=-=-= Loading Maps =-=-=-=-=-=-=-");
 		_worldRegions.put(0, new MuMap(0, "Lorencia"));
 		_worldRegions.put(1, new MuMap(1, "Dungeon"));
 		_worldRegions.put(2, new MuMap(2, "Devias"));
@@ -173,7 +173,7 @@ public class MuWorld {
 		_worldRegions.put(4, new MuMap(4, "Lost Tower"));
 		_worldRegions.put(7, new MuMap(7, "Atlans"));
 		_worldRegions.put(8, new MuMap(8, "Tarkan"));
-		System.out.println("-=-=-=-=-=-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=");
+		log.debug("-=-=-=-=-=-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=");
 
 		// Do not let the server start if loading items failed.
 		if (!MuItemStats.loadItems(GameServerConfig.getInstance().global.getProperty("global.itemFile"))) {
