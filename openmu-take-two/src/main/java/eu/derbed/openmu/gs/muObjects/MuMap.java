@@ -6,6 +6,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javolution.util.FastMap;
 import eu.derbed.openmu.gs.GameServerConfig;
@@ -189,7 +190,7 @@ public class MuMap extends LoggableObject {
 	 */
 	public MuMap(int mapId, String mapName) {
 		_mapCode = (byte) mapId;
-		playerVisibiliyRange= Integer.parseInt(GameServerConfig.gs.getProperty("gs.playerVisibility"));
+		playerVisibiliyRange= Integer.parseInt(GameServerConfig.getInstance().gs.getProperty("gs.playerVisibility"));
 		_mapName = mapName;
 		_allPlayers = new HashMap<String, MuObject>();
 		_allObjects = new HashMap<Integer, MuObject>();
@@ -235,9 +236,10 @@ public class MuMap extends LoggableObject {
 		boolean result = true;
 		int i = 0, j = 0;
 		byte val;
-		RandomAccessFile file;
+		RandomAccessFile file = null;
+		String mapsDir = GameServerConfig.getInstance().global.getProperty("global.mapsDir");
 		try {
-			file = new RandomAccessFile(GameServerConfig.global.getProperty("global.mapsDir")+ "Terrain" + (_mapCode + 1)
+			file = new RandomAccessFile(mapsDir+ "Terrain" + (_mapCode + 1)
 					+ ".att", "r");
 			file.readByte(); // 0x00 or mapCode
 			file.readByte(); // X Size
@@ -253,12 +255,18 @@ public class MuMap extends LoggableObject {
 			file.close();
 		} catch (final EOFException e1) {
 			result = false;
-			System.err.println(GameServerConfig.global.getProperty("global.mapsDir")+ "Terrain" + (_mapCode + 1)
-					+ ".att is corrupted!");
+			log.error(mapsDir+ "Terrain" + (_mapCode + 1) + ".att is corrupted!", e1);
 		} catch (final IOException e2) {
 			result = false;
-			System.err.println(GameServerConfig.global.getProperty("global.mapsDir")+ "Terrain" + (_mapCode + 1)
-					+ ".att could not be found!");
+			log.error(mapsDir+ "Terrain" + (_mapCode + 1) + ".att could not be found!", e2);
+		} finally {
+			if (null != file) {
+				try {
+					file.close();
+				} catch (final IOException e) {
+					log.error("Failed to close file", e);
+				}
+			}
 		}
 		return result;
 	}

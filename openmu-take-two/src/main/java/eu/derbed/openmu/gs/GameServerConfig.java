@@ -13,10 +13,10 @@ public final class GameServerConfig {
 
 	private static final String GLOBAL_CONF = "global.conf";
 
-	public static final Properties global = new Properties();
-	public static final Properties databse = new Properties();
-	public static final Properties gs = new Properties();
-	public static final Properties cs = new Properties();
+	public final Properties global = new Properties();
+	public final Properties databse = new Properties();
+	public final Properties gs = new Properties();
+	public final Properties cs = new Properties();
 
 	private static final GameServerConfig INSTANCE = new GameServerConfig();
 
@@ -33,8 +33,7 @@ public final class GameServerConfig {
 	 *
 	 */
 	private GameServerConfig() {
-		global.put("global.home", System.getProperty("user.dir"));
-		global.put(GLOBAL_CONF, global.getProperty("global.home") + "/src/main/resources");
+		global.put(GLOBAL_CONF, System.getProperty("user.dir") + "/src/main/resources");
 
 		final String conf = getConf();
 		global.put("global.itemFile", conf + "/data/item.txt");

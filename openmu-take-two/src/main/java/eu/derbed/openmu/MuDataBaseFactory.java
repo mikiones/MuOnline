@@ -31,7 +31,7 @@ class MuDataBaseFactory implements DataAccess {
 	private Statement _syst;
 
 	public MuDataBaseFactory() {
-		final Properties db = GameServerConfig.databse;
+		final Properties db = GameServerConfig.getInstance().databse;
 		driver = db.getProperty("driver");
 		url = db.getProperty("url");
 		username = db.getProperty("user");

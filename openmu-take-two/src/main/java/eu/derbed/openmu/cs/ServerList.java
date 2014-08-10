@@ -57,7 +57,7 @@ public class ServerList {
 	}
 
 	public void load() {
-		Properties cs = GameServerConfig.cs;
+		Properties cs = GameServerConfig.getInstance().cs;
 		HashSet<String> names = new HashSet<String>();
 		for (Entry en : cs.entrySet()) {
 			// System.out.println(en);

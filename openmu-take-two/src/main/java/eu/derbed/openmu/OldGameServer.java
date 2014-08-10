@@ -44,7 +44,7 @@ public class OldGameServer {
 		GameServerConfig.getInstance();
 
 //		_ip = GameServerConfig.gs.getProperty("gs.ip");
-		_port = Integer.parseInt((GameServerConfig.gs.getProperty("gs.port")));
+		_port = Integer.parseInt((GameServerConfig.getInstance().gs.getProperty("gs.port")));
 
 		System.out.println("used mem:" + getUsedMemoryMB() + "MB");
 
