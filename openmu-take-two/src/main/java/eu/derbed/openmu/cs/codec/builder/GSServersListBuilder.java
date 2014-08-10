@@ -16,7 +16,7 @@
 
 package eu.derbed.openmu.cs.codec.builder;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
@@ -29,20 +29,23 @@ import eu.derbed.openmu.netty.abstracts.AbstractMuPackageBuilder;
  * @author mikiones
  * 
  */
-public class GSServersListBuilder implements
-		AbstractMuPackageBuilder<GSSerersList> {
+public class GSServersListBuilder implements AbstractMuPackageBuilder<GSSerersList> {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.code.openmu.natty.tests.AbstractMuPackageBuilder#Build(int,
-	 * com.google.code.openmu.natty.tests.AbstractMuPackageData,
-	 * org.jboss.netty.buffer.ChannelBuffer)
+	private final ServerList serverList;
+
+	/**
+	 * @param serverList
+	 */
+	public GSServersListBuilder(final ServerList serverList) {
+		this.serverList = serverList;
+	}
+
+	/* (non-Javadoc)
+	 * @see eu.derbed.openmu.netty.abstracts.AbstractMuPackageBuilder#Build(int, eu.derbed.openmu.netty.abstracts.AbstractMuPackageData, org.jboss.netty.buffer.ChannelBuffer)
 	 */
 	@Override
 	public void Build(int SesionID, GSSerersList data, ChannelBuffer out) {
-		ArrayList<ServerEntry> list = ServerList.getInstance().asArrayList();
+		List<ServerEntry> list = serverList.asArrayList();
 		int size=(6 + (list.size() * 4));
 		out.writeByte(0xc2);
 		out.writeShort(size);

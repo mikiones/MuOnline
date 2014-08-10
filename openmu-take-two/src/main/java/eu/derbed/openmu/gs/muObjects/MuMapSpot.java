@@ -26,11 +26,11 @@ public class MuMapSpot {
 		_c = c;
 	}
 
-	public void InitSpot() {
+	public void InitSpot(final MuWorld world) {
 		System.out.println("-----------------------------Start Spown Spot:"
 				+ _name + "-------------------");
 		for (int i = 0; i < _c; i++) {
-			final MuMonsterInstance mo = new MuMonsterInstance(_monster);
+			final MuMonsterInstance mo = new MuMonsterInstance(_monster, world);
 			mo.setObiectId((short) IdFactory.getInstance().newId());
 			mo.SetPos((short) (_startX + (Math.random() * (_endX - _startX))),
 					(short) (_stratY + (Math.random() * (_endY - _stratY))),
@@ -39,7 +39,7 @@ public class MuMapSpot {
 			mo.setM(_map.getMapCode());
 			mo.setCurrentWorldRegion(_map);
 			System.out.println("Spown:" + mo);
-			MuWorld.getInstance().addObject(mo);
+			world.addObject(mo);
 		}
 		System.out.println("-----------------------------Start Spown Spot:"
 				+ _name + "-------------------");

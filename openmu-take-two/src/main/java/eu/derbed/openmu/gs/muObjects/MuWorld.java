@@ -5,7 +5,6 @@ import javolution.util.FastMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.derbed.openmu.gs.GameServerConfig;
 import eu.derbed.openmu.gs.IdFactory;
 import eu.derbed.openmu.gs.templates.MuNpc;
 
@@ -15,29 +14,32 @@ import eu.derbed.openmu.gs.templates.MuNpc;
  *
  * @author Miki, Marcel
  */
-public class MuWorld {
+public final class MuWorld {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	private static MuWorld _instance;
 	private final FastMap<String, MuObject> _allPlayers;
 	private final FastMap<Integer, MuObject> _allObjects;
 	private final FastMap<Integer, MuMap> _worldRegions;
 	private final FastMap<Integer, MuGate> _gates;
 
-	private MuWorld() {
-		_allPlayers = new FastMap<String, MuObject>().setShared(true);
-		_allObjects = new FastMap().setShared(true);
-		_worldRegions = new FastMap<Integer, MuMap>().setShared(true);
-		_gates = new FastMap<Integer, MuGate>().setShared(true);
-		// initWorld();
-	}
+	private final int playerVisibiliyRange;
 
-	public static MuWorld getInstance() {
-		if (_instance == null) {
-			_instance = new MuWorld();
-		}
-		return _instance;
+	private final String folderDir;
+
+	/**
+	 * @param folderDir
+	 * @param playerVisibiliyRange
+	 */
+	public MuWorld(final String folderDir, final int playerVisibiliyRange) {
+		_allPlayers = new FastMap<String, MuObject>().shared();
+		_allObjects = new FastMap<Integer, MuObject>().shared();
+		_worldRegions = new FastMap<Integer, MuMap>().shared();
+		_gates = new FastMap<Integer, MuGate>().shared();
+
+		this.playerVisibiliyRange = playerVisibiliyRange;
+		this.folderDir = folderDir;
+		// initWorld();
 	}
 
 	/**
@@ -109,7 +111,7 @@ public class MuWorld {
 	 * @param Obj
 	 *            The object to be deleted
 	 */
-	public void removeObject(MuObject Obj) {
+	public synchronized void removeObject(MuObject Obj) {
 		if (Obj == null) {
 			log.debug("Object does not exist.", new NullPointerException());
 			return;
@@ -119,7 +121,6 @@ public class MuWorld {
 		if (Obj instanceof MuPcInstance) {
 			_allPlayers.remove(((MuPcInstance) Obj).getName().toLowerCase());
 		}
-		Obj = null;
 	}
 
 	public void removeObject(int ObjectId) {
@@ -160,23 +161,42 @@ public class MuWorld {
 	}
 
 	/**
+	 * @param mapId
+	 * @param mapName
+	 * @return
+	 */
+	private void add(final int mapId, final String mapName) {
+		final MuMap map = new MuMap(mapId, mapName, this);
+		if (map.loadTerrain(folderDir)) {
+			log.debug("| [" + mapId + "]" + mapName
+					+ " loaded successfully.");
+		} else {
+			log.debug("| [" + mapId + "]" + mapName
+					+ " could not be loaded.");
+		}
+		_worldRegions.put(mapId, map);
+	}
+
+	/**
 	 * Initializes the world. The function loads the maps, items, monsters and
 	 * spots, NPCs etc.
+	 *
+	 * @param itemFile
 	 */
-	public void initWorld() {
+	public void initWorld(final String itemFile) {
 
 		log.debug("-=-=-=-=-=-=-= Loading Maps =-=-=-=-=-=-=-");
-		_worldRegions.put(0, new MuMap(0, "Lorencia"));
-		_worldRegions.put(1, new MuMap(1, "Dungeon"));
-		_worldRegions.put(2, new MuMap(2, "Devias"));
-		_worldRegions.put(3, new MuMap(3, "Noria"));
-		_worldRegions.put(4, new MuMap(4, "Lost Tower"));
-		_worldRegions.put(7, new MuMap(7, "Atlans"));
-		_worldRegions.put(8, new MuMap(8, "Tarkan"));
+		add(0, "Lorencia");
+		add(1, "Dungeon");
+		add(2, "Devias");
+		add(3, "Noria");
+		add(4, "Lost Tower");
+		add(7, "Atlans");
+		add(8, "Tarkan");
 		log.debug("-=-=-=-=-=-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=");
 
 		// Do not let the server start if loading items failed.
-		if (!MuItemStats.loadItems(GameServerConfig.getInstance().global.getProperty("global.itemFile"))) {
+		if (!MuItemStats.loadItems(itemFile)) {
 			System.err.println("Wrong item configuration file.");
 			System.exit(1);
 		}
@@ -218,7 +238,7 @@ public class MuWorld {
 		actor.setCurrentWorldRegion(_worldRegions.get(0));
 		/*
 		 * //monsters MuMapSpot spot1=new MuMapSpot("Budge Dragon",
-		 * _worldRegions.get(0), 176, 128, 199, 160, paj, 40); spot1.InitSpot();
+		 * _worldRegions.get(0), 176, 128, 199, 160, paj, 40); spot1.InitSpot(this);
 		 * MuMonsterInstance mo = new MuMonsterInstance(paj);
 		 * mo.setObiectId((short) IdFactory.getInstance().newId());
 		 * mo.SetPos(176, 126, 0); mo.setWalkArea(new MuMobWalkArea(166, 116,
@@ -231,7 +251,7 @@ public class MuWorld {
 		 * mo2.setCurrentWorldRegion(_worldRegions.get(0)); addObject(mo2);
 		 */
 		// npc's
-		final MuMonsterInstance npc1 = new MuMonsterInstance(blacksmith);
+		final MuMonsterInstance npc1 = new MuMonsterInstance(blacksmith, this);
 		npc1.setObiectId((short) IdFactory.getInstance().newId());
 		npc1.SetPos(165, 128, 0x03);
 		npc1.setWalkArea(new MuMobWalkArea(166, 116, 186, 136, 3));
@@ -241,6 +261,13 @@ public class MuWorld {
 		System.out.println("Uset Mem after setup maps total:"
 				+ Runtime.getRuntime().totalMemory() + "used "
 				+ Runtime.getRuntime().freeMemory());
+	}
+
+	/**
+	 * @return
+	 */
+	public int getPlayerVisibilityRange() {
+		return playerVisibiliyRange;
 	}
 
 	// /*

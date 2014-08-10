@@ -35,9 +35,20 @@ import eu.derbed.openmu.netty.abstracts.AbstractMuPackageData;
 public class CSProtocolEncoder extends OneToOneEncoder {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	static final HelloClientBuilder helloClient = new HelloClientBuilder();
-	static final GSServersListBuilder gsSererList = new GSServersListBuilder();
-	static final GSServerEntryBuilder GS_SERVER_ENTRY_BUILDER = new GSServerEntryBuilder();
+	private final HelloClientBuilder helloClient = new HelloClientBuilder();
+	private final GSServersListBuilder gsSererList;
+	private final GSServerEntryBuilder entryBuilder = new GSServerEntryBuilder();
+
+	/**
+	 * @param serverList
+	 */
+	public CSProtocolEncoder(final ServerList serverList) {
+		gsSererList = new GSServersListBuilder(serverList);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.netty.handler.codec.oneone.OneToOneEncoder#encode(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.Channel, java.lang.Object)
+	 */
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel,
 			Object msg) throws Exception {
@@ -49,13 +60,13 @@ public class CSProtocolEncoder extends OneToOneEncoder {
 		AbstractMuPackageData mesage = (AbstractMuPackageData) msg;
 		switch (mesage.getMessageID()) {
 		case 0x00://hello CL
-			CSProtocolEncoder.helloClient.Build(0, (HelloClientData) mesage,out);
+			helloClient.Build(0, (HelloClientData) mesage,out);
 			break;
 		case 0xf402: // server list ansfer
-			CSProtocolEncoder.gsSererList.Build(0, (GSSerersList) mesage, out);
+			gsSererList.Build(0, (GSSerersList) mesage, out);
 			break;
 		case 0xf403: // chosed server data
-			CSProtocolEncoder.GS_SERVER_ENTRY_BUILDER.Build(0, (ServerEntry) mesage, out);
+			entryBuilder.Build(0, (ServerEntry) mesage, out);
 			break;
 		default:
 			return msg;

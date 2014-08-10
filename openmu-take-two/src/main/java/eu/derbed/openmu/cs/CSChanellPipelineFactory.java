@@ -39,12 +39,16 @@ import eu.derbed.openmu.netty.filters.MuMessageDecrytor;
  *
  */
 public class CSChanellPipelineFactory implements ChannelPipelineFactory {
-	public CSChanellPipelineFactory() {
+
+	/**
+	 * @param serverList
+	 */
+	public CSChanellPipelineFactory(final ServerList serverList) {
 		super();
 		pipe.addLast("1 frameDecoder", new MuFrameDecoder());
 		pipe.addLast("2 frame decrypter", new MuMessageDecrytor());
-		pipe.addLast("3 protocol Builder", new CSProtocolEncoder());
-		pipe.addLast("4 sesionHandler", new CSSesionHandler());
+		pipe.addLast("3 protocol Builder", new CSProtocolEncoder(serverList));
+		pipe.addLast("4 sesionHandler", new CSSesionHandler(serverList));
 	}
 
 	ChannelPipeline pipe = Channels.pipeline();

@@ -1,32 +1,15 @@
 package eu.derbed.openmu.cs;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
 
 import eu.derbed.openmu.cs.codec.data.ServerEntry;
-import eu.derbed.openmu.gs.GameServerConfig;
 
 public class ServerList {
-	private static ServerList instance = null;
-	ArrayList<ServerEntry> gsArray = new ArrayList<ServerEntry>();
-
-	public static ServerList getInstance() {
-		if (instance == null)
-			try {
-				instance = new ServerList();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		return instance;
-	}
-
-	private ServerList() throws IOException {
-		GameServerConfig.getInstance();
-	}
+	private final List<ServerEntry> gsArray = new ArrayList<ServerEntry>();
 
 	/**
 	 * 
@@ -56,8 +39,10 @@ public class ServerList {
 			gsArray.add(serv);
 	}
 
-	public void load() {
-		Properties cs = GameServerConfig.getInstance().cs;
+	/**
+	 * @param cs
+	 */
+	public void load(final Properties cs) {
 		HashSet<String> names = new HashSet<String>();
 		for (Entry en : cs.entrySet()) {
 			// System.out.println(en);
@@ -82,7 +67,7 @@ public class ServerList {
 
 	}
 
-	public ArrayList<ServerEntry> asArrayList() {
+	public List<ServerEntry> asArrayList() {
 		return gsArray;
 	}
 }

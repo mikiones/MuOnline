@@ -59,10 +59,7 @@ public class ClientThread extends Thread {
 	private final MuCharacterList ChList = new MuCharacterList();
 	// settings actual played character
 	private MuClientSettings _clientSettings = null;
-	/**
-	 * world
-	 */
-	private final MuWorld _world;
+
 	/**
 	 * Actual Took with NPC
 	 */
@@ -109,7 +106,6 @@ public class ClientThread extends Thread {
 		_connection = new MuSocket(client);
 		this.resolver = application.getResolver();
 		this.application = application;
-		_world = MuWorld.getInstance();
 
 		start();
 	}
@@ -200,7 +196,7 @@ public class ClientThread extends Thread {
 					// connection loss
 				{
 					// notify the world about our disconnect
-					_activeChar.deleteMe();
+					_activeChar.deleteMe(getWorld());
 
 					try {
 						saveCharToDataBase(_activeChar);
@@ -341,7 +337,7 @@ public class ClientThread extends Thread {
 				oldChar.SetWearLook(new MuCharacterWear());
 			}
 			System.out.println("x" + oldChar.getX() + "y" + oldChar.getY());
-			oldChar.setCurrentWorldRegion(MuWorld.getInstance().getMap(
+			oldChar.setCurrentWorldRegion(getWorld().getMap(
 					oldChar.getM()));
 			// MuWorld.getInstance().storeObject(oldChar);
 			rset.close();
@@ -498,6 +494,13 @@ public class ClientThread extends Thread {
 	 */
 	public Connection getDatabaseConnection() throws SQLException {
 		return application.getDataAccess().getConnection();
+	}
+
+	/**
+	 * @return
+	 */
+	public MuWorld getWorld() {
+		return application.getWorld();
 	}
 
 }

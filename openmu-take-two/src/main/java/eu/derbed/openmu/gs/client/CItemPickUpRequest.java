@@ -14,7 +14,6 @@ import com.notbed.muonline.util.DataDecrypter;
 import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
-import eu.derbed.openmu.gs.muObjects.MuWorld;
 
 /**
  * @author Miki i Linka
@@ -39,7 +38,7 @@ class CItemPickUpRequest extends SimpleClientPackage {
 		// MuWorld.getInstance().removeObject(obj[i]);
 		// break;
 		// }
-		MuWorld.getInstance().removeObject(id);
+		client.getWorld().removeObject(id);
 		log.debug("Request to pickup item id {}", id);
 	}
 

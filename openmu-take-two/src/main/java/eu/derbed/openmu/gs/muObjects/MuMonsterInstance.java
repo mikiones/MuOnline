@@ -2,7 +2,6 @@ package eu.derbed.openmu.gs.muObjects;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 import eu.derbed.openmu.gs.serverPackets.SGoneExp;
 import eu.derbed.openmu.gs.templates.MuNpc;
@@ -15,16 +14,33 @@ import eu.derbed.openmu.gs.templates.MuNpc;
  */
 public class MuMonsterInstance extends MuAtackableInstance {
 
-	private static Logger _log = Logger.getLogger(MuMonsterInstance.class
-			.getName());
 	private MuMobWalkArea _walkArea = null;
 	private boolean _walkActive = false;
 	private final boolean _isAgresive = true;
 	private boolean _onTargetScan = false;
+
+	private RandomWalkingTask _walkTask = null;
+	private final Timer _walkTimer = new Timer(true);
+	private TargetScanTask _targetScanTask = null;
+	private final Timer _targetScanTimer = new Timer(true);
+
+	private final MuWorld world;
+
+//	/**
+//	 * demon for Ai tasks
+//	 */
+//	private final Timer _aiTimer = new Timer("Ai TAsk Deamon", true);
+
 	/**
-	 * demon for Ai tasks
+	 * @param temp
 	 */
-	private final Timer _aiTimer = new Timer("Ai TAsk Deamon", true);
+	public MuMonsterInstance(MuNpc temp, final MuWorld world) {
+		super(temp);
+		this.world = world;
+		setMaxHp(temp.getMaxHp());
+		setCurentHp(temp.getMaxHp());
+		_objectType = 2;
+	}
 
 	public void setWalkArea(MuMobWalkArea w) {
 		_walkArea = w;
@@ -34,23 +50,6 @@ public class MuMonsterInstance extends MuAtackableInstance {
 		final int nx = _walkArea.getRandX(getX());
 		final int ny = _walkArea.getRandY(getY());
 		moveTo(nx, ny);
-	}
-
-	class RandomWalkingTask extends TimerTask {
-
-		MuMonsterInstance _instance;
-
-		public RandomWalkingTask(MuMonsterInstance c) {
-			_instance = c;
-		}
-
-		@Override
-		public void run() {
-
-			_instance.onWalkTimer();
-			// System.out.println(_instance.getClass().getSimpleName() +
-			// ".RandomWalk.Run(): DOne");
-		}
 	}
 
 	private int getSQRDistance(MuPcInstance pc) {
@@ -75,35 +74,6 @@ public class MuMonsterInstance extends MuAtackableInstance {
 //		System.out.println(this + " Found target: " + target);
 //		setTarget(target);
 	}
-
-	class TargetScanTask extends TimerTask {
-
-		MuMonsterInstance _instance;
-
-		public TargetScanTask(MuMonsterInstance c) {
-			_instance = c;
-		}
-
-		@Override
-		public void run() {
-			System.out.println(_instance + " search 4 target");
-			_instance.onTargetScanTask();
-
-		}
-	}
-
-	public MuMonsterInstance(MuNpc temp) {
-		super(temp);
-		setMaxHp(temp.getMaxHp());
-		setCurentHp(temp.getMaxHp());
-		_objectType = 2;
-
-	}
-
-	private RandomWalkingTask _walkTask = null;
-	private final Timer _walkTimer = new Timer(true);
-	private TargetScanTask _targetScanTask = null;
-	private final Timer _targetScanTimer = new Timer(true);
 
 	public void startTargetScan() {
 		if (_targetScanTask == null) {
@@ -149,7 +119,7 @@ public class MuMonsterInstance extends MuAtackableInstance {
 		final int _who = getTargetID(); // get id
 		final long _exp = getExpReward(); // geting exp reward value
 		// Item _item = getItemReward(); // geting item reward
-		final MuObject t = MuWorld.getInstance().getObject(_who);
+		final MuObject t = world.getObject(_who);
 		System.out.println(this + " Calculate Rerawds for :" + t);
 		if (t instanceof MuPcInstance) {
 			((MuPcInstance) t).sendPacket(new SGoneExp(_who, (int) _exp));
@@ -166,7 +136,7 @@ public class MuMonsterInstance extends MuAtackableInstance {
 		// broadcastPacket(new SIdGoneDie(getObjectId()));
 		// TODO: broadcast to region
 		System.out.println("Starting Respown Task");
-		startRespownTask();
+		startRespownTask(world);
 
 	}
 
@@ -225,6 +195,39 @@ public class MuMonsterInstance extends MuAtackableInstance {
 	public void moveTo(int x, int y) {
 		super.moveTo(x, y);
 
+	}
+
+	class RandomWalkingTask extends TimerTask {
+
+		MuMonsterInstance _instance;
+
+		public RandomWalkingTask(MuMonsterInstance c) {
+			_instance = c;
+		}
+
+		@Override
+		public void run() {
+
+			_instance.onWalkTimer();
+			// System.out.println(_instance.getClass().getSimpleName() +
+			// ".RandomWalk.Run(): DOne");
+		}
+	}
+
+	class TargetScanTask extends TimerTask {
+
+		MuMonsterInstance _instance;
+
+		public TargetScanTask(MuMonsterInstance c) {
+			_instance = c;
+		}
+
+		@Override
+		public void run() {
+			System.out.println(_instance + " search 4 target");
+			_instance.onTargetScanTask();
+
+		}
 	}
 
 	// @Override

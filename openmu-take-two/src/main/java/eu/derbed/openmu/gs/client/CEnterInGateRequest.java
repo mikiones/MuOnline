@@ -39,8 +39,9 @@ class CEnterInGateRequest extends SimpleClientPackage {
 		// perform teleport
 		// WARNING: sometimes received coordinates are 0x00 and direction is not
 		// valid
-		final MuGate gate = MuWorld.getInstance().getGate(GateNb);
-		final MuGate gateTo = MuWorld.getInstance().getGate(gate.getToGate());
+		final MuWorld world = client.getWorld();
+		final MuGate gate = world.getGate(GateNb);
+		final MuGate gateTo = world.getGate(gate.getToGate());
 		client.getConnection().sendPacket(
 				new SGateEnterAnsfer(gateTo, client.getActiveChar()
 						.getDirection()));

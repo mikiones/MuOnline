@@ -125,17 +125,15 @@ public class MuPcInstance extends MuCharacter {
 	// }
 	// }
 	//
+
 	/**
 	 * remove me from everyehere
+	 * @param muWorld
 	 */
-	public void deleteMe() {
-
-		// stop all scheduled events
-		final MuWorld world = MuWorld.getInstance();
-
-		world.removeObject(this);		
+	public void deleteMe(final MuWorld muWorld) {
+//		stop all scheduled events
+		muWorld.removeObject(this);
 		setNetConnection(null);
-		world.removeObject(this);
 	}
 
 	/**

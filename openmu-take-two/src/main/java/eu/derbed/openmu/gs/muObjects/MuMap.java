@@ -6,10 +6,8 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import javolution.util.FastMap;
-import eu.derbed.openmu.gs.GameServerConfig;
 import eu.derbed.openmu.gs.serverPackets.SForgetId;
 import eu.derbed.openmu.gs.serverPackets.SMeetItemOnGround;
 import eu.derbed.openmu.gs.serverPackets.SNpcMiting;
@@ -26,149 +24,7 @@ import eu.derbed.util.LoggableObject;
  * @see MuObject
  * @see MuWorld
  */
-public class MuMap extends LoggableObject {
-
-	/**
-	 * MuMapPoint encapsulates all objects visible on a 3x3 square on map.<br>
-	 * Each map is partitioned in 86 MuMapPoints, and the player visibility
-	 * range is measured in number of MuMapPoints away from his own.
-	 */
-	class MuMapPoint {
-
-		private final FastMap<Integer, MuObject> _objects = new FastMap<Integer, MuObject>()
-				.setShared(true);
-
-		/**
-		 * Check if there are objects present in the MuMapPoint instance.
-		 * @return True if the are no visible objects.
-		 */
-		public boolean isEmpty() {
-			return _objects.isEmpty();
-		}
-
-		/**
-		 * Add an object to the MuMapPoint instance.
-		 * @param MuObj To object to be added.
-		 */
-		public void addObject(MuObject MuObj) {
-			_objects.put(new Integer(MuObj.getObjectId()), MuObj);
-		}
-
-		/**
-		 * Check if an object is present in the MuMapPoint instance.
-		 * @param MuObj The object to be verified.
-		 * @return True if the object is contained in the MuMapPoint instance.
-		 */
-		public boolean containsObject(MuObject MuObj) {
-			return _objects.containsValue(MuObj);
-		}
-
-		/**
-		 * Check if an object is present in the MuMapPoint instance.
-		 * @param objectId The Id of the object to be verified.
-		 * @return True if the object is contained in the MuMapPoint instance.
-		 */
-		public boolean containsObject(int objectId) {
-			return _objects.containsKey(new Integer(objectId));
-		}
-
-		/**
-		 * Removes an object from the MuMapPoint instance by Id number.
-		 * @param objectId The Id of the object to be removed.
-		 * @return True if the removal succeeded.
-		 */
-		public boolean removeObject(int objectId) {
-			return (_objects.remove(new Integer(objectId)) != null);
-		}
-
-		// TODO separate function for forgetting ids -> to pack everything in 1
-		// packet
-		/* XXX: An object controller class should be added to bridge between
-		 * the model and network communication.
-		 */
-		public void broadcastPacket(MuObject Client, ServerBasePacket Packet) {
-			// System.out.println("[MuMapPoint] Stored objects: "+_objects.size());
-			for (FastMap.Entry<Integer, MuObject> e = _objects.head(), end = _objects
-					.tail(); (e = e.getNext()) != end;) {
-				final MuObject obj = e.getValue();
-				if (Client != obj) {
-					if (obj instanceof MuPcInstance) {
-						final MuPcInstance otherPlayer = (MuPcInstance) obj;
-						otherPlayer.sendPacket(Packet);
-						if (Packet instanceof SForgetId) {
-							((MuPcInstance) Client).sendPacket(new SForgetId(
-									otherPlayer));
-							System.out.println("[MuMapPoint] "
-									+ ((MuPcInstance) Client).getName()
-									+ " no longer sees "
-									+ otherPlayer.getName());
-							System.out.println("[MuMapPoint] "
-									+ otherPlayer.getName()
-									+ " no longer sees "
-									+ ((MuPcInstance) Client).getName());
-						} else if (Packet instanceof SToMoveID) {
-							System.out.println("[MuMapPoint] "
-									+ ((MuPcInstance) Client).getName()
-									+ " sent move info to "
-									+ ((MuPcInstance) obj).getName() + " ("
-									+ ((MuPcInstance) Client).getOldX() + " "
-									+ ((MuPcInstance) Client).getOldY() + "->"
-									+ ((MuPcInstance) Client).getX() + " "
-									+ ((MuPcInstance) Client).getY() + ")");
-						}
-					} else if (Packet instanceof SForgetId) {
-						((MuPcInstance) Client).sendPacket(new SForgetId(obj));
-					}
-				}
-			}
-		}
-
-		public void broadcastPacket(ServerBasePacket Packet) {
-			broadcastPacket(null, Packet);
-		}
-
-		public void sendMeetingPackets(MuPcInstance Player) {
-			// System.out.println("[MuMapPoint] Stored objects: "+_objects.size());
-			final ArrayList<MuPcInstance> playersInRegion = new ArrayList<MuPcInstance>();
-			for (FastMap.Entry<Integer, MuObject> e = _objects.head(), end = _objects
-					.tail(); (e = e.getNext()) != end;) {
-				final MuObject obj = e.getValue();
-				final ArrayList<MuObject> objA = new ArrayList<MuObject>();
-				objA.add(obj);
-				if (obj != Player) {
-					if (obj instanceof MuItemOnGround) {
-						Player.sendPacket(new SMeetItemOnGround(objA));
-						System.out.println("[MuMapPoint] " + Player.getName()
-								+ " sees the item on ground: ");// +((MuItemOnGround)obj).getItemStats().get_itemName());
-					} else if (obj instanceof MuMonsterInstance) {
-						Player.sendPacket(new SNpcMiting(objA));
-						System.out.println("[MuMapPoint] " + Player.getName()
-								+ " the sees monster: "
-								+ ((MuMonsterInstance) obj).getName());
-					} else {
-						Player.sendPacket(new SPlayersMeeting(objA));
-						playersInRegion.add((MuPcInstance) obj);
-						System.out.println("[MuMapPoint] " + Player.getName()
-								+ " the sees player/bot: "
-								+ ((MuPcInstance) obj).getName());
-					}
-				}
-			}
-			final ArrayList<MuObject> player = new ArrayList<MuObject>();
-			player.add(Player);
-			for (int i = 0; i < playersInRegion.size(); i++) {
-				if ((playersInRegion.get(i) instanceof MuPcInstance)
-						&& !(playersInRegion.get(i) instanceof MuPcInstance)) {
-					playersInRegion.get(i).sendPacket(
-							new SPlayersMeeting(player));
-					System.out.println("[MuMapPoint] "
-							+ playersInRegion.get(i).getName() + " sees "
-							+ Player.getName() + " (" + Player.getX() + " "
-							+ Player.getY() + ")");
-				}
-			}
-		}
-	}
+public final class MuMap extends LoggableObject {
 
 	// Loaded from *.att files
 	private final byte[][] _terrain;
@@ -180,6 +36,7 @@ public class MuMap extends LoggableObject {
 	private final byte _mapCode;
 	private final String _mapName;
 	private int playerVisibiliyRange = 1;
+	private final MuWorld world;
 
 	/**
 	 * MuMap constructor function.
@@ -187,10 +44,12 @@ public class MuMap extends LoggableObject {
 	 *            The Id of the map to be constructed. It must match with files.
 	 * @param mapName
 	 *            The name of the map to be constructed. For logging purposes only.
+	 * @param muWorld 
 	 */
-	public MuMap(int mapId, String mapName) {
+	public MuMap(int mapId, String mapName, MuWorld world) {
+		this.world = world;
 		_mapCode = (byte) mapId;
-		playerVisibiliyRange= Integer.parseInt(GameServerConfig.getInstance().gs.getProperty("gs.playerVisibility"));
+		playerVisibiliyRange = world.getPlayerVisibilityRange();
 		_mapName = mapName;
 		_allPlayers = new HashMap<String, MuObject>();
 		_allObjects = new HashMap<Integer, MuObject>();
@@ -199,13 +58,6 @@ public class MuMap extends LoggableObject {
 			for (int j = 0; j <= 85; j++) {
 				_regions[i][j] = new MuMapPoint();
 			}
-		}
-		if (loadTerrain()) {
-			log.debug("| [" + _mapCode + "]" + _mapName
-					+ " loaded successfully.");
-		} else {
-			log.debug("| [" + _mapCode + "]" + _mapName
-					+ " could not be loaded.");
 		}
 	}
 
@@ -232,12 +84,11 @@ public class MuMap extends LoggableObject {
 	 *
 	 * @return true if successful
 	 */
-	private boolean loadTerrain() {
+	public boolean loadTerrain(final String mapsDir) {
 		boolean result = true;
 		int i = 0, j = 0;
 		byte val;
 		RandomAccessFile file = null;
-		String mapsDir = GameServerConfig.getInstance().global.getProperty("global.mapsDir");
 		try {
 			file = new RandomAccessFile(mapsDir+ "Terrain" + (_mapCode + 1)
 					+ ".att", "r");
@@ -638,7 +489,7 @@ public class MuMap extends LoggableObject {
 					sendMeetingPackets((MuPcInstance) object, x, y);
 				}
 			}
-			MuWorld.getInstance().addObject(object);
+			world.addObject(object);
 			return false;
 		}
 		// Add object to full list
@@ -682,7 +533,7 @@ public class MuMap extends LoggableObject {
 				sendMeetingPackets((MuPcInstance) object, x, y);
 			}
 		}
-		MuWorld.getInstance().addObject(object);
+		world.addObject(object);
 		return true;
 	}
 
@@ -700,6 +551,148 @@ public class MuMap extends LoggableObject {
 		_regions[x][y].removeObject(object.getObjectId());
 		if (object instanceof MuPcInstance) {
 			_allPlayers.remove(((MuPcInstance) object).getName().toLowerCase());
+		}
+	}
+
+	/**
+	 * MuMapPoint encapsulates all objects visible on a 3x3 square on map.<br>
+	 * Each map is partitioned in 86 MuMapPoints, and the player visibility
+	 * range is measured in number of MuMapPoints away from his own.
+	 */
+	class MuMapPoint {
+
+		private final FastMap<Integer, MuObject> _objects = new FastMap<Integer, MuObject>()
+				.setShared(true);
+
+		/**
+		 * Check if there are objects present in the MuMapPoint instance.
+		 * @return True if the are no visible objects.
+		 */
+		public boolean isEmpty() {
+			return _objects.isEmpty();
+		}
+
+		/**
+		 * Add an object to the MuMapPoint instance.
+		 * @param MuObj To object to be added.
+		 */
+		public void addObject(MuObject MuObj) {
+			_objects.put(new Integer(MuObj.getObjectId()), MuObj);
+		}
+
+		/**
+		 * Check if an object is present in the MuMapPoint instance.
+		 * @param MuObj The object to be verified.
+		 * @return True if the object is contained in the MuMapPoint instance.
+		 */
+		public boolean containsObject(MuObject MuObj) {
+			return _objects.containsValue(MuObj);
+		}
+
+		/**
+		 * Check if an object is present in the MuMapPoint instance.
+		 * @param objectId The Id of the object to be verified.
+		 * @return True if the object is contained in the MuMapPoint instance.
+		 */
+		public boolean containsObject(int objectId) {
+			return _objects.containsKey(new Integer(objectId));
+		}
+
+		/**
+		 * Removes an object from the MuMapPoint instance by Id number.
+		 * @param objectId The Id of the object to be removed.
+		 * @return True if the removal succeeded.
+		 */
+		public boolean removeObject(int objectId) {
+			return (_objects.remove(new Integer(objectId)) != null);
+		}
+
+		// TODO separate function for forgetting ids -> to pack everything in 1
+		// packet
+		/* XXX: An object controller class should be added to bridge between
+		 * the model and network communication.
+		 */
+		public void broadcastPacket(MuObject Client, ServerBasePacket Packet) {
+			// System.out.println("[MuMapPoint] Stored objects: "+_objects.size());
+			for (FastMap.Entry<Integer, MuObject> e = _objects.head(), end = _objects
+					.tail(); (e = e.getNext()) != end;) {
+				final MuObject obj = e.getValue();
+				if (Client != obj) {
+					if (obj instanceof MuPcInstance) {
+						final MuPcInstance otherPlayer = (MuPcInstance) obj;
+						otherPlayer.sendPacket(Packet);
+						if (Packet instanceof SForgetId) {
+							((MuPcInstance) Client).sendPacket(new SForgetId(
+									otherPlayer));
+							System.out.println("[MuMapPoint] "
+									+ ((MuPcInstance) Client).getName()
+									+ " no longer sees "
+									+ otherPlayer.getName());
+							System.out.println("[MuMapPoint] "
+									+ otherPlayer.getName()
+									+ " no longer sees "
+									+ ((MuPcInstance) Client).getName());
+						} else if (Packet instanceof SToMoveID) {
+							System.out.println("[MuMapPoint] "
+									+ ((MuPcInstance) Client).getName()
+									+ " sent move info to "
+									+ ((MuPcInstance) obj).getName() + " ("
+									+ ((MuPcInstance) Client).getOldX() + " "
+									+ ((MuPcInstance) Client).getOldY() + "->"
+									+ ((MuPcInstance) Client).getX() + " "
+									+ ((MuPcInstance) Client).getY() + ")");
+						}
+					} else if (Packet instanceof SForgetId) {
+						((MuPcInstance) Client).sendPacket(new SForgetId(obj));
+					}
+				}
+			}
+		}
+
+		public void broadcastPacket(ServerBasePacket Packet) {
+			broadcastPacket(null, Packet);
+		}
+
+		public void sendMeetingPackets(MuPcInstance Player) {
+			// System.out.println("[MuMapPoint] Stored objects: "+_objects.size());
+			final ArrayList<MuPcInstance> playersInRegion = new ArrayList<MuPcInstance>();
+			for (FastMap.Entry<Integer, MuObject> e = _objects.head(), end = _objects
+					.tail(); (e = e.getNext()) != end;) {
+				final MuObject obj = e.getValue();
+				final ArrayList<MuObject> objA = new ArrayList<MuObject>();
+				objA.add(obj);
+				if (obj != Player) {
+					if (obj instanceof MuItemOnGround) {
+						Player.sendPacket(new SMeetItemOnGround(objA));
+						System.out.println("[MuMapPoint] " + Player.getName()
+								+ " sees the item on ground: ");// +((MuItemOnGround)obj).getItemStats().get_itemName());
+					} else if (obj instanceof MuMonsterInstance) {
+						Player.sendPacket(new SNpcMiting(objA));
+						System.out.println("[MuMapPoint] " + Player.getName()
+								+ " the sees monster: "
+								+ ((MuMonsterInstance) obj).getName());
+					} else {
+						Player.sendPacket(new SPlayersMeeting(objA));
+						playersInRegion.add((MuPcInstance) obj);
+						System.out.println("[MuMapPoint] " + Player.getName()
+								+ " the sees player/bot: "
+								+ ((MuPcInstance) obj).getName());
+					}
+				}
+			}
+			final ArrayList<MuObject> player = new ArrayList<MuObject>();
+			player.add(Player);
+			for (int i = 0; i < playersInRegion.size(); i++) {
+				if ((playersInRegion.get(i) instanceof MuPcInstance)
+						&& !(playersInRegion.get(i) instanceof MuPcInstance)) {
+					playersInRegion.get(i).sendPacket(
+							new SPlayersMeeting(player));
+					System.out.println("[MuMapPoint] "
+							+ playersInRegion.get(i).getName() + " sees "
+							+ Player.getName() + " (" + Player.getX() + " "
+							+ Player.getY() + ")");
+				}
+			}
 		}
 	}
 

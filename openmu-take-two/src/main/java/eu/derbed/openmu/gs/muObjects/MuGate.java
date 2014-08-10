@@ -121,22 +121,22 @@ public class MuGate {
 		this._y2 = _y2;
 	}
 
-	/**
-	 * 
-	 * @return the object of map where going gate
-	 */
-	public MuMap getDestMap() {
-		return MuWorld.getInstance().getMap(
-				MuWorld.getInstance().getGate(_toGateNb)._Map);
-	}
-
-	/**
-	 * get object map from going map
-	 * 
-	 * @return
-	 */
-	public MuMap FromMap() {
-		return MuWorld.getInstance().getMap(_Map);
-	}
+//	/**
+//	 * 
+//	 * @return the object of map where going gate
+//	 */
+//	public MuMap getDestMap() {
+//		return MuWorld.getInstance().getMap(
+//				MuWorld.getInstance().getGate(_toGateNb)._Map);
+//	}
+//
+//	/**
+//	 * get object map from going map
+//	 * 
+//	 * @return
+//	 */
+//	public MuMap FromMap() {
+//		return MuWorld.getInstance().getMap(_Map);
+//	}
 
 }

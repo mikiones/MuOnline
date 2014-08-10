@@ -11,33 +11,23 @@ import java.util.Properties;
  */
 public final class GameServerConfig {
 
-	private static final String GLOBAL_CONF = "global.conf";
-
-	public final Properties global = new Properties();
 	public final Properties databse = new Properties();
 	public final Properties gs = new Properties();
 	public final Properties cs = new Properties();
 
-	private static final GameServerConfig INSTANCE = new GameServerConfig();
-
 	public final boolean testMode;
 
-	/**
-	 * @return
-	 */
-	public static GameServerConfig getInstance() {
-		return INSTANCE;
-	}
+	private final String confFolder;
+	private final String itemFile;
+	private final String mapsFolder;
 
 	/**
-	 *
+	 * @param confFolder
 	 */
-	private GameServerConfig() {
-		global.put(GLOBAL_CONF, System.getProperty("user.dir") + "/src/main/resources");
-
-		final String conf = getConf();
-		global.put("global.itemFile", conf + "/data/item.txt");
-		global.put("global.mapsDir", conf + "/data/maps/");
+	public GameServerConfig(final String confFolder) {
+		this.confFolder = confFolder;
+		this.itemFile = confFolder + "/data/item.txt";
+		this.mapsFolder = confFolder + "/data/item.txt";
 
 		loadConfig();
 
@@ -45,20 +35,12 @@ public final class GameServerConfig {
 	}
 
 	/**
-	 * @return
-	 */
-	private String getConf() {
-		return global.getProperty(GLOBAL_CONF);
-	}
-
-	/**
 	 *
 	 */
 	private void loadConfig() {
-		final String conf = getConf();
-		load(conf, "/conf/database.ini", databse);
-		load(conf, "/conf/gameserver.ini", gs);
-		load(conf, "/conf/connectserver.ini", cs);
+		load(confFolder, "/conf/database.ini", databse);
+		load(confFolder, "/conf/gameserver.ini", gs);
+		load(confFolder, "/conf/connectserver.ini", cs);
 	}
 
 	/**
@@ -66,7 +48,7 @@ public final class GameServerConfig {
 	 * @param file
 	 * @param dest
 	 */
-	private void load(final String conf, final String file, final Properties dest) {
+	private static void load(final String conf, final String file, final Properties dest) {
 		try (InputStream in = new FileInputStream(conf + file)) {
 			dest.load(in);
 		} catch (final IOException e) {
@@ -77,8 +59,22 @@ public final class GameServerConfig {
 	/**
 	 * @return
 	 */
-	public static boolean isTestMode() {
-		return getInstance().testMode;
+	public boolean isTestMode() {
+		return testMode;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getItemFile() {
+		return itemFile;
+	}
+
+	/**
+	 * @return the mapsFolder
+	 */
+	public String getMapsFolder() {
+		return mapsFolder;
 	}
 
 }

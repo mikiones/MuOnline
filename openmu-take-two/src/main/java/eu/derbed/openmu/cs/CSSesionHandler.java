@@ -14,13 +14,14 @@
  */
 package eu.derbed.openmu.cs;
 
-import java.util.logging.Logger;
 
 import org.jboss.netty.channel.ChannelEvent;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.derbed.openmu.cs.codec.data.GSSerersList;
 import eu.derbed.openmu.cs.codec.data.HelloClientData;
@@ -29,9 +30,17 @@ import eu.derbed.openmu.netty.abstracts.MuBaseMessage;
 
 public class CSSesionHandler extends SimpleChannelHandler {
 
-	private static final Logger logger = Logger.getLogger(CSSesionHandler.class
-			.getName());
+	private static final Logger log = LoggerFactory.getLogger(CSSesionHandler.class);
+
+	private final ServerList serverList;
 	
+	/**
+	 * @param serverList
+	 */
+	public CSSesionHandler(final ServerList serverList) {
+		this.serverList = serverList;
+	}
+
 	/* (non-Javadoc)
 	 * @see org.jboss.netty.channel.SimpleChannelHandler#writeRequested(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.MessageEvent)
 	 */
@@ -72,7 +81,7 @@ public class CSSesionHandler extends SimpleChannelHandler {
 			throws Exception {
 		
 		MuBaseMessage m = (MuBaseMessage) e.getMessage();
-		logger.info(m.toString());
+		log.info(m.toString());
 		 int head= m.message.readUnsignedByte();
 		 short size =(short) (((head==0xc1)||(head==0xc3))? m.message.readByte():m.message.readUnsignedShort());
 		switch (m.message.readUnsignedByte()) {
@@ -82,7 +91,7 @@ public class CSSesionHandler extends SimpleChannelHandler {
 			 {
 			 case 0x02:e.getChannel().write(new GSSerersList());break;
 			 case 0x03:{
-				 ServerEntry s =ServerList.getInstance().get(m.message.getUnsignedByte(4), m.message.getUnsignedByte(5));
+				 ServerEntry s =serverList.get(m.message.getUnsignedByte(4), m.message.getUnsignedByte(5));
 				 e.getChannel().write(s);}break;
 			 
 			 }

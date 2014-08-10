@@ -13,7 +13,6 @@ import com.notbed.muonline.util.Header;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuNpcInstance;
-import eu.derbed.openmu.gs.muObjects.MuWorld;
 
 /**
  * @author Miki i Linka
@@ -30,7 +29,7 @@ class CNpcRunRequest implements ClientPackage {
 	public void process(final byte[] data, final ClientThread client) throws IOException {
 		final int _idNpcToRun = data[1];
 		log.debug("Request to npc it :" + _idNpcToRun + " ");
-		final Object o = MuWorld.getInstance().getObject(_idNpcToRun);
+		final Object o = client.getWorld().getObject(_idNpcToRun);
 		if (o instanceof MuNpcInstance) {
 			final MuNpcInstance npc = (MuNpcInstance) o;
 			log.debug("object name '" + npc.getName() + "'");

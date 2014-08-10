@@ -142,11 +142,13 @@ public abstract class MuCharacter extends MuObject {
 		private final MuCharacter _instance;
 		private int _resX = 0;
 		private int _resY = 0;
+		private final MuWorld world;
 
-		public RespownTask(final MuCharacter _instance, final int x, final int y) {
+		public RespownTask(final MuCharacter _instance, final MuWorld world, final int x, final int y) {
 			System.out.println("Respown setup  start");
 			this._resX = x;
 			this._resY = y;
+			this.world = world;
 			System.out.println("Saving old wsp");
 			this._instance = _instance;
 
@@ -167,7 +169,7 @@ public abstract class MuCharacter extends MuObject {
 				_instance.setX(_resX);
 				_instance.setY(_resY);
 				System.out.println("actualize  wsp...done");
-				MuWorld.getInstance().addObject(_instance);
+				world.addObject(_instance);
 				System.out.println("added to map ... done");
 				System.out
 				.println("-=-=-=-=-=-=-=-=-=-respown end=-=-=-=-=-=-=-=-=-=-");
@@ -292,7 +294,6 @@ public abstract class MuCharacter extends MuObject {
 	 * default constructor
 	 */
 	public MuCharacter() {
-		super();
 		_objectType = 0;
 	}
 
@@ -462,9 +463,9 @@ public abstract class MuCharacter extends MuObject {
 	/**
 	 * starting respown taski
 	 */
-	public void startRespownTask() {
+	public void startRespownTask(final MuWorld world) {
 		System.out.println("starting respown task");
-		_respown = new RespownTask(this, getX(), getY());
+		_respown = new RespownTask(this, world, getX(), getY());
 		_respownTimer.schedule(_respown, 5000);
 
 	}

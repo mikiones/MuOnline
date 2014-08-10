@@ -12,7 +12,6 @@ import javax.sql.DataSource;
 
 import com.mchange.v2.c3p0.DataSources;
 
-import eu.derbed.openmu.gs.GameServerConfig;
 import eu.derbed.openmu.gs.database.DataAccess;
 import eu.derbed.util.CallbackException;
 import eu.derbed.util.database.DatabaseHelper;
@@ -30,8 +29,10 @@ class MuDataBaseFactory implements DataAccess {
 	private DataSource _source;
 	private Statement _syst;
 
-	public MuDataBaseFactory() {
-		final Properties db = GameServerConfig.getInstance().databse;
+	/**
+	 * @param db
+	 */
+	public MuDataBaseFactory(final Properties db) {
 		driver = db.getProperty("driver");
 		url = db.getProperty("url");
 		username = db.getProperty("user");

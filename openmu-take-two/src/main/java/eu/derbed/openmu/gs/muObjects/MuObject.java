@@ -121,7 +121,7 @@ public class MuObject {
 		}
 		_map = region;
 		_map.addObject(this);
-	};
+	}
 
 	/**
 	 * ustawia mape = m
@@ -176,9 +176,11 @@ public class MuObject {
 
 	/**
 	 * update maps after it changes
+	 *
+	 * @param world
 	 */
-	public void updateCurrentWorldRegion() {
-		final MuMap newRegion = MuWorld.getInstance().getMap(getM());
+	public void updateCurrentWorldRegion(final MuWorld world) {
+		final MuMap newRegion = world.getMap(getM());
 		if (!newRegion.equals(_map)) {
 			if (_map != null) {
 				_map.removeObject(this);

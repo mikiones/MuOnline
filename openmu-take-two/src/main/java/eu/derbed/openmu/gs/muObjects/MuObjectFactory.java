@@ -152,10 +152,11 @@ public class MuObjectFactory {
     /**
      *
      * @param template the monster data
+     * @param world
      * @return new Monster object
      * @throws ObiectIDAllreadyInUse if id in use
      */
-    public static MuMonsterInstance NewMonsterInstance(MuNpc template) throws ObjectIDAllreadyInUse {
+    public static MuMonsterInstance NewMonsterInstance(final MuNpc template, final MuWorld world) throws ObjectIDAllreadyInUse {
 
         getInstance();
         int id = _instance.getNewId();
@@ -163,7 +164,7 @@ public class MuObjectFactory {
             throw new ObjectIDAllreadyInUse(id);
         }
 
-        _instance.objectPool[id] = new MuMonsterInstance(template);
+        _instance.objectPool[id] = new MuMonsterInstance(template, world);
         _instance.objectPool[id].setObiectId((short) id);
 
         _instance.cObject++;

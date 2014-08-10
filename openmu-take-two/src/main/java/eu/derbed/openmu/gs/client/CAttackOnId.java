@@ -11,7 +11,6 @@ import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.muObjects.MuMonsterInstance;
 import eu.derbed.openmu.gs.muObjects.MuObject;
 import eu.derbed.openmu.gs.muObjects.MuPcInstance;
-import eu.derbed.openmu.gs.muObjects.MuWorld;
 
 @Header (0xd9)
 class CAttackOnId implements ClientPackage {
@@ -28,7 +27,7 @@ class CAttackOnId implements ClientPackage {
 //		final short _r |= (decrypt[4]);// r
 
 		// System.out.println("Atack On target "+ _id+ "in r "+_r);
-		final MuObject t = MuWorld.getInstance().getObject(_id);
+		final MuObject t = client.getWorld().getObject(_id);
 		if (t instanceof MuMonsterInstance) {
 			final MuMonsterInstance mon = (MuMonsterInstance) t;
 			client.getActiveChar().startAttack(mon);

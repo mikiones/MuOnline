@@ -13,7 +13,6 @@ import com.notbed.muonline.util.RegistrationException;
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.CommandHandler;
 import eu.derbed.openmu.gs.GameServerConfig;
-import eu.derbed.openmu.gs.muObjects.MuWorld;
 
 public class OldGameServer {
 
@@ -37,16 +36,17 @@ public class OldGameServer {
 	public OldGameServer()
 			throws IOException, RegistrationException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
-		app = new MuApplication(new MuDataBaseFactory());
+		final String confFolder = System.getProperty("user.dir") + "/src/main/resources";
+		final GameServerConfig gsConfig = new GameServerConfig(confFolder);
+		final MuDataBaseFactory databaseFactory = new MuDataBaseFactory(gsConfig.databse);
+		app = new MuApplication(gsConfig, databaseFactory);
 
 		log.info("WorkingDir: " + System.getProperty("user.dir"));
 
-		GameServerConfig.getInstance();
-
 //		_ip = GameServerConfig.gs.getProperty("gs.ip");
-		_port = Integer.parseInt((GameServerConfig.getInstance().gs.getProperty("gs.port")));
+		_port = Integer.parseInt((app.getGameServerConfig().gs.getProperty("gs.port")));
 
-		System.out.println("used mem:" + getUsedMemoryMB() + "MB");
+		log.debug("used mem: " + getUsedMemoryMB() + "MB");
 
 		final String hostname = "*";
 
@@ -78,10 +78,6 @@ public class OldGameServer {
 	 */
 	public void run() {
 		try {
-			log.info("Init Regions:...");
-			MuWorld.getInstance().initWorld();
-			log.info("Init Gates.....");
-			MuWorld.getInstance().InitGates();
 			CommandHandler.getInstancec();
 
 
@@ -98,7 +94,7 @@ public class OldGameServer {
 		}
 	}
 
-	public long getUsedMemoryMB() {
+	public static long getUsedMemoryMB() {
 		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime()
 				.freeMemory()) / 1024 / 1024;
 	}
