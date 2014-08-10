@@ -38,7 +38,7 @@ public class OldGameServer {
 
 		final String confFolder = System.getProperty("user.dir") + "/src/main/resources";
 		final GameServerConfig gsConfig = new GameServerConfig(confFolder);
-		final MuDataBaseFactory databaseFactory = new MuDataBaseFactory(gsConfig.databse);
+		final MuDataBaseFactory databaseFactory = new MuDataBaseFactory(gsConfig.getDataSource());
 		app = new MuApplication(gsConfig, databaseFactory);
 
 		log.info("WorkingDir: " + System.getProperty("user.dir"));

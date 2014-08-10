@@ -3,7 +3,12 @@ package eu.derbed.openmu.gs;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import com.mchange.v2.c3p0.DataSources;
 
 /**
  *
@@ -11,7 +16,7 @@ import java.util.Properties;
  */
 public final class GameServerConfig {
 
-	public final Properties databse = new Properties();
+	private final Properties database = new Properties();
 	public final Properties gs = new Properties();
 	public final Properties cs = new Properties();
 
@@ -38,7 +43,7 @@ public final class GameServerConfig {
 	 *
 	 */
 	private void loadConfig() {
-		load(confFolder, "/conf/database.ini", databse);
+		load(confFolder, "/conf/database.ini", database);
 		load(confFolder, "/conf/gameserver.ini", gs);
 		load(confFolder, "/conf/connectserver.ini", cs);
 	}
@@ -77,4 +82,27 @@ public final class GameServerConfig {
 		return mapsFolder;
 	}
 
+	/**
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public DataSource getDataSource() throws SQLException {
+		try {
+			Class.forName(database.getProperty("driver"));
+		} catch (final ClassNotFoundException e) {
+			throw new SQLException("Database driver is not available", e);
+		}
+
+		final String url = database.getProperty("url");
+		final String username = database.getProperty("user");
+		final String password = database.getProperty("password");
+
+		final DataSource source = DataSources.unpooledDataSource(url, username, password);
+		final DataSource polled = DataSources.pooledDataSource(source);
+
+		polled.getConnection().close();
+
+		return polled;
+	}
 }
