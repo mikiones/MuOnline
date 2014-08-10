@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class MuTaskMng extends Thread {
 
-	PriorityQueue<MuTimeJob> jobs;
+	private final PriorityQueue<MuTimeJob> jobs;
 	private static MuTaskMng _instance = null;
 
 	private MuTaskMng() {
