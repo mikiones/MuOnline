@@ -1,10 +1,14 @@
 package com.notbed.muonline.util;
 
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,4 +60,16 @@ public final class IoUtil {
 		}
 	}
 
+	/**
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 */
+	public static Properties load(final String folder, final String fileName) throws IOException {
+		final Properties properties = new Properties();
+		try (InputStream in = new FileInputStream(new File(folder, fileName))) {
+			properties.load(in);
+		}
+		return properties;
+	}
 }
