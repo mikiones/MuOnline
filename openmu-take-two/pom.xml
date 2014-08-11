@@ -17,12 +17,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.8.4.5</version>
-		</dependency>
-
-		<dependency>
 			<groupId>javolution</groupId>
 			<artifactId>javolution</artifactId>
 			<version>5.5.1</version>
