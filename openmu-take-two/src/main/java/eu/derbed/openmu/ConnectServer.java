@@ -1,5 +1,6 @@
 package eu.derbed.openmu;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
@@ -19,8 +20,9 @@ public class ConnectServer {
 
 	/**
 	 * @param args
+	 * @throws IOException
 	 */
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws IOException {
 		final String confFolder = System.getProperty("user.dir") + "/src/main/resources";
 		final ServerList serverList = new ServerList();
 

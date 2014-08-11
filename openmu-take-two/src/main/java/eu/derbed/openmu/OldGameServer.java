@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.notbed.muonline.util.IoUtil;
 import com.notbed.muonline.util.RegistrationException;
 
 import eu.derbed.openmu.gs.ClientThread;
 import eu.derbed.openmu.gs.CommandHandler;
 import eu.derbed.openmu.gs.GameServerConfig;
+import eu.derbed.util.database.DatabaseHelper;
 
 public class OldGameServer {
 
@@ -38,8 +40,8 @@ public class OldGameServer {
 
 		final String confFolder = System.getProperty("user.dir") + "/src/main/resources";
 		final GameServerConfig gsConfig = new GameServerConfig(confFolder);
-		final MuDataBaseFactory databaseFactory = new MuDataBaseFactory(gsConfig.getDataSource());
-		app = new MuApplication(gsConfig, databaseFactory);
+		final DatabaseHelper helper = new DatabaseHelper(IoUtil.load(confFolder, "/conf/database.ini"));
+		app = new MuApplication(gsConfig, helper);
 
 		log.info("WorkingDir: " + System.getProperty("user.dir"));
 

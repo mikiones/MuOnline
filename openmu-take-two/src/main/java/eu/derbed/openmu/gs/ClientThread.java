@@ -30,6 +30,7 @@ import eu.derbed.openmu.gs.muObjects.MuPcInstance;
 import eu.derbed.openmu.gs.muObjects.MuUser;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
 import eu.derbed.openmu.gs.serverPackets.SHello;
+import eu.derbed.util.CallbackException;
 import eu.derbed.util.database.ResultStatementEvaluator;
 
 
@@ -153,7 +154,7 @@ public class ClientThread extends Thread {
 	 */
 	public void readCharacterList() throws IOException {
 		final int id = user.getId();
-		application.getDataAccess().execute(new LoadCharacterList(id, ChList));
+		execute(new LoadCharacterList(id, ChList));
 		ChList.noNeedRead();
 	}
 
@@ -485,7 +486,11 @@ public class ClientThread extends Thread {
 	 * @throws IOException
 	 */
 	public <R> void execute(final ResultStatementEvaluator<R> evaluator) throws IOException {
-		application.getDataAccess().execute(evaluator);
+		try {
+			application.getDataAccess().execute(evaluator);
+		} catch (final CallbackException e) {
+			throw new IOException("Failed to execute callback", e);
+		}
 	}
 
 	/**

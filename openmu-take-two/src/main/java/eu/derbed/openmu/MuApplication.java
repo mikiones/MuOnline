@@ -15,8 +15,8 @@ import com.notbed.muonline.util.RegistrationException;
 import eu.derbed.openmu.gs.GameServerConfig;
 import eu.derbed.openmu.gs.client.ClientPackage;
 import eu.derbed.openmu.gs.client.ClientPacketResolver;
-import eu.derbed.openmu.gs.database.DataAccess;
 import eu.derbed.openmu.gs.muObjects.MuWorld;
+import eu.derbed.util.database.DataAccess;
 
 /**
  * @author Alexandru Bledea
